@@ -550,8 +550,9 @@ class OxxifyFanControl extends utils.Adapter {
                         this.protocolBuilder.FinishFrame();
 
                         const packet = this.protocolBuilder.ProtocolPacket;
-                        this.setTimeout(() => {
+                        const timeout = this.setTimeout(() => {
                             this.sendQuene.enqueue(new DataToSend(packet, fanData.strIpAddress));
+                            this.clearTimeout(timeout);
                         }, 1000);
                     }
                 });

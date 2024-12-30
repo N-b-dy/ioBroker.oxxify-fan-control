@@ -437,8 +437,9 @@ class OxxifyFanControl extends utils.Adapter {
           this.protocolBuilder.ReadRtcDateTime();
           this.protocolBuilder.FinishFrame();
           const packet2 = this.protocolBuilder.ProtocolPacket;
-          this.setTimeout(() => {
+          const timeout = this.setTimeout(() => {
             this.sendQuene.enqueue(new import_ModelData.DataToSend(packet2, fanData.strIpAddress));
+            this.clearTimeout(timeout);
           }, 1e3);
         }
       });
