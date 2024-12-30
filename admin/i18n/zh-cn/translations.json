@@ -1,5 +1,17 @@
 {
-    "oxxify-fan-control adapter settings": "oxxify-fan-control的适配器设置",
-    "option1": "选项1",
-    "option2": "选项2"
+    "cfgHelpFanId": "风扇 ID 由制造商定义，通常作为贴纸贴在设备上。",
+    "cfgHelpFanName": "为风扇定义一个唯一的名称。",
+    "cfgHelpIp": "风扇的 IP 地址，可通过该地址访问该风扇。",
+    "cfgHelpNtpServer": "The NTP server used for time synchronization with the fans.",
+    "cfgHelpPassword": "设置访问风扇的密码。默认密码为 1111。",
+    "cfgHelpPollingInterval": "这定义了以秒为单位的时间，用于从粉丝获取新数据。",
+    "cfgLblFanId": "唯一的粉丝 ID。",
+    "cfgLblFanName": "粉丝姓名",
+    "cfgLblIp": "粉丝ip地址",
+    "cfgLblNtpServer": "NTP server",
+    "cfgLblPassword": "粉丝密码。",
+    "cfgLblPollingInterval": "轮询间隔",
+    "cfgLblTable": "可用粉丝",
+    "options": "选项",
+    "oxxify-fan-control adapter settings": "oxxify-fan-control 的适配器设置"
 }
