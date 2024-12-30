@@ -7,7 +7,7 @@
     "email": "daten4me@gmx.de"
   },
   "homepage": "https://github.com/N-b-dy/ioBroker.oxxify-fan-control",
-  "license": "GPL-3.0",
+  "license": "GPL-3.0-or-later",
   "keywords": [
     "oxxify"
   ],
