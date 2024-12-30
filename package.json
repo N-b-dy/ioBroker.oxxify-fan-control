@@ -19,7 +19,7 @@
     "node": ">= 20"
   },
   "dependencies": {
-    "@iobroker/adapter-core": "^3.2.2"
+    "@iobroker/adapter-core": "^3.2.2",
     "date-and-time": "^3.6.0",
     "ntp-time": "^2.0.6",
     "queue-fifo": "^0.2.6"
