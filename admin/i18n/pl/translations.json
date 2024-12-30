@@ -1,5 +1,17 @@
 {
-    "oxxify-fan-control adapter settings": "Ustawienia adaptera dla oxxify-fan-control",
-    "option1": "opcja 1",
-    "option2": "opcja 2"
+    "cfgHelpFanId": "Identyfikator wentylatora jest ustalany przez producenta i zazwyczaj umieszczany w formie naklejki na urządzeniu.",
+    "cfgHelpFanName": "Zdefiniuj unikalną nazwę dla wentylatora.",
+    "cfgHelpIp": "Adres IP wentylatora, pod którym można się z nim skontaktować.",
+    "cfgHelpNtpServer": "Serwer NTP używany do synchronizacji czasu z wentylatorami.",
+    "cfgHelpPassword": "Hasło ustawione w celu uzyskania dostępu do wentylatora. Domyślne hasło to 1111.",
+    "cfgHelpPollingInterval": "Określa czas w sekundach, przez który pobierane są nowe dane od wentylatorów.",
+    "cfgLblFanId": "Unikalny identyfikator fana.",
+    "cfgLblFanName": "Nazwa fana",
+    "cfgLblIp": "Adres IP wentylatora",
+    "cfgLblNtpServer": "Serwer NTP",
+    "cfgLblPassword": "Hasło fana.",
+    "cfgLblPollingInterval": "Interwał odpytywania",
+    "cfgLblTable": "Dostępne wentylatory",
+    "options": "Opcje",
+    "oxxify-fan-control adapter settings": "Ustawienia adaptera do sterowania wentylatorem oxxify"
 }

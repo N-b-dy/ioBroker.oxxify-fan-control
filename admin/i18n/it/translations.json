@@ -1,5 +1,17 @@
 {
-    "oxxify-fan-control adapter settings": "Impostazioni dell'adattatore per oxxify-fan-control",
-    "option1": "opzione1",
-    "option2": "opzione2"
+    "cfgHelpFanId": "L'ID della ventola viene definito dal produttore e generalmente posizionato come adesivo sul dispositivo.",
+    "cfgHelpFanName": "Definire un nome univoco per la ventola.",
+    "cfgHelpIp": "L'indirizzo IP del ventilatore, sotto il quale è raggiungibile.",
+    "cfgHelpNtpServer": "Il server NTP utilizzato per la sincronizzazione dell'ora con i ventilatori.",
+    "cfgHelpPassword": "La password impostata per accedere al ventilatore. La password predefinita è 1111.",
+    "cfgHelpPollingInterval": "Questo definisce il tempo in secondi, che viene utilizzato per recuperare nuovi dati dai fan.",
+    "cfgLblFanId": "L'ID univoco del fan.",
+    "cfgLblFanName": "Nome del tifoso",
+    "cfgLblIp": "Indirizzo IP del ventilatore",
+    "cfgLblNtpServer": "Server NTP",
+    "cfgLblPassword": "La password del tifoso.",
+    "cfgLblPollingInterval": "Intervallo di polling",
+    "cfgLblTable": "Ventilatori disponibili",
+    "options": "Opzioni",
+    "oxxify-fan-control adapter settings": "Impostazioni dell'adattatore per il controllo della ventola oxxify"
 }
