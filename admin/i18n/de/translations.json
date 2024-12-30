@@ -1,5 +1,17 @@
 {
-    "oxxify-fan-control adapter settings": "Adaptereinstellungen für oxxify-fan-control",
-    "option1": "Option1",
-    "option2": "Option2"
+    "cfgHelpFanId": "Die Lüfter-ID wird vom Hersteller festgelegt und normalerweise als Aufkleber auf dem Gerät angebracht.",
+    "cfgHelpFanName": "Definieren Sie einen eindeutigen Namen für den Lüfter.",
+    "cfgHelpIp": "Die IP-Adresse des Lüfters, unter der dieser erreichbar ist.",
+    "cfgHelpNtpServer": "Der NTP-Server, der für die Zeitsynchronisation mit den Ventilatoren verwendet wird.",
+    "cfgHelpPassword": "Das Passwort, das für den Zugriff auf den Lüfter festgelegt ist. Das Standardpasswort ist 1111.",
+    "cfgHelpPollingInterval": "Dies definiert die Zeit in Sekunden, die verwendet wird, um neue Daten von den Lüftern abzurufen.",
+    "cfgLblFanId": "Die eindeutige Fan-ID.",
+    "cfgLblFanName": "Fanname",
+    "cfgLblIp": "Fan-IP-Adresse",
+    "cfgLblNtpServer": "NTP-Server",
+    "cfgLblPassword": "Das Fan-Passwort.",
+    "cfgLblPollingInterval": "Abfrageintervall",
+    "cfgLblTable": "Verfügbare Fans",
+    "options": "Optionen",
+    "oxxify-fan-control adapter settings": "Adaptereinstellungen für oxxify-fan-control"
 }

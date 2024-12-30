@@ -1,5 +1,17 @@
 {
-    "oxxify-fan-control adapter settings": "Adapter settings for oxxify-fan-control",
-    "option1": "option1",
-    "option2": "option2"
+    "cfgHelpFanId": "The fan id is defined from the manufacturer and typically placed as a sticker on the device.",
+    "cfgHelpFanName": "Define an unique name for the fan.",
+    "cfgHelpIp": "The ip address of the fan, under which it can be reached.",
+    "cfgHelpNtpServer": "The NTP server used for time synchronization with the fans.",
+    "cfgHelpPassword": "The password which is set to access the fan. Default password is 1111.",
+    "cfgHelpPollingInterval": "This defines the time in seconds, which is used to fetch new data from the fans.",
+    "cfgLblFanId": "The unique fan id.",
+    "cfgLblFanName": "Fan Name",
+    "cfgLblIp": "Fan ip address",
+    "cfgLblNtpServer": "NTP server",
+    "cfgLblPassword": "The fan password.",
+    "cfgLblPollingInterval": "Polling interval",
+    "cfgLblTable": "Available fans",
+    "options": "Options",
+    "oxxify-fan-control adapter settings": "Adapter settings for oxxify-fan-control"
 }

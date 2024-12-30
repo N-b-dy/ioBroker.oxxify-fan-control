@@ -1,16 +1,80 @@
 {
     "i18n": true,
-    "type": "panel",
+    "type": "tabs",
     "items": {
-        "option1": {
-            "type": "checkbox",
-            "label": "option1",
-            "newLine": true
-        },
-        "option2": {
-            "type": "text",
-            "label": "option2",
-            "newLine": true
+        "_options": {
+            "type": "panel",
+            "label": "options",
+            "items": {
+                "pollingInterval": {
+                    "type": "number",
+                    "label": "cfgLblPollingInterval",
+                    "help": "cfgHelpPollingInterval",
+                    "default": "2",
+                    "min": 1,
+                    "sm": 3,
+                    "md": 3,
+                    "lg": 3
+                },
+                "ntpServer": {
+                    "type": "text",
+                    "label": "cfgLblNtpServer",
+                    "help": "cfgHelpNtpServer",
+                    "default": "0.de.pool.ntp.org",
+                    "sm": 3,
+                    "md": 3,
+                    "lg": 3
+                },
+                "fans": {
+                    "newLine": true,
+                    "type": "table",
+                    "sm": 12,
+                    "md": 12,
+                    "lg": 12,
+                    "label": "cfgLblTable",
+                    "uniqueColumns": ["id", "ipaddr"],
+                    "items": [
+                        {
+                            "type": "text",
+                            "attr": "name",
+                            "width": "30%",
+                            "title": "cfgLblFanName",
+                            "filter": true,
+                            "sort": true,
+                            "help": "cfgHelpFanName"
+                        },
+                        {
+                            "type": "text",
+                            "attr": "id",
+                            "width": "30%",
+                            "title": "cfgLblFanId",
+                            "filter": true,
+                            "sort": true,
+                            "help": "cfgHelpFanId",
+                            "default": "0123456789ABCDEF"
+                        },
+                        {
+                            "type": "text",
+                            "attr": "ipaddr",
+                            "width": "20%",
+                            "title": "cfgLblIp",
+                            "filter": true,
+                            "sort": true,
+                            "help": "cfgHelpIp"
+                        },
+                        {
+                            "type": "password",
+                            "attr": "password",
+                            "width": "20%",
+                            "title": "cfgLblPassword",
+                            "filter": false,
+                            "sort": false,
+                            "help": "cfgHelpPassword",
+                            "default": "1111"
+                        }
+                    ]
+                }
+            }
         }
     }
 }

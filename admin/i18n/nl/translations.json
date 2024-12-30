@@ -1,5 +1,17 @@
 {
-    "oxxify-fan-control adapter settings": "Adapterinstellingen voor oxxify-fan-control",
-    "option1": "optie1",
-    "option2": "optie2"
+    "cfgHelpFanId": "De fan-ID wordt door de fabrikant gedefinieerd en wordt doorgaans als sticker op het apparaat geplaatst.",
+    "cfgHelpFanName": "Definieer een unieke naam voor de ventilator.",
+    "cfgHelpIp": "Het ip-adres van de fan, waaronder deze bereikbaar is.",
+    "cfgHelpNtpServer": "De NTP-server die gebruikt wordt voor tijdsynchronisatie met de ventilatoren.",
+    "cfgHelpPassword": "Het wachtwoord dat is ingesteld voor toegang tot de ventilator. Het standaardwachtwoord is 1111.",
+    "cfgHelpPollingInterval": "Dit definieert de tijd in seconden, die wordt gebruikt om nieuwe gegevens van de fans op te halen.",
+    "cfgLblFanId": "De unieke fan-ID.",
+    "cfgLblFanName": "Fan naam",
+    "cfgLblIp": "Fan IP-adres",
+    "cfgLblNtpServer": "NTP-server",
+    "cfgLblPassword": "Het ventilatorwachtwoord.",
+    "cfgLblPollingInterval": "Polling-interval",
+    "cfgLblTable": "Beschikbare ventilatoren",
+    "options": "Opties",
+    "oxxify-fan-control adapter settings": "Adapterinstellingen voor oxxify-fan-control"
 }
