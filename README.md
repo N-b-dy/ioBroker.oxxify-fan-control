@@ -1,4 +1,5 @@
-![Logo](admin/oxxify-fan-control.png)
+<img src="admin/oxxify-fan-control.png" width="80">
+
 # ioBroker.oxxify-fan-control
 
 [![NPM version](https://img.shields.io/npm/v/iobroker.oxxify-fan-control.svg)](https://www.npmjs.com/package/iobroker.oxxify-fan-control)
