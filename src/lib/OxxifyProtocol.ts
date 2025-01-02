@@ -783,7 +783,7 @@ export class OxxifyProtocol {
     private ParseSystemType(bytes: Buffer): ioBroker.StateValue {
         switch (bytes.at(0) ?? 255) {
             case 0x0e:
-                return "14 - Oxxify.pro 50";
+                return "14 - Oxxify.smart 50";
         }
         return null;
     }

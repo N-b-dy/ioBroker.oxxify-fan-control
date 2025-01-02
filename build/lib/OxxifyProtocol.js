@@ -655,7 +655,7 @@ class OxxifyProtocol {
     var _a;
     switch ((_a = bytes.at(0)) != null ? _a : 255) {
       case 14:
-        return "14 - Oxxify.pro 50";
+        return "14 - Oxxify.smart 50";
     }
     return null;
   }
