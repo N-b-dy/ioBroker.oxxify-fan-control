@@ -17,7 +17,7 @@ Integrate your Oxxify fans into your Smart Home. All the provided ioBroker data 
 
 ## Working devices
 
--   Oxxify pro 50 (tested from my side)
+-   Oxxify smart 50 (tested from my side)
 -   Any other Oxxify device with WiFi
 -   Blauberg Vents (should be, not yet tested)
 
@@ -43,7 +43,7 @@ The data entrys for the sensors are implemented as defined in the protocol. The 
 
 ![image](doc/screenshots/sensors-data.png)
 
-#### System datamanufacturer
+#### System data
 
 This channel contains system data about the hardware and firmware as well as runtime, RTC battery voltage and date/time. Here alarms can be reset and also the RTC time can be set based on the configured NTP server. From my experience it can sometimes happen, that after an RTC time sync the new (right) values are not visible immediately and it takes until the next data polling.
 
