@@ -789,7 +789,7 @@ export class OxxifyProtocol {
     }
 
     private ParseNothing(byte: Buffer): ioBroker.StateValue {
-        byte?.length; // Avoid eslint issue - probably not the best way
+        const length = byte?.length; // Avoid eslint issue - probably not the best way
         return null;
     }
 
