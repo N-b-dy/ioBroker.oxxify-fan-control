@@ -789,8 +789,7 @@ export class OxxifyProtocol {
     }
 
     private ParseNothing(byte: Buffer): ioBroker.StateValue {
-        // eslint-disable-next-line no-unused-expressions
-        byte;
+        byte?.length; // Avoid eslint issue - probably not the best way
         return null;
     }
 
