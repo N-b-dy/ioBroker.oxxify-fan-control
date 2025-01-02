@@ -13,101 +13,48 @@
 
 ## oxxify-fan-control adapter for ioBroker
 
-Integrate your Oxxify Fans into your Smart Home.
+Integrate your Oxxify fans into your Smart Home. All the provided ioBroker data points are based on the communication protocol described [here](./doc/BDA_Anschluss_SmartHome_RV_V2.pdf). As other manufacturers are using the same protocol (e.g. Blauberg vents), it is pretty likely, that they will work as well.
 
-## Developer manual
+## Working devices
 
-This section is intended for the developer. It can be deleted later.
+-   Oxxify pro 50 (tested from my side)
+-   Any other Oxxify device with WiFi
+-   Blauberg Vents (should be, not yet tested)
 
-### DISCLAIMER
+### Object tree desciption
 
-Please make sure that you consider copyrights and trademarks when you use names or logos of a company and add a disclaimer to your README.
-You can check other adapters for examples or ask in the developer community. Using a name or logo of a company without permission may cause legal problems for you.
+The object tree contains the folder named "devices", which creates an entry for each configured fan. The channels below are created with the unique fan id, which is provided by the manufacturer. In the column _name_ the entry from the configuration is used, to distinguish better between the fans. Below each fan four channels are created to group the data provided per fan. They are explained as follows:
 
-### Getting started
+#### Fan data
 
-You are almost done, only a few steps left:
+This channel contains any fan related data like timers, fan speed, on/off state and information regarding the filter cleaning/exchange interval. The fan operating modes contains the numerical value from the communication protocol as well as a speaking string state. The values can be written by the number only (e.g. a 1 for the heating recovery). Same applys for the timer mode and the fan speed mode, which accepts 1, 2, 3 and 255 for manual speed setting. The fan speed for fan 2 is not available at my devices (Oxxify pro 50) and stays either at 0 rpm in off state or 1500 in any run state. The other value changes accoring to the speed.
 
-1. Create a new repository on GitHub with the name `ioBroker.oxxify-fan-control`
+![image](doc/screenshots/fan-data.png)
 
-1. Push all files to the GitHub repo. The creator has already set up the local repository for you:
-    ```bash
-    git push origin main
-    ```
-1. Add a new secret under https://github.com/N-b-dy/ioBroker.oxxify-fan-control/settings/secrets. It must be named `AUTO_MERGE_TOKEN` and contain a personal access token with push access to the repository, e.g. yours. You can create a new token under https://github.com/settings/tokens.
+#### Network data
 
-1. Head over to [src/main.ts](src/main.ts) and start programming!
+The network data is currently read-only, writing/changing of values here is not yet implemented and can be done with the app of the manufacturer. Same applys for the cloud server control state.
 
-### Best Practices
+![image](doc/screenshots/network-data.png)
 
-We've collected some [best practices](https://github.com/ioBroker/ioBroker.repositories#development-and-coding-best-practices) regarding ioBroker development and coding in general. If you're new to ioBroker or Node.js, you should
-check them out. If you're already experienced, you should also take a look at them - you might learn something new :)
+#### Sensors data
 
-### Scripts in `package.json`
+The data entrys for the sensors are implemented as defined in the protocol. The analog voltage vale is in % as defined in the protocol. I have nothing connected to the analog and relais sensor, so I can not really test what happens, if you activate them.
 
-Several npm scripts are predefined for your convenience. You can run them using `npm run <scriptname>`
-| Script name | Description |
-|-------------|-------------|
-| `build` | Compile the TypeScript sources. |
-| `watch` | Compile the TypeScript sources and watch for changes. |
-| `test:ts` | Executes the tests you defined in `*.test.ts` files. |
-| `test:package` | Ensures your `package.json` and `io-package.json` are valid. |
-| `test:integration` | Tests the adapter startup with an actual instance of ioBroker. |
-| `test` | Performs a minimal test run on package files and your tests. |
-| `check` | Performs a type-check on your code (without compiling anything). |
-| `lint` | Runs `ESLint` to check your code for formatting errors and potential bugs. |
-| `translate` | Translates texts in your adapter to all required languages, see [`@iobroker/adapter-dev`](https://github.com/ioBroker/adapter-dev#manage-translations) for more details. |
-| `release` | Creates a new release, see [`@alcalzone/release-script`](https://github.com/AlCalzone/release-script#usage) for more details. |
+![image](doc/screenshots/sensors-data.png)
 
-### Configuring the compilation
+#### System datamanufacturer
 
-The adapter template uses [esbuild](https://esbuild.github.io/) to compile TypeScript and/or React code. You can configure many compilation settings
-either in `tsconfig.json` or by changing options for the build tasks. These options are described in detail in the
-[`@iobroker/adapter-dev` documentation](https://github.com/ioBroker/adapter-dev#compile-adapter-files).
+This channel contains system data about the hardware and firmware as well as runtime, RTC battery voltage and date/time. Here alarms can be reset and also the RTC time can be set based on the configured NTP server. From my experience it can sometimes happen, that after an RTC time sync the new (right) values are not visible immediately and it takes until the next data polling.
 
-### Writing tests
+![image](doc/screenshots/system-data.png)
 
-When done right, testing code is invaluable, because it gives you the
-confidence to change your code while knowing exactly if and when
-something breaks. A good read on the topic of test-driven development
-is https://hackernoon.com/introduction-to-test-driven-development-tdd-61a13bc92d92.
-Although writing tests before the code might seem strange at first, but it has very
-clear upsides.
+## ToDos
 
-The template provides you with basic tests for the adapter startup and package files.
-It is recommended that you add your own tests into the mix.
-
-### Publishing the adapter
-
-Using GitHub Actions, you can enable automatic releases on npm whenever you push a new git tag that matches the form
-`v<major>.<minor>.<patch>`. We **strongly recommend** that you do. The necessary steps are described in `.github/workflows/test-and-release.yml`.
-
-Since you installed the release script, you can create a new
-release simply by calling:
-
-```bash
-npm run release
-```
-
-Additional command line options for the release script are explained in the
-[release-script documentation](https://github.com/AlCalzone/release-script#command-line).
-
-To get your adapter released in ioBroker, please refer to the documentation
-of [ioBroker.repositories](https://github.com/ioBroker/ioBroker.repositories#requirements-for-adapter-to-get-added-to-the-latest-repository).
-
-### Test the adapter manually with dev-server
-
-Since you set up `dev-server`, you can use it to run, test and debug your adapter.
-
-You may start `dev-server` by calling from your dev directory:
-
-```bash
-dev-server watch
-```
-
-The ioBroker.admin interface will then be available at http://localhost:8081/
-
-Please refer to the [`dev-server` documentation](https://github.com/ioBroker/dev-server#command-line) for more details.
+-   Releasing a stable version on npm :)
+-   Implementing tests
+-   Improve documentation
+-   Implement missing data points (like time schedule, four data points with high byte 0x03, writing of network data & cloud control)
 
 ## Changelog
 
