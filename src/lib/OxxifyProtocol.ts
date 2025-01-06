@@ -788,8 +788,7 @@ export class OxxifyProtocol {
         return null;
     }
 
-    private ParseNothing(byte: Buffer): ioBroker.StateValue {
-        byte;
+    private ParseNothing(_: Buffer): ioBroker.StateValue {
         return null;
     }
 
