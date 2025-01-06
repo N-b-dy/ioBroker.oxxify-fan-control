@@ -17,9 +17,9 @@ Integrate your Oxxify fans into your Smart Home. All the provided ioBroker data 
 
 ## Working devices
 
--   Oxxify smart 50 (tested from my side)
--   Any other Oxxify device with WiFi
--   Blauberg Vents (should be, not yet tested)
+- Oxxify smart 50 (tested from my side)
+- Any other Oxxify device with WiFi
+- Blauberg Vents (should be, not yet tested)
 
 ### Object tree desciption
 
@@ -51,10 +51,10 @@ This channel contains system data about the hardware and firmware as well as run
 
 ## ToDos
 
--   Releasing a stable version on npm :)
--   Implementing tests
--   Improve documentation
--   Implement missing data points (like time schedule, four data points with high byte 0x03, writing of network data & cloud control)
+- Releasing a stable version on npm :)
+- Implementing tests
+- Improve documentation
+- Implement missing data points (like time schedule, four data points with high byte 0x03, writing of network data & cloud control)
 
 ## Changelog
 
@@ -65,7 +65,7 @@ This channel contains system data about the hardware and firmware as well as run
 
 ### **WORK IN PROGRESS**
 
--   (N-b-dy) initial release
+- (N-b-dy) initial release
 
 ## License
 
@@ -95,4 +95,4 @@ PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS),
 EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF
 SUCH DAMAGES.
 
-Copyright (c) 2024 N-b-dy <daten4me@gmx.de>
+Copyright (c) 2025 N-b-dy <daten4me@gmx.de>
