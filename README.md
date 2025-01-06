@@ -62,8 +62,7 @@ This channel contains system data about the hardware and firmware as well as run
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 0.0.2 (2025-01-06)
 
 - (N-b-dy) initial release
 

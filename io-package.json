@@ -1,116 +1,137 @@
 {
-    "common": {
-        "name": "oxxify-fan-control",
-        "version": "0.0.1",
-        "news": {
-            "0.0.1": {
-                "en": "initial release",
-                "de": "Erstveröffentlichung",
-                "ru": "Начальная версия",
-                "pt": "lançamento inicial",
-                "nl": "Eerste uitgave",
-                "fr": "Première version",
-                "it": "Versione iniziale",
-                "es": "Versión inicial",
-                "pl": "Pierwsze wydanie",
-                "uk": "Початкова версія",
-                "zh-cn": "首次出版"
-            }
-        },
-        "titleLang": {
-            "en": "Oxxify Fan Control",
-            "de": "Oxxify-Lüftersteuerung",
-            "ru": "Управление вентилятором Oxxify",
-            "pt": "Controle de ventilador Oxxify",
-            "nl": "Oxxify-ventilatorbediening",
-            "fr": "Contrôle du ventilateur Oxxify",
-            "it": "Controllo della ventola Oxxify",
-            "es": "Control del ventilador Oxxify",
-            "pl": "Sterowanie wentylatorem Oxxify",
-            "uk": "Контроль вентиляторів Oxxify",
-            "zh-cn": "Oxxify 风扇控制"
-        },
-        "desc": {
-            "en": "Integrate your Oxxify Fans into your Smart Home.",
-            "de": "Integrieren Sie Ihre Oxxify-Lüfter in Ihr Smart Home.",
-            "ru": "Интегрируйте вентиляторы Oxxify в свой умный дом.",
-            "pt": "Integre seus fãs Oxxify em sua casa inteligente.",
-            "nl": "Integreer je Oxxify Fans in je Smart Home.",
-            "fr": "Intégrez vos ventilateurs Oxxify dans votre maison intelligente.",
-            "it": "Integra i tuoi fan Oxxify nella tua casa intelligente.",
-            "es": "Integra tus Fans Oxxify en tu Hogar Inteligente.",
-            "pl": "Zintegruj swoich fanów Oxxify ze swoim inteligentnym domem.",
-            "uk": "Інтегруйте вентилятори Oxxify у свій розумний дім.",
-            "zh-cn": "将您的 Oxxify 风扇集成到您的智能家居中。"
-        },
-        "authors": ["N-b-dy <daten4me@gmx.de>"],
-        "keywords": ["oxxify"],
-        "licenseInformation": {
-            "type": "free",
-            "license": "GPL-3.0-or-later"
-        },
-        "platform": "Javascript/Node.js",
-        "icon": "oxxify-fan-control.png",
-        "enabled": true,
-        "extIcon": "https://raw.githubusercontent.com/N-b-dy/ioBroker.oxxify-fan-control/main/admin/oxxify-fan-control.png",
-        "readme": "https://github.com/N-b-dy/ioBroker.oxxify-fan-control/blob/main/README.md",
-        "loglevel": "info",
-        "tier": 3,
-        "mode": "daemon",
-        "type": "climate-control",
-        "compact": true,
-        "connectionType": "local",
-        "dataSource": "poll",
-        "adminUI": {
-            "config": "json"
-        },
-        "dependencies": [
-            {
-                "js-controller": ">=6.0.11"
-            }
-        ],
-        "globalDependencies": [
-            {
-                "admin": ">=7.1.3"
-            }
-        ]
+  "common": {
+    "name": "oxxify-fan-control",
+    "version": "0.0.2",
+    "news": {
+      "0.0.2": {
+        "en": "initial release",
+        "de": "erstausstrahlung",
+        "ru": "первоначальный выпуск",
+        "pt": "lançamento inicial",
+        "nl": "eerste release",
+        "fr": "libération initiale",
+        "it": "rilascio iniziale",
+        "es": "liberación inicial",
+        "pl": "początkowe zwolnienie",
+        "uk": "початковий реліз",
+        "zh-cn": "初步释放"
+      },
+      "0.0.1": {
+        "en": "initial release",
+        "de": "Erstveröffentlichung",
+        "ru": "Начальная версия",
+        "pt": "lançamento inicial",
+        "nl": "Eerste uitgave",
+        "fr": "Première version",
+        "it": "Versione iniziale",
+        "es": "Versión inicial",
+        "pl": "Pierwsze wydanie",
+        "uk": "Початкова версія",
+        "zh-cn": "首次出版"
+      }
     },
-    "native": {
-        "pollingInterval": 5,
-        "ntpServer": "0.de.pool.ntp.org",
-        "fans": [
-            {
-                "name": "fan1",
-                "id": "1234567890123456",
-                "ipaddr": "192.168.1.1",
-                "password": "topsecret"
-            }
-        ]
+    "titleLang": {
+      "en": "Oxxify Fan Control",
+      "de": "Oxxify-Lüftersteuerung",
+      "ru": "Управление вентилятором Oxxify",
+      "pt": "Controle de ventilador Oxxify",
+      "nl": "Oxxify-ventilatorbediening",
+      "fr": "Contrôle du ventilateur Oxxify",
+      "it": "Controllo della ventola Oxxify",
+      "es": "Control del ventilador Oxxify",
+      "pl": "Sterowanie wentylatorem Oxxify",
+      "uk": "Контроль вентиляторів Oxxify",
+      "zh-cn": "Oxxify 风扇控制"
     },
-    "protectedNative": ["fans.password"],
-    "encryptedNative": ["fans.password"],
-    "objects": [],
-    "instanceObjects": [
-        {
-            "_id": "info",
-            "type": "channel",
-            "common": {
-                "name": "Information"
-            },
-            "native": {}
-        },
-        {
-            "_id": "info.connection",
-            "type": "state",
-            "common": {
-                "role": "indicator.connected",
-                "name": "Device or service connected",
-                "type": "boolean",
-                "read": true,
-                "write": false,
-                "def": false
-            },
-            "native": {}
-        }
+    "desc": {
+      "en": "Integrate your Oxxify Fans into your Smart Home.",
+      "de": "Integrieren Sie Ihre Oxxify-Lüfter in Ihr Smart Home.",
+      "ru": "Интегрируйте вентиляторы Oxxify в свой умный дом.",
+      "pt": "Integre seus fãs Oxxify em sua casa inteligente.",
+      "nl": "Integreer je Oxxify Fans in je Smart Home.",
+      "fr": "Intégrez vos ventilateurs Oxxify dans votre maison intelligente.",
+      "it": "Integra i tuoi fan Oxxify nella tua casa intelligente.",
+      "es": "Integra tus Fans Oxxify en tu Hogar Inteligente.",
+      "pl": "Zintegruj swoich fanów Oxxify ze swoim inteligentnym domem.",
+      "uk": "Інтегруйте вентилятори Oxxify у свій розумний дім.",
+      "zh-cn": "将您的 Oxxify 风扇集成到您的智能家居中。"
+    },
+    "authors": [
+      "N-b-dy <daten4me@gmx.de>"
+    ],
+    "keywords": [
+      "oxxify"
+    ],
+    "licenseInformation": {
+      "type": "free",
+      "license": "GPL-3.0-or-later"
+    },
+    "platform": "Javascript/Node.js",
+    "icon": "oxxify-fan-control.png",
+    "enabled": true,
+    "extIcon": "https://raw.githubusercontent.com/N-b-dy/ioBroker.oxxify-fan-control/main/admin/oxxify-fan-control.png",
+    "readme": "https://github.com/N-b-dy/ioBroker.oxxify-fan-control/blob/main/README.md",
+    "loglevel": "info",
+    "tier": 3,
+    "mode": "daemon",
+    "type": "climate-control",
+    "compact": true,
+    "connectionType": "local",
+    "dataSource": "poll",
+    "adminUI": {
+      "config": "json"
+    },
+    "dependencies": [
+      {
+        "js-controller": ">=6.0.11"
+      }
+    ],
+    "globalDependencies": [
+      {
+        "admin": ">=7.1.3"
+      }
     ]
+  },
+  "native": {
+    "pollingInterval": 5,
+    "ntpServer": "0.de.pool.ntp.org",
+    "fans": [
+      {
+        "name": "fan1",
+        "id": "1234567890123456",
+        "ipaddr": "192.168.1.1",
+        "password": "topsecret"
+      }
+    ]
+  },
+  "protectedNative": [
+    "fans.password"
+  ],
+  "encryptedNative": [
+    "fans.password"
+  ],
+  "objects": [],
+  "instanceObjects": [
+    {
+      "_id": "info",
+      "type": "channel",
+      "common": {
+        "name": "Information"
+      },
+      "native": {}
+    },
+    {
+      "_id": "info.connection",
+      "type": "state",
+      "common": {
+        "role": "indicator.connected",
+        "name": "Device or service connected",
+        "type": "boolean",
+        "read": true,
+        "write": false,
+        "def": false
+      },
+      "native": {}
+    }
+  ]
 }

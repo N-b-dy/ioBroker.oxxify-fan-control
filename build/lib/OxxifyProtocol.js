@@ -659,8 +659,7 @@ class OxxifyProtocol {
     }
     return null;
   }
-  ParseNothing(byte) {
-    byte;
+  ParseNothing(_) {
     return null;
   }
   FillParameterDictionary() {

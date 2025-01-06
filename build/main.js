@@ -158,6 +158,7 @@ class OxxifyFanControl extends utils.Adapter {
       this.udpServer.close();
       callback();
     } catch (e) {
+      this.log.error(e.toString());
       callback();
     }
   }
