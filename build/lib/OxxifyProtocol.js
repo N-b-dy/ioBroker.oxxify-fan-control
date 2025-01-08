@@ -80,6 +80,10 @@ var ParameterType = /* @__PURE__ */ ((ParameterType2) => {
   ParameterType2[ParameterType2["FanOperatingMode"] = 183] = "FanOperatingMode";
   ParameterType2[ParameterType2["TargetAnalogVoltageValue"] = 184] = "TargetAnalogVoltageValue";
   ParameterType2[ParameterType2["FanType"] = 185] = "FanType";
+  ParameterType2[ParameterType2["NightModeTimerSetpoint"] = 770] = "NightModeTimerSetpoint";
+  ParameterType2[ParameterType2["PartyModeTimerSetPoint"] = 771] = "PartyModeTimerSetPoint";
+  ParameterType2[ParameterType2["HumiditySensorOverSetPoint"] = 772] = "HumiditySensorOverSetPoint";
+  ParameterType2[ParameterType2["AnalogVoltageSensorOverSetPoint"] = 773] = "AnalogVoltageSensorOverSetPoint";
   return ParameterType2;
 })(ParameterType || {});
 class FanData {
@@ -129,6 +133,7 @@ class OxxifyProtocol {
     this.nWriteIndex += strPassword.length;
     this.eCurrentFunction = 0 /* Undefined */;
     this.bIsFirstFunction = true;
+    this.nCurrentWriteHighByte = 0;
     return true;
   }
   FinishFrame() {
@@ -377,6 +382,38 @@ class OxxifyProtocol {
     this.AddFunctionCode(1 /* Read */);
     this.AddParameter(185 /* FanType */);
   }
+  ReadNightModeTimerSetPoint() {
+    this.AddFunctionCode(1 /* Read */);
+    this.AddParameter(770 /* NightModeTimerSetpoint */);
+  }
+  WriteNightModeTimerSetPoint(strTimeValue) {
+    const [nHours, nMinutes] = strTimeValue.split(":").map(Number);
+    const data = Buffer.alloc(2);
+    data[0] = nMinutes;
+    data[1] = nHours;
+    this.AddFunctionCode(3 /* WriteRead */);
+    this.AddParameter(770 /* NightModeTimerSetpoint */, data);
+  }
+  ReadPartyModeTimerSetPoint() {
+    this.AddFunctionCode(1 /* Read */);
+    this.AddParameter(771 /* PartyModeTimerSetPoint */);
+  }
+  WritePartyModeTimerSetPoint(strTimeValue) {
+    const [nHours, nMinutes] = strTimeValue.split(":").map(Number);
+    const data = Buffer.alloc(2);
+    data[0] = nMinutes;
+    data[1] = nHours;
+    this.AddFunctionCode(3 /* WriteRead */);
+    this.AddParameter(771 /* PartyModeTimerSetPoint */, data);
+  }
+  ReadHumiditySensorOverSetPoint() {
+    this.AddFunctionCode(1 /* Read */);
+    this.AddParameter(772 /* HumiditySensorOverSetPoint */);
+  }
+  ReadAnalogVoltageSensorOverSetPoint() {
+    this.AddFunctionCode(1 /* Read */);
+    this.AddParameter(773 /* AnalogVoltageSensorOverSetPoint */);
+  }
   //////////////////////////////////////////////////////////////////////////////////////////////
   get ProtocolPacket() {
     return Buffer.from(this.internalBuffer.subarray(0, this.nWriteIndex));
@@ -385,6 +422,7 @@ class OxxifyProtocol {
     var _a;
     const status = this.CheckProtocol(dataBytes);
     const result = new import_ModelData.ParsedData();
+    this.nCurrentReadHighByte = 0;
     if (dataBytes == void 0) {
       result.status = import_ModelData.ParsingStatus.Undefined;
       return result;
@@ -413,13 +451,18 @@ class OxxifyProtocol {
     return result;
   }
   ParseData(data, receivedData) {
-    var _a, _b, _c;
+    var _a, _b, _c, _d, _e;
     let nIndex = 0;
     let nCurrentReadParameterSize = 1;
+    if (data.at(nIndex) == 255) {
+      nIndex++;
+      this.nCurrentReadHighByte = (_a = data.at(nIndex)) != null ? _a : 0;
+      nIndex++;
+    }
     switch (data.at(nIndex)) {
       case 254:
         nIndex++;
-        nCurrentReadParameterSize = (_a = data.at(nIndex)) != null ? _a : 1;
+        nCurrentReadParameterSize = (_b = data.at(nIndex)) != null ? _b : 1;
         nIndex++;
         break;
       case 253:
@@ -427,14 +470,14 @@ class OxxifyProtocol {
         nIndex++;
         break;
     }
-    const eParameter = data.at(nIndex);
+    const eParameter = ((_c = data.at(nIndex)) != null ? _c : 0) | this.nCurrentReadHighByte << 8;
     nIndex++;
     if (this.parameterDictionary.has(eParameter)) {
       const fanData = this.parameterDictionary.get(eParameter);
       if (fanData != void 0) {
         const parsedData = new import_ModelData.ReceivedData();
-        parsedData.strIdentifer = (_b = fanData == null ? void 0 : fanData.strIdentifer) != null ? _b : "UNDEFINED";
-        parsedData.value = (_c = fanData == null ? void 0 : fanData.parseFunction(data.subarray(nIndex, nIndex + nCurrentReadParameterSize))) != null ? _c : null;
+        parsedData.strIdentifer = (_d = fanData == null ? void 0 : fanData.strIdentifer) != null ? _d : "UNDEFINED";
+        parsedData.value = (_e = fanData == null ? void 0 : fanData.parseFunction(data.subarray(nIndex, nIndex + nCurrentReadParameterSize))) != null ? _e : null;
         receivedData.push(parsedData);
       }
     }
@@ -448,6 +491,8 @@ class OxxifyProtocol {
   internalBuffer = Buffer.alloc(256);
   nWriteIndex = 0;
   nReadIndex = 0;
+  nCurrentReadHighByte = 0;
+  nCurrentWriteHighByte = 0;
   bIsFirstFunction = false;
   eCurrentFunction = 0 /* Undefined */;
   // Dictionary with parameter low byte as key for the HighByte 0x00
@@ -496,6 +541,15 @@ class OxxifyProtocol {
     const parameterData = this.parameterDictionary.get(eParameter);
     if (parameterData == void 0)
       return false;
+    const nHighByte = (Number(eParameter) & 65280) >> 8;
+    const bChangeHighByte = nHighByte != this.nCurrentWriteHighByte;
+    if (bChangeHighByte) {
+      this.nCurrentWriteHighByte = nHighByte;
+      this.internalBuffer[this.nWriteIndex] = 255;
+      this.nWriteIndex++;
+      this.internalBuffer[this.nWriteIndex] = nHighByte;
+      this.nWriteIndex++;
+    }
     if (parameterData.nSize != 1) {
       if (this.eCurrentFunction != 1 /* Read */) {
         this.internalBuffer[this.nWriteIndex] = 254;
@@ -658,6 +712,10 @@ class OxxifyProtocol {
         return "14 - Oxxify.smart 50";
     }
     return null;
+  }
+  ParseHourMinuteTimer(bytes) {
+    var _a, _b;
+    return `${(_a = bytes.at(1)) == null ? void 0 : _a.toString().padStart(2, "0")}:${(_b = bytes.at(0)) == null ? void 0 : _b.toString().padStart(2, "0")}`;
   }
   ParseNothing(_) {
     return null;
@@ -1679,6 +1737,104 @@ class OxxifyProtocol {
           "zh-cn": "System type"
         },
         this.ParseSystemType
+      )
+    );
+    this.parameterDictionary.set(
+      770 /* NightModeTimerSetpoint */,
+      new FanData(
+        2,
+        "fan.nightModeTimerSetpoint",
+        true,
+        "state",
+        "string",
+        {
+          en: "Setpoint of the timer for night mode",
+          de: "Sollwert der Zeitschaltuhr f\xFCr den Nachtbetrieb",
+          ru: "\u0423\u0441\u0442\u0430\u0432\u043A\u0430 \u0442\u0430\u0439\u043C\u0435\u0440\u0430 \u0434\u043B\u044F \u043D\u043E\u0447\u043D\u043E\u0433\u043E \u0440\u0435\u0436\u0438\u043C\u0430",
+          pt: "Ponto de regula\xE7\xE3o do temporizador para o modo noturno",
+          nl: "Instelpunt van de timer voor nachtmodus",
+          fr: "Point de consigne de la minuterie pour le mode nuit",
+          it: "Setpoint del timer per la modalit\xE0 notturna",
+          es: "Consigna del temporizador para el modo nocturno",
+          pl: "Warto\u015B\u0107 zadana timera dla trybu nocnego",
+          uk: "\u0423\u0441\u0442\u0430\u0432\u043A\u0430 \u0442\u0430\u0439\u043C\u0435\u0440\u0430 \u0434\u043B\u044F \u043D\u0456\u0447\u043D\u043E\u0433\u043E \u0440\u0435\u0436\u0438\u043C\u0443",
+          "zh-cn": "Setpoint of the timer for night mode"
+        },
+        this.ParseHourMinuteTimer,
+        "hh:mm"
+      )
+    );
+    this.parameterDictionary.set(
+      771 /* PartyModeTimerSetPoint */,
+      new FanData(
+        2,
+        "fan.partyModeTimerSetpoint",
+        true,
+        "state",
+        "string",
+        {
+          en: "Setpoint of the timer for party mode",
+          de: "Sollwert des Timers f\xFCr den Partybetrieb",
+          ru: "\u0423\u0441\u0442\u0430\u0432\u043A\u0430 \u0442\u0430\u0439\u043C\u0435\u0440\u0430 \u0434\u043B\u044F \u0440\u0435\u0436\u0438\u043C\u0430 \u0432\u0435\u0447\u0435\u0440\u0438\u043D\u043A\u0438",
+          pt: "Ponto de regula\xE7\xE3o do temporizador para o modo de festa",
+          nl: "Instelpunt van de timer voor partymodus",
+          fr: "Point de consigne de la minuterie pour le mode f\xEAte",
+          it: "Setpoint del timer per la modalit\xE0 party",
+          es: "Consigna del temporizador para el modo fiesta",
+          pl: "Warto\u015B\u0107 zadana timera dla trybu party",
+          uk: "\u0423\u0441\u0442\u0430\u0432\u043A\u0430 \u0442\u0430\u0439\u043C\u0435\u0440\u0430 \u0434\u043B\u044F \u0440\u0435\u0436\u0438\u043C\u0443 \u0432\u0435\u0447\u0456\u0440\u043A\u0438",
+          "zh-cn": "Setpoint of the timer for party mode"
+        },
+        this.ParseHourMinuteTimer,
+        "hh:mm"
+      )
+    );
+    this.parameterDictionary.set(
+      772 /* HumiditySensorOverSetPoint */,
+      new FanData(
+        1,
+        "sensors.humiditySensorOverSetPoint",
+        false,
+        "state",
+        "boolean",
+        {
+          en: "Humidity sensor is above set value",
+          de: "Luftfeuchtigkeitssensor liegt \xFCber dem eingestellten Wert",
+          ru: "\u0414\u0430\u0442\u0447\u0438\u043A \u0432\u043B\u0430\u0436\u043D\u043E\u0441\u0442\u0438 \u043F\u0440\u0435\u0432\u044B\u0448\u0430\u0435\u0442 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u043D\u043E\u0435 \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u0435",
+          pt: "O sensor de humidade est\xE1 acima do valor definido",
+          nl: "Vochtigheidssensor is hoger dan de ingestelde waarde",
+          fr: "Le capteur d'humidit\xE9 est au-dessus de la valeur r\xE9gl\xE9e",
+          it: "Il sensore di umidit\xE0 supera il valore impostato",
+          es: "El sensor de humedad est\xE1 por encima del valor ajustado",
+          pl: "Czujnik wilgotno\u015Bci przekracza ustawion\u0105 warto\u015B\u0107",
+          uk: "\u0414\u0430\u0442\u0447\u0438\u043A \u0432\u043E\u043B\u043E\u0433\u043E\u0441\u0442\u0456 \u043F\u0435\u0440\u0435\u0432\u0438\u0449\u0443\u0454 \u0432\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0435 \u0437\u043D\u0430\u0447\u0435\u043D\u043D\u044F",
+          "zh-cn": "Humidity sensor is above set value"
+        },
+        this.ParseBool
+      )
+    );
+    this.parameterDictionary.set(
+      773 /* AnalogVoltageSensorOverSetPoint */,
+      new FanData(
+        1,
+        "sensors.analogVoltageSensorOverSetPoint",
+        false,
+        "state",
+        "boolean",
+        {
+          en: "Analog voltage sensor is above setpoint",
+          de: "Analoger Spannungssensor liegt \xFCber dem Sollwert",
+          ru: "\u0410\u043D\u0430\u043B\u043E\u0433\u043E\u0432\u044B\u0439 \u0434\u0430\u0442\u0447\u0438\u043A \u043D\u0430\u043F\u0440\u044F\u0436\u0435\u043D\u0438\u044F \u0432\u044B\u0448\u0435 \u0437\u0430\u0434\u0430\u043D\u043D\u043E\u0433\u043E \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u044F",
+          pt: "O sensor de tens\xE3o anal\xF3gica est\xE1 acima do ponto de regula\xE7\xE3o",
+          nl: "Analoge spanningssensor is boven setpoint",
+          fr: "Le capteur de tension analogique est au-dessus du point de consigne",
+          it: "Il sensore di tensione analogico \xE8 superiore al setpoint",
+          es: "El sensor anal\xF3gico de tensi\xF3n est\xE1 por encima de la consigna",
+          pl: "Analogowy czujnik napi\u0119cia jest powy\u017Cej warto\u015Bci zadanej",
+          uk: "\u0410\u043D\u0430\u043B\u043E\u0433\u043E\u0432\u0438\u0439 \u0434\u0430\u0442\u0447\u0438\u043A \u043D\u0430\u043F\u0440\u0443\u0433\u0438 \u0432\u0438\u0449\u0435 \u0437\u0430\u0434\u0430\u043D\u043E\u0433\u043E \u0437\u043D\u0430\u0447\u0435\u043D\u043D\u044F",
+          "zh-cn": "Analog voltage sensor is above setpoint"
+        },
+        this.ParseBool
       )
     );
   }

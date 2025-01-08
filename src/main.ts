@@ -49,6 +49,11 @@ class OxxifyFanControl extends utils.Adapter {
             return;
         }
 
+        // Remove any old objects and recreate them on adapter start
+        if (this.supportsFeature && this.supportsFeature("ADAPTER_DEL_OBJECT_RECURSIVE")) {
+            await this.delObjectAsync("devices", { recursive: true });
+        }
+
         await this.extendObject("devices", {
             type: "channel",
             common: {
@@ -70,7 +75,7 @@ class OxxifyFanControl extends utils.Adapter {
             native: {},
         });
 
-        const dataDictionary = this.protocolBuilder.DataDictionary;
+        const dataDictionary = this.oxxify.DataDictionary;
 
         this.config.fans.forEach(async (element) => {
             this.log.debug('Fan configured: "' + element.name + '": ' + element.id + " - " + element.ipaddr);
@@ -124,7 +129,7 @@ class OxxifyFanControl extends utils.Adapter {
             this.log.silly(
                 `Received ${msg.length} bytes from ${info.address}:${info.port} - Data: ${msg.toString("hex")}`,
             );
-            const data = this.protocolBuilder.ParseResponseData(msg);
+            const data = this.oxxify.ParseResponseData(msg);
 
             if (data.receivedData.length > 0) {
                 data.receivedData.forEach(async (value: ReceivedData) => {
@@ -207,61 +212,86 @@ class OxxifyFanControl extends utils.Adapter {
                     const fanData = this.GetFanDataFromConfig(strFanId);
 
                     if (fanData) {
+                        const data = new WriteDataModel(strFanId, fanData, state.val);
+
                         switch (strStateIdentifier.split(".").pop()) {
                             case "boostModeFollowUpTime":
-                                this.WriteBoostModeFollowUpTime(strFanId, fanData, state.val);
+                                this.WriteNumberFanData(data, this.oxxify.WriteBoostModeFollowUpTime.bind(this.oxxify));
                                 break;
 
                             case "fanOperatingMode":
-                                this.WriteOperatingMode(strFanId, fanData, state.val);
+                                this.WriteNumberFanData(data, this.oxxify.WriteOperatingMode.bind(this.oxxify));
                                 break;
 
                             case "fanSpeedMode":
-                                this.WriteFanSpeedMode(strFanId, fanData, state.val);
+                                this.WriteNumberFanData(data, this.oxxify.WriteFanSpeedMode.bind(this.oxxify));
                                 break;
 
                             case "fanState":
-                                this.WriteFanState(strFanId, fanData, state.val);
+                                this.WriteBoolFanData(data, this.oxxify.WriteFanState.bind(this.oxxify));
                                 break;
 
                             case "manualFanSpeed":
-                                this.WriteManualFanSpeed(strFanId, fanData, state.val);
+                                this.WriteNumberFanData(data, this.oxxify.WriteManualFanSpeed.bind(this.oxxify));
+                                break;
+
+                            case "nightModeTimerSetpoint":
+                                this.WriteStringFanData(
+                                    data,
+                                    this.oxxify.WriteNightModeTimerSetPoint.bind(this.oxxify),
+                                );
+                                break;
+
+                            case "partyModeTimerSetpoint":
+                                this.WriteStringFanData(
+                                    data,
+                                    this.oxxify.WritePartyModeTimerSetPoint.bind(this.oxxify),
+                                );
                                 break;
 
                             case "resetFilterExchangeCountdown":
-                                this.ResetFilterExchangeCountdown(strFanId, fanData);
+                                this.WriteVoidFanData(
+                                    data,
+                                    this.oxxify.WriteResetFilterExchangeCountdown.bind(this.oxxify),
+                                );
                                 break;
 
                             case "timeControlledMode":
-                                this.WriteTimeControlledMode(strFanId, fanData, state.val);
+                                this.WriteBoolFanData(data, this.oxxify.WriteTimeControlledMode.bind(this.oxxify));
                                 break;
 
                             case "timerMode":
-                                this.WriteTimerMode(strFanId, fanData, state.val);
+                                this.WriteNumberFanData(data, this.oxxify.WriteTimerMode.bind(this.oxxify));
                                 break;
 
                             case "stateAnalogVoltageSensor":
-                                this.WriteAnalogVoltageSensorState(strFanId, fanData, state.val);
+                                this.WriteBoolFanData(
+                                    data,
+                                    this.oxxify.WriteAnalogVoltageSensorState.bind(this.oxxify),
+                                );
                                 break;
 
                             case "stateHumiditySensor":
-                                this.WriteHumiditySensorState(strFanId, fanData, state.val);
+                                this.WriteBoolFanData(data, this.oxxify.WriteHumiditySensorState.bind(this.oxxify));
                                 break;
 
                             case "stateRelaisSensor":
-                                this.WriteRelaisSensorState(strFanId, fanData, state.val);
+                                this.WriteBoolFanData(data, this.oxxify.WriteRelaisSensorState.bind(this.oxxify));
                                 break;
 
                             case "targetAnalogVoltageValue":
-                                this.WriteTargetAnalogVoltageValue(strFanId, fanData, state.val);
+                                this.WriteNumberFanData(
+                                    data,
+                                    this.oxxify.WriteTargetAnalogVoltageValue.bind(this.oxxify),
+                                );
                                 break;
 
                             case "targetHumidityValue":
-                                this.WriteTargetHumidityValue(strFanId, fanData, state.val);
+                                this.WriteNumberFanData(data, this.oxxify.WriteTargetHumidityValue.bind(this.oxxify));
                                 break;
 
                             case "resetAlarms":
-                                this.ResetAlarms(strFanId, fanData);
+                                this.WriteVoidFanData(data, this.oxxify.WriteResetAlarmState.bind(this.oxxify));
                                 break;
 
                             case "triggerRtcTimeSync":
@@ -279,40 +309,44 @@ class OxxifyFanControl extends utils.Adapter {
 
     private ReadAllFanData(bIncludeConstData: boolean): void {
         this.config.fans.forEach((element) => {
-            this.protocolBuilder.StartNewFrame(element.id, element.password);
-            this.protocolBuilder.ReadFanState();
-            this.protocolBuilder.ReadFanSpeedMode();
-            this.protocolBuilder.ReadOperatingMode();
-            this.protocolBuilder.ReadOperatingTime();
-            this.protocolBuilder.ReadBoostState();
-            this.protocolBuilder.ReadBoostModeFollowUpTime();
-            this.protocolBuilder.ReadRtcBattery();
-            this.protocolBuilder.ReadAnalogVoltageSensorState();
-            this.protocolBuilder.ReadAlarmState();
-            this.protocolBuilder.ReadCloudServerEnabled();
-            this.protocolBuilder.ReadHumiditySensorState();
-            this.protocolBuilder.ReadRelaisSensorState();
-            this.protocolBuilder.ReadCurrentAnalogVoltage();
-            this.protocolBuilder.ReadCurrentHumidity();
-            this.protocolBuilder.ReadCurrentRelaisState();
-            this.protocolBuilder.ReadManualFanSpeed();
-            this.protocolBuilder.ReadFan1Speed();
-            this.protocolBuilder.ReadFan2Speed();
-            this.protocolBuilder.ReadFilterExchangeCountdown();
-            this.protocolBuilder.ReadFilterExchangeNecessary();
-            this.protocolBuilder.ReadWifiData();
-            this.protocolBuilder.ReadTimerModeValues();
-            this.protocolBuilder.ReadTargetAnalogVoltageValue();
-            this.protocolBuilder.ReadTargetHumidityValue();
-            this.protocolBuilder.ReadTimeControlledMode();
-            this.protocolBuilder.ReadRtcDateTime();
+            this.oxxify.StartNewFrame(element.id, element.password);
+            this.oxxify.ReadFanState();
+            this.oxxify.ReadFanSpeedMode();
+            this.oxxify.ReadOperatingMode();
+            this.oxxify.ReadOperatingTime();
+            this.oxxify.ReadBoostState();
+            this.oxxify.ReadBoostModeFollowUpTime();
+            this.oxxify.ReadRtcBattery();
+            this.oxxify.ReadAnalogVoltageSensorState();
+            this.oxxify.ReadAlarmState();
+            this.oxxify.ReadCloudServerEnabled();
+            this.oxxify.ReadHumiditySensorState();
+            this.oxxify.ReadRelaisSensorState();
+            this.oxxify.ReadCurrentAnalogVoltage();
+            this.oxxify.ReadCurrentHumidity();
+            this.oxxify.ReadCurrentRelaisState();
+            this.oxxify.ReadManualFanSpeed();
+            this.oxxify.ReadFan1Speed();
+            this.oxxify.ReadFan2Speed();
+            this.oxxify.ReadFilterExchangeCountdown();
+            this.oxxify.ReadFilterExchangeNecessary();
+            this.oxxify.ReadWifiData();
+            this.oxxify.ReadTimerModeValues();
+            this.oxxify.ReadTargetAnalogVoltageValue();
+            this.oxxify.ReadTargetHumidityValue();
+            this.oxxify.ReadTimeControlledMode();
+            this.oxxify.ReadRtcDateTime();
             if (bIncludeConstData) {
-                this.protocolBuilder.ReadFanType();
-                this.protocolBuilder.ReadFirmware();
+                this.oxxify.ReadFanType();
+                this.oxxify.ReadFirmware();
             }
-            this.protocolBuilder.FinishFrame();
+            this.oxxify.ReadNightModeTimerSetPoint();
+            this.oxxify.ReadPartyModeTimerSetPoint();
+            this.oxxify.ReadHumiditySensorOverSetPoint();
+            this.oxxify.ReadAnalogVoltageSensorOverSetPoint();
+            this.oxxify.FinishFrame();
 
-            const packet = this.protocolBuilder.ProtocolPacket;
+            const packet = this.oxxify.ProtocolPacket;
             this.sendQuene.enqueue(new DataToSend(packet, element.ipaddr));
         });
     }
@@ -336,195 +370,49 @@ class OxxifyFanControl extends utils.Adapter {
         return { strIpAddress: data.ipaddr, strPassword: data.password };
     }
 
-    private WriteBoostModeFollowUpTime(strFanId: string, fanData: FanRemoteEndpoint, value: ioBroker.StateValue): void {
-        if (typeof value !== "number") {
-            this.log.warn("The value is not from type number.");
-            return;
-        }
-
-        this.protocolBuilder.StartNewFrame(strFanId, fanData.strPassword);
-        this.protocolBuilder.WriteBoostModeFollowUpTime(Number(value));
-        this.protocolBuilder.FinishFrame();
-
-        const packet = this.protocolBuilder.ProtocolPacket;
-        this.sendQuene.enqueue(new DataToSend(packet, fanData.strIpAddress));
-    }
-
-    private WriteOperatingMode(strFanId: string, fanData: FanRemoteEndpoint, value: ioBroker.StateValue): void {
-        const nValue = this.ParseInputNumber(value);
+    private WriteNumberFanData(data: WriteDataModel, writeNumberMethod: (nValue: number) => void): void {
+        const nValue = this.ParseInputNumber(data.value);
 
         if (isNaN(nValue)) return;
 
-        this.protocolBuilder.StartNewFrame(strFanId, fanData.strPassword);
-        this.protocolBuilder.WriteOperatingMode(nValue);
-        this.protocolBuilder.FinishFrame();
+        this.oxxify.StartNewFrame(data.strFanId, data.fanData.strPassword);
+        writeNumberMethod(nValue);
+        this.oxxify.FinishFrame();
 
-        const packet = this.protocolBuilder.ProtocolPacket;
-        this.sendQuene.enqueue(new DataToSend(packet, fanData.strIpAddress));
+        const packet = this.oxxify.ProtocolPacket;
+        this.sendQuene.enqueue(new DataToSend(packet, data.fanData.strIpAddress));
     }
 
-    private WriteFanSpeedMode(strFanId: string, fanData: FanRemoteEndpoint, value: ioBroker.StateValue): void {
-        const nValue = this.ParseInputNumber(value);
+    private WriteStringFanData(data: WriteDataModel, writeStringMethod: (strValue: string) => void): void {
+        this.oxxify.StartNewFrame(data.strFanId, data.fanData.strPassword);
+        writeStringMethod(String(data.value));
+        this.oxxify.FinishFrame();
 
-        if (isNaN(nValue)) return;
-
-        this.protocolBuilder.StartNewFrame(strFanId, fanData.strPassword);
-        this.protocolBuilder.WriteFanSpeedMode(nValue);
-        this.protocolBuilder.FinishFrame();
-
-        const packet = this.protocolBuilder.ProtocolPacket;
-        this.sendQuene.enqueue(new DataToSend(packet, fanData.strIpAddress));
+        const packet = this.oxxify.ProtocolPacket;
+        this.sendQuene.enqueue(new DataToSend(packet, data.fanData.strIpAddress));
     }
 
-    private WriteFanState(strFanId: string, fanData: FanRemoteEndpoint, value: ioBroker.StateValue): void {
-        if (typeof value !== "boolean") {
+    private WriteBoolFanData(data: WriteDataModel, writeStringMethod: (bValue: boolean) => void): void {
+        if (typeof data.value !== "boolean") {
             this.log.warn(`The value is not from type boolean.`);
             return;
         }
 
-        this.protocolBuilder.StartNewFrame(strFanId, fanData.strPassword);
-        this.protocolBuilder.WriteFanState(Boolean(value));
-        this.protocolBuilder.FinishFrame();
+        this.oxxify.StartNewFrame(data.strFanId, data.fanData.strPassword);
+        writeStringMethod(Boolean(data.value));
+        this.oxxify.FinishFrame();
 
-        const packet = this.protocolBuilder.ProtocolPacket;
-        this.sendQuene.enqueue(new DataToSend(packet, fanData.strIpAddress));
+        const packet = this.oxxify.ProtocolPacket;
+        this.sendQuene.enqueue(new DataToSend(packet, data.fanData.strIpAddress));
     }
 
-    private WriteManualFanSpeed(strFanId: string, fanData: FanRemoteEndpoint, value: ioBroker.StateValue): void {
-        if (typeof value !== "number") {
-            this.log.warn("The value is not from type number.");
-            return;
-        }
+    private WriteVoidFanData(data: WriteDataModel, writeVoidMethod: () => void): void {
+        this.oxxify.StartNewFrame(data.strFanId, data.fanData.strPassword);
+        writeVoidMethod();
+        this.oxxify.FinishFrame();
 
-        this.protocolBuilder.StartNewFrame(strFanId, fanData.strPassword);
-        this.protocolBuilder.WriteManualFanSpeed(Number(value));
-        this.protocolBuilder.FinishFrame();
-
-        const packet = this.protocolBuilder.ProtocolPacket;
-        this.sendQuene.enqueue(new DataToSend(packet, fanData.strIpAddress));
-    }
-
-    private ResetFilterExchangeCountdown(strFanId: string, fanData: FanRemoteEndpoint): void {
-        this.protocolBuilder.StartNewFrame(strFanId, fanData.strPassword);
-        this.protocolBuilder.WriteResetFilterExchangeCountdown();
-        this.protocolBuilder.FinishFrame();
-
-        const packet = this.protocolBuilder.ProtocolPacket;
-        this.sendQuene.enqueue(new DataToSend(packet, fanData.strIpAddress));
-    }
-
-    private WriteTimeControlledMode(strFanId: string, fanData: FanRemoteEndpoint, value: ioBroker.StateValue): void {
-        if (typeof value !== "boolean") {
-            this.log.warn(`The value is not from type boolean.`);
-            return;
-        }
-
-        this.protocolBuilder.StartNewFrame(strFanId, fanData.strPassword);
-        this.protocolBuilder.WriteTimeControlledMode(Boolean(value));
-        this.protocolBuilder.FinishFrame();
-
-        const packet = this.protocolBuilder.ProtocolPacket;
-        this.sendQuene.enqueue(new DataToSend(packet, fanData.strIpAddress));
-    }
-
-    private WriteTimerMode(strFanId: string, fanData: FanRemoteEndpoint, value: ioBroker.StateValue): void {
-        const nValue = this.ParseInputNumber(value);
-
-        if (isNaN(nValue)) return;
-
-        this.protocolBuilder.StartNewFrame(strFanId, fanData.strPassword);
-        this.protocolBuilder.WriteTimerMode(nValue);
-        this.protocolBuilder.FinishFrame();
-
-        const packet = this.protocolBuilder.ProtocolPacket;
-        this.sendQuene.enqueue(new DataToSend(packet, fanData.strIpAddress));
-    }
-
-    private WriteAnalogVoltageSensorState(
-        strFanId: string,
-        fanData: FanRemoteEndpoint,
-        value: ioBroker.StateValue,
-    ): void {
-        if (typeof value !== "boolean") {
-            this.log.warn(`The value is not from type boolean.`);
-            return;
-        }
-
-        this.protocolBuilder.StartNewFrame(strFanId, fanData.strPassword);
-        this.protocolBuilder.WriteAnalogVoltageSensorState(Boolean(value));
-        this.protocolBuilder.FinishFrame();
-
-        const packet = this.protocolBuilder.ProtocolPacket;
-        this.sendQuene.enqueue(new DataToSend(packet, fanData.strIpAddress));
-    }
-
-    private WriteHumiditySensorState(strFanId: string, fanData: FanRemoteEndpoint, value: ioBroker.StateValue): void {
-        if (typeof value !== "boolean") {
-            this.log.warn(`The value is not from type boolean.`);
-            return;
-        }
-
-        this.protocolBuilder.StartNewFrame(strFanId, fanData.strPassword);
-        this.protocolBuilder.WriteHumiditySensorState(Boolean(value));
-        this.protocolBuilder.FinishFrame();
-
-        const packet = this.protocolBuilder.ProtocolPacket;
-        this.sendQuene.enqueue(new DataToSend(packet, fanData.strIpAddress));
-    }
-
-    private WriteRelaisSensorState(strFanId: string, fanData: FanRemoteEndpoint, value: ioBroker.StateValue): void {
-        if (typeof value !== "boolean") {
-            this.log.warn(`The value is not from type boolean.`);
-            return;
-        }
-
-        this.protocolBuilder.StartNewFrame(strFanId, fanData.strPassword);
-        this.protocolBuilder.WriteRelaisSensorState(Boolean(value));
-        this.protocolBuilder.FinishFrame();
-
-        const packet = this.protocolBuilder.ProtocolPacket;
-        this.sendQuene.enqueue(new DataToSend(packet, fanData.strIpAddress));
-    }
-
-    private WriteTargetAnalogVoltageValue(
-        strFanId: string,
-        fanData: FanRemoteEndpoint,
-        value: ioBroker.StateValue,
-    ): void {
-        if (typeof value !== "number") {
-            this.log.warn(`The value is not from type number.`);
-            return;
-        }
-
-        this.protocolBuilder.StartNewFrame(strFanId, fanData.strPassword);
-        this.protocolBuilder.WriteTargetAnalogVoltageValue(Number(value));
-        this.protocolBuilder.FinishFrame();
-
-        const packet = this.protocolBuilder.ProtocolPacket;
-        this.sendQuene.enqueue(new DataToSend(packet, fanData.strIpAddress));
-    }
-
-    private WriteTargetHumidityValue(strFanId: string, fanData: FanRemoteEndpoint, value: ioBroker.StateValue): void {
-        if (typeof value !== "number") {
-            this.log.warn(`The value is not from type number.`);
-            return;
-        }
-
-        this.protocolBuilder.StartNewFrame(strFanId, fanData.strPassword);
-        this.protocolBuilder.WriteTargetHumidityValue(Number(value));
-        this.protocolBuilder.FinishFrame();
-
-        const packet = this.protocolBuilder.ProtocolPacket;
-        this.sendQuene.enqueue(new DataToSend(packet, fanData.strIpAddress));
-    }
-
-    private ResetAlarms(strFanId: string, fanData: FanRemoteEndpoint): void {
-        this.protocolBuilder.StartNewFrame(strFanId, fanData.strPassword);
-        this.protocolBuilder.WriteResetAlarmState();
-        this.protocolBuilder.FinishFrame();
-
-        const packet = this.protocolBuilder.ProtocolPacket;
-        this.sendQuene.enqueue(new DataToSend(packet, fanData.strIpAddress));
+        const packet = this.oxxify.ProtocolPacket;
+        this.sendQuene.enqueue(new DataToSend(packet, data.fanData.strIpAddress));
     }
 
     private SyncRtcClock(strFanId: string, fanData: FanRemoteEndpoint): void {
@@ -534,11 +422,11 @@ class OxxifyFanControl extends utils.Adapter {
                 const dateTime = DateTime.parse(value.time.toISOString(), "YYYY-MM-DD[T]HH:mm:ss.SSS[Z]", true);
                 this.log.debug("Received local time via ntp: " + dateTime.toLocaleString());
 
-                this.protocolBuilder.StartNewFrame(strFanId, fanData.strPassword);
-                this.protocolBuilder.WriteRtcDateTime(dateTime);
-                this.protocolBuilder.FinishFrame();
+                this.oxxify.StartNewFrame(strFanId, fanData.strPassword);
+                this.oxxify.WriteRtcDateTime(dateTime);
+                this.oxxify.FinishFrame();
 
-                const packet = this.protocolBuilder.ProtocolPacket;
+                const packet = this.oxxify.ProtocolPacket;
 
                 // Immediately send the data, as any delay would make the time sync invalid
                 this.udpServer.send(packet, 4000, fanData.strIpAddress, (err) => {
@@ -546,11 +434,11 @@ class OxxifyFanControl extends utils.Adapter {
                         this.log.error(err.message);
                     } else {
                         // Retrigger a reading of the data, as a RTC write does not immediately return the right values
-                        this.protocolBuilder.StartNewFrame(strFanId, fanData.strPassword);
-                        this.protocolBuilder.ReadRtcDateTime();
-                        this.protocolBuilder.FinishFrame();
+                        this.oxxify.StartNewFrame(strFanId, fanData.strPassword);
+                        this.oxxify.ReadRtcDateTime();
+                        this.oxxify.FinishFrame();
 
-                        const packet = this.protocolBuilder.ProtocolPacket;
+                        const packet = this.oxxify.ProtocolPacket;
                         const timeout = this.setTimeout(() => {
                             this.sendQuene.enqueue(new DataToSend(packet, fanData.strIpAddress));
                             this.clearTimeout(timeout);
@@ -588,7 +476,7 @@ class OxxifyFanControl extends utils.Adapter {
     //#region Protected data members
 
     udpServer: udp.Socket;
-    protocolBuilder: Oxxify.OxxifyProtocol = new Oxxify.OxxifyProtocol();
+    oxxify: Oxxify.OxxifyProtocol = new Oxxify.OxxifyProtocol();
     sendQuene: Queue<DataToSend> = new Queue<DataToSend>();
     queneInterval: ioBroker.Interval | undefined;
     pollingInterval: ioBroker.Interval | undefined;
@@ -603,4 +491,15 @@ if (require.main !== module) {
 } else {
     // otherwise start the instance directly
     (() => new OxxifyFanControl())();
+}
+
+class WriteDataModel {
+    constructor(strFanId: string, fanData: FanRemoteEndpoint, value: ioBroker.StateValue) {
+        this.strFanId = strFanId;
+        this.fanData = fanData;
+        this.value = value;
+    }
+    strFanId: string;
+    fanData: FanRemoteEndpoint;
+    value: ioBroker.StateValue;
 }

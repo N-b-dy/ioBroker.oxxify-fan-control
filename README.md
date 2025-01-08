@@ -58,10 +58,17 @@ This channel contains system data about the hardware and firmware as well as run
 
 ## Changelog
 
+### **WORK IN PROGRESS**
+
+- Added states for objects with high byte 0x03 with reading and writing
+- Recreate device objects on adapter restart
+- Simplified methods for writing fan data based on subscribed states
+
 <!--
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+
 ### 0.0.2 (2025-01-06)
 
 - (N-b-dy) initial release
