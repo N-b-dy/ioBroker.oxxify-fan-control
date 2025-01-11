@@ -21,7 +21,8 @@ __export(ModelData_exports, {
   DataToSend: () => DataToSend,
   ParsedData: () => ParsedData,
   ParsingStatus: () => ParsingStatus,
-  ReceivedData: () => ReceivedData
+  ReceivedData: () => ReceivedData,
+  WriteDataModel: () => WriteDataModel
 });
 module.exports = __toCommonJS(ModelData_exports);
 class DataToSend {
@@ -59,11 +60,22 @@ class ReceivedData {
   strIdentifer;
   value;
 }
+class WriteDataModel {
+  constructor(strFanId, fanData, value) {
+    this.strFanId = strFanId;
+    this.fanData = fanData;
+    this.value = value;
+  }
+  strFanId;
+  fanData;
+  value;
+}
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   DataToSend,
   ParsedData,
   ParsingStatus,
-  ReceivedData
+  ReceivedData,
+  WriteDataModel
 });
 //# sourceMappingURL=ModelData.js.map

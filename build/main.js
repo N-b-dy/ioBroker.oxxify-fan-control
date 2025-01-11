@@ -26,6 +26,7 @@ var DateTime = __toESM(require("date-and-time"));
 var udp = __toESM(require("dgram"));
 var NTP = __toESM(require("ntp-time"));
 var import_queue_fifo = __toESM(require("queue-fifo"));
+var import_DataHelpers = require("./lib/DataHelpers");
 var import_ModelData = require("./lib/ModelData");
 var Oxxify = __toESM(require("./lib/OxxifyProtocol"));
 class OxxifyFanControl extends utils.Adapter {
@@ -166,7 +167,10 @@ class OxxifyFanControl extends utils.Adapter {
     }
   }
   /**
-   * Is called if a subscribed state changes
+   * Is called if a subscribed state changes. Here the subscribed states are dispatched for the
+   * dedicated actions regarding the fans.
+   * @param strStateIdentifier The state which has changed.
+   * @param state The new value including meta data from ioBroker.
    */
   onStateChange(strStateIdentifier, state) {
     if (state) {
@@ -176,7 +180,7 @@ class OxxifyFanControl extends utils.Adapter {
         if (strFanId) {
           const fanData = this.GetFanDataFromConfig(strFanId);
           if (fanData) {
-            const data = new WriteDataModel(strFanId, fanData, state.val);
+            const data = new import_ModelData.WriteDataModel(strFanId, fanData, state.val);
             switch (strStateIdentifier.split(".").pop()) {
               case "boostModeFollowUpTime":
                 this.WriteNumberFanData(data, this.oxxify.WriteBoostModeFollowUpTime.bind(this.oxxify));
@@ -252,6 +256,10 @@ class OxxifyFanControl extends utils.Adapter {
       this.log.info(`state ${strStateIdentifier} deleted`);
     }
   }
+  /**
+   * Method to build up the protocol frame to read all data from the fans according to the protocol.
+   * @param bIncludeConstData True contains the const data like the firmware and the version, false excludes them.
+   */
   ReadAllFanData(bIncludeConstData) {
     this.config.fans.forEach((element) => {
       this.oxxify.StartNewFrame(element.id, element.password);
@@ -294,6 +302,12 @@ class OxxifyFanControl extends utils.Adapter {
       this.sendQuene.enqueue(new import_ModelData.DataToSend(packet, element.ipaddr));
     });
   }
+  /**
+   * Parses the fan id from the ioBroker identifer. This fan id has 16 hexadecimal
+   * characters and is added from the end user by the fan configuration.
+   * @param strId The identifier from ioBroker for the state, that has changed.
+   * @returns The fan id if found or undefined.
+   */
   ParseFanId(strId) {
     const strFanIdRegex = "[0-9A-Fa-f]{16}";
     const match = strId.match(strFanIdRegex);
@@ -302,14 +316,24 @@ class OxxifyFanControl extends utils.Adapter {
     }
     return void 0;
   }
+  /**
+   * Fetchs the configured fan data based on the provided identifier.
+   * @param strFanId The fan identifier, for which the configuration data is requested.
+   * @returns The fan config data if found, otherwise undefined.
+   */
   GetFanDataFromConfig(strFanId) {
     const data = this.config.fans.find((f) => f.id == strFanId);
     if (data == void 0)
       return void 0;
     return { strIpAddress: data.ipaddr, strPassword: data.password };
   }
+  /**
+   * Generic function to create a protocol frame to write a numeric value to the fan.
+   * @param data The data to write with necessary fan data as well.
+   * @param writeNumberMethod The function from the OxxifyProtocol class, which adds the data to write.
+   */
   WriteNumberFanData(data, writeNumberMethod) {
-    const nValue = this.ParseInputNumber(data.value);
+    const nValue = import_DataHelpers.DataHelpers.ParseInputNumber(data.value, this.log);
     if (isNaN(nValue))
       return;
     this.oxxify.StartNewFrame(data.strFanId, data.fanData.strPassword);
@@ -318,6 +342,11 @@ class OxxifyFanControl extends utils.Adapter {
     const packet = this.oxxify.ProtocolPacket;
     this.sendQuene.enqueue(new import_ModelData.DataToSend(packet, data.fanData.strIpAddress));
   }
+  /**
+   * Generic function to create a protocol frame to write a string value to the fan.
+   * @param data The data to write with necessary fan data as well.
+   * @param writeNumberMethod The function from the OxxifyProtocol class, which adds the data to write.
+   */
   WriteStringFanData(data, writeStringMethod) {
     this.oxxify.StartNewFrame(data.strFanId, data.fanData.strPassword);
     writeStringMethod(String(data.value));
@@ -325,6 +354,11 @@ class OxxifyFanControl extends utils.Adapter {
     const packet = this.oxxify.ProtocolPacket;
     this.sendQuene.enqueue(new import_ModelData.DataToSend(packet, data.fanData.strIpAddress));
   }
+  /**
+   * Generic function to create a protocol frame to write a bool value to the fan.
+   * @param data The data to write with necessary fan data as well.
+   * @param writeNumberMethod The function from the OxxifyProtocol class, which adds the data to write.
+   */
   WriteBoolFanData(data, writeStringMethod) {
     if (typeof data.value !== "boolean") {
       this.log.warn(`The value is not from type boolean.`);
@@ -336,6 +370,11 @@ class OxxifyFanControl extends utils.Adapter {
     const packet = this.oxxify.ProtocolPacket;
     this.sendQuene.enqueue(new import_ModelData.DataToSend(packet, data.fanData.strIpAddress));
   }
+  /**
+   * Generic function to create a protocol frame to trigger a funtion at the fan. like reseting stuff.
+   * @param writeNumberMethod The function from the OxxifyProtocol class, triggers the function.
+   * @returns void
+   */
   WriteVoidFanData(data, writeVoidMethod) {
     this.oxxify.StartNewFrame(data.strFanId, data.fanData.strPassword);
     writeVoidMethod();
@@ -343,6 +382,11 @@ class OxxifyFanControl extends utils.Adapter {
     const packet = this.oxxify.ProtocolPacket;
     this.sendQuene.enqueue(new import_ModelData.DataToSend(packet, data.fanData.strIpAddress));
   }
+  /**
+   * Fetchs the current time from the configured NTP server and writes the date and time to the provided fan.
+   * @param strFanId The fan id, for which the time sync is processed.
+   * @param fanData The related fan data to create the protocol frame.
+   */
   SyncRtcClock(strFanId, fanData) {
     this.ntpClient.syncTime().then((value) => {
       const dateTime = DateTime.parse(value.time.toISOString(), "YYYY-MM-DD[T]HH:mm:ss.SSS[Z]", true);
@@ -369,22 +413,6 @@ class OxxifyFanControl extends utils.Adapter {
       this.log.error(reason);
     });
   }
-  ParseInputNumber(value) {
-    if (typeof value !== "number" && typeof value !== "string") {
-      this.log.warn(`The value is not from type number or string, but ${typeof value}`);
-      return NaN;
-    }
-    let nValue = Number(value);
-    if (typeof value === "string") {
-      nValue = parseInt(value);
-      if (isNaN(nValue))
-        nValue = parseInt(String(value).substring(0, String(value).indexOf(" ")));
-      if (isNaN(nValue)) {
-        this.log.warn(`Unable to parse the number from the input value: ${value}`);
-      }
-    }
-    return nValue;
-  }
   //#region Protected data members
   udpServer;
   oxxify = new Oxxify.OxxifyProtocol();
@@ -398,15 +426,5 @@ if (require.main !== module) {
   module.exports = (options) => new OxxifyFanControl(options);
 } else {
   (() => new OxxifyFanControl())();
-}
-class WriteDataModel {
-  constructor(strFanId, fanData, value) {
-    this.strFanId = strFanId;
-    this.fanData = fanData;
-    this.value = value;
-  }
-  strFanId;
-  fanData;
-  value;
 }
 //# sourceMappingURL=main.js.map

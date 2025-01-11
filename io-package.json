@@ -1,116 +1,139 @@
 {
-    "common": {
-        "name": "oxxify-fan-control",
-        "version": "0.0.2",
-        "news": {
-            "0.0.2": {
-                "en": "initial release",
-                "de": "erstausstrahlung",
-                "ru": "первоначальный выпуск",
-                "pt": "lançamento inicial",
-                "nl": "eerste release",
-                "fr": "libération initiale",
-                "it": "rilascio iniziale",
-                "es": "liberación inicial",
-                "pl": "początkowe zwolnienie",
-                "uk": "початковий реліз",
-                "zh-cn": "初步释放"
-            }
-        },
-        "titleLang": {
-            "en": "Oxxify Fan Control",
-            "de": "Oxxify-Lüftersteuerung",
-            "ru": "Управление вентилятором Oxxify",
-            "pt": "Controle de ventilador Oxxify",
-            "nl": "Oxxify-ventilatorbediening",
-            "fr": "Contrôle du ventilateur Oxxify",
-            "it": "Controllo della ventola Oxxify",
-            "es": "Control del ventilador Oxxify",
-            "pl": "Sterowanie wentylatorem Oxxify",
-            "uk": "Контроль вентиляторів Oxxify",
-            "zh-cn": "Oxxify 风扇控制"
-        },
-        "desc": {
-            "en": "Integrate your Oxxify Fans into your Smart Home.",
-            "de": "Integrieren Sie Ihre Oxxify-Lüfter in Ihr Smart Home.",
-            "ru": "Интегрируйте вентиляторы Oxxify в свой умный дом.",
-            "pt": "Integre seus fãs Oxxify em sua casa inteligente.",
-            "nl": "Integreer je Oxxify Fans in je Smart Home.",
-            "fr": "Intégrez vos ventilateurs Oxxify dans votre maison intelligente.",
-            "it": "Integra i tuoi fan Oxxify nella tua casa intelligente.",
-            "es": "Integra tus Fans Oxxify en tu Hogar Inteligente.",
-            "pl": "Zintegruj swoich fanów Oxxify ze swoim inteligentnym domem.",
-            "uk": "Інтегруйте вентилятори Oxxify у свій розумний дім.",
-            "zh-cn": "将您的 Oxxify 风扇集成到您的智能家居中。"
-        },
-        "authors": ["N-b-dy <daten4me@gmx.de>"],
-        "keywords": ["oxxify", "fan", "ventilation"],
-        "licenseInformation": {
-            "type": "free",
-            "license": "GPL-3.0-or-later"
-        },
-        "platform": "Javascript/Node.js",
-        "icon": "oxxify-fan-control.png",
-        "enabled": true,
-        "extIcon": "https://raw.githubusercontent.com/N-b-dy/ioBroker.oxxify-fan-control/main/admin/oxxify-fan-control.png",
-        "readme": "https://github.com/N-b-dy/ioBroker.oxxify-fan-control/blob/main/README.md",
-        "loglevel": "info",
-        "tier": 3,
-        "mode": "daemon",
-        "type": "climate-control",
-        "compact": true,
-        "connectionType": "local",
-        "dataSource": "poll",
-        "adminUI": {
-            "config": "json"
-        },
-        "dependencies": [
-            {
-                "js-controller": ">=6.0.11"
-            }
-        ],
-        "globalDependencies": [
-            {
-                "admin": ">=7.1.3"
-            }
-        ]
+  "common": {
+    "name": "oxxify-fan-control",
+    "version": "0.0.3",
+    "news": {
+      "0.0.3": {
+        "en": "- Added states for objects with high byte 0x03 with reading and writing\n- Recreate device objects on adapter restart\n- Simplified methods for writing fan data based on subscribed states\n- Added a first unit test for the parsing of numbers.\n\n<!--\n    Placeholder for the next version (at the beginning of the line):\n    ### **WORK IN PROGRESS**\n-->",
+        "de": "- Hinzugefügt Zustände für Objekte mit hohem Byte 0x03 mit Lesen und Schreiben\n- Geräteobjekte auf Adapter neu starten\n- Vereinfachte Methoden zum Schreiben von Fandaten basierend auf abonnierten Zuständen\n- Es wurde ein erster Einzeltest für die Parsierung von Zahlen hinzugefügt.\n\n<!--\nPlatzhalter für die nächste Version (am Anfang der Linie):\n**WORK IN PROGRESS**\n-->",
+        "ru": "- Добавленные состояния для объектов с высоким байтом 0x03 с чтением и написанием\n- Восстановление объектов устройства при перезагрузке адаптера\n- Упрощенные методы для написания фан-данных на основе подписанных государств\n- Добавлено первое единичное испытание для выравнивания чисел.\n\n<!--\nМестоположение для следующей версии (в начале линии):\n** В ПРОГРЕССЕ**\n-->",
+        "pt": "- estados adicionados para objetos com alto byte 0x03 com leitura e escrita\n- Recriar objetos de dispositivo no reinício do adaptador\n- Métodos simplificados para escrever dados de fãs com base em estados subscritos\n- Adicionado um primeiro teste de unidade para a análise de números.\n\n<!--\nPlaceholder para a próxima versão (no início da linha):\n# # # TRABALHO EM PROGRESSO #\n-->",
+        "nl": "- Toegevoegd toestanden voor objecten met hoge byte 0x03 met lezen en schrijven\n- Apparaatobjecten op adapter herstarten\n- Vereenvoudigde methoden voor het schrijven van fangegevens op basis van de ingeschreven staten\n- Een eerste test toegevoegd voor het verwerken van getallen.\n\n<!--\nPlaatshouder voor de volgende versie (aan het begin van de regel):\nWORK IN PROGRESS\n-->",
+        "fr": "- Ajout d'états pour les objets avec haut octet 0x03 avec lecture et écriture\n- Recréer les objets du périphérique lors du redémarrage de l'adaptateur\n- Méthodes simplifiées pour l'écriture des données des ventilateurs basées sur les états souscrits\n- Ajout d'un premier test unitaire pour l'analyse des nombres.\n\n<!--\nPlaceholder pour la prochaine version (au début de la ligne):\n### **WORK IN PROGRESS**\n-->",
+        "it": "- Aggiunti stati per oggetti con byte 0x03 alto con lettura e scrittura\n- Riattivare gli oggetti del dispositivo sul riavvio dell'adattatore\n- Metodi semplificati per la scrittura dei dati dei fan in base agli stati iscritti\n- Aggiunto un primo test unitario per la parsing dei numeri.\n\n<!--\nSegnaposto per la prossima versione (all'inizio della linea):\n######WORK IN PROGRESS #\n-->",
+        "es": "- Estados añadidos para objetos con alto byte 0x03 con lectura y escritura\n- Recrear objetos de dispositivo en el reinicio del adaptador\n- Métodos simplificados para escribir datos de fans basados en estados suscritos\n- Se agregó una primera prueba de unidad para el perfeccionamiento de números.\n\n<!--\nTitular para la próxima versión (al principio de la línea):\n#### **WORK IN PROGRESS**\n-->",
+        "pl": "- Dodano stany dla obiektów o wysokim bajcie 0x03 z czytaniem i pisaniem\n- Regeneracja obiektów urządzenia przy ponownym uruchomieniu adaptera\n- Uproszczone metody zapisu danych fanów na podstawie subskrybowanych stanów\n- Dodano pierwszy test jednostkowy na parsowanie liczb.\n\n<!--\nUchwyt do następnej wersji (na początku wiersza):\n** * WORK IN PROGRESS **\n-->",
+        "uk": "- Додано стани для об'єктів з високим байтом 0x03 з читанням та письмовим записом\n- Відтворити об'єкти пристроїв на перезавантаженні адаптера\n- Спрощені методи написання даних вентилятора на основі підписаних штатів\n- Додано тест першого блоку для парсингу чисел.\n\n<!--\nМісцевласника для наступної версії (на початку лінії):\n###**\n-->",
+        "zh-cn": "- 对有读写功能的高字节0x03的对象添加状态\n- 在适配器重新启动时重建设备对象\n- 简化根据订阅状态编写风扇数据的方法\n- 增加了第一个数字解析单元测试.\n\n<!--\n下一个版本(行首)的占位符 :\n** 工作进展**\n-->"
+      },
+      "0.0.2": {
+        "en": "initial release",
+        "de": "erstausstrahlung",
+        "ru": "первоначальный выпуск",
+        "pt": "lançamento inicial",
+        "nl": "eerste release",
+        "fr": "libération initiale",
+        "it": "rilascio iniziale",
+        "es": "liberación inicial",
+        "pl": "początkowe zwolnienie",
+        "uk": "початковий реліз",
+        "zh-cn": "初步释放"
+      }
     },
-    "native": {
-        "pollingInterval": 5,
-        "ntpServer": "0.de.pool.ntp.org",
-        "fans": [
-            {
-                "name": "fan1",
-                "id": "1234567890123456",
-                "ipaddr": "192.168.1.1",
-                "password": "topsecret"
-            }
-        ]
+    "titleLang": {
+      "en": "Oxxify Fan Control",
+      "de": "Oxxify-Lüftersteuerung",
+      "ru": "Управление вентилятором Oxxify",
+      "pt": "Controle de ventilador Oxxify",
+      "nl": "Oxxify-ventilatorbediening",
+      "fr": "Contrôle du ventilateur Oxxify",
+      "it": "Controllo della ventola Oxxify",
+      "es": "Control del ventilador Oxxify",
+      "pl": "Sterowanie wentylatorem Oxxify",
+      "uk": "Контроль вентиляторів Oxxify",
+      "zh-cn": "Oxxify 风扇控制"
     },
-    "protectedNative": ["fans.password"],
-    "encryptedNative": ["fans.password"],
-    "objects": [],
-    "instanceObjects": [
-        {
-            "_id": "info",
-            "type": "channel",
-            "common": {
-                "name": "Information"
-            },
-            "native": {}
-        },
-        {
-            "_id": "info.connection",
-            "type": "state",
-            "common": {
-                "role": "indicator.connected",
-                "name": "Device or service connected",
-                "type": "boolean",
-                "read": true,
-                "write": false,
-                "def": false
-            },
-            "native": {}
-        }
+    "desc": {
+      "en": "Integrate your Oxxify Fans into your Smart Home.",
+      "de": "Integrieren Sie Ihre Oxxify-Lüfter in Ihr Smart Home.",
+      "ru": "Интегрируйте вентиляторы Oxxify в свой умный дом.",
+      "pt": "Integre seus fãs Oxxify em sua casa inteligente.",
+      "nl": "Integreer je Oxxify Fans in je Smart Home.",
+      "fr": "Intégrez vos ventilateurs Oxxify dans votre maison intelligente.",
+      "it": "Integra i tuoi fan Oxxify nella tua casa intelligente.",
+      "es": "Integra tus Fans Oxxify en tu Hogar Inteligente.",
+      "pl": "Zintegruj swoich fanów Oxxify ze swoim inteligentnym domem.",
+      "uk": "Інтегруйте вентилятори Oxxify у свій розумний дім.",
+      "zh-cn": "将您的 Oxxify 风扇集成到您的智能家居中。"
+    },
+    "authors": [
+      "N-b-dy <daten4me@gmx.de>"
+    ],
+    "keywords": [
+      "oxxify",
+      "fan",
+      "ventilation"
+    ],
+    "licenseInformation": {
+      "type": "free",
+      "license": "GPL-3.0-or-later"
+    },
+    "platform": "Javascript/Node.js",
+    "icon": "oxxify-fan-control.png",
+    "enabled": true,
+    "extIcon": "https://raw.githubusercontent.com/N-b-dy/ioBroker.oxxify-fan-control/main/admin/oxxify-fan-control.png",
+    "readme": "https://github.com/N-b-dy/ioBroker.oxxify-fan-control/blob/main/README.md",
+    "loglevel": "info",
+    "tier": 3,
+    "mode": "daemon",
+    "type": "climate-control",
+    "compact": true,
+    "connectionType": "local",
+    "dataSource": "poll",
+    "adminUI": {
+      "config": "json"
+    },
+    "dependencies": [
+      {
+        "js-controller": ">=6.0.11"
+      }
+    ],
+    "globalDependencies": [
+      {
+        "admin": ">=7.1.3"
+      }
     ]
+  },
+  "native": {
+    "pollingInterval": 5,
+    "ntpServer": "0.de.pool.ntp.org",
+    "fans": [
+      {
+        "name": "fan1",
+        "id": "1234567890123456",
+        "ipaddr": "192.168.1.1",
+        "password": "topsecret"
+      }
+    ]
+  },
+  "protectedNative": [
+    "fans.password"
+  ],
+  "encryptedNative": [
+    "fans.password"
+  ],
+  "objects": [],
+  "instanceObjects": [
+    {
+      "_id": "info",
+      "type": "channel",
+      "common": {
+        "name": "Information"
+      },
+      "native": {}
+    },
+    {
+      "_id": "info.connection",
+      "type": "state",
+      "common": {
+        "role": "indicator.connected",
+        "name": "Device or service connected",
+        "type": "boolean",
+        "read": true,
+        "write": false,
+        "def": false
+      },
+      "native": {}
+    }
+  ]
 }

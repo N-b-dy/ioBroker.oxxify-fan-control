@@ -63,8 +63,7 @@ This channel contains system data about the hardware and firmware as well as run
 - Implement missing data points (like time schedule, writing of network data & cloud control)
 
 ## Changelog
-
-### **WORK IN PROGRESS**
+### 0.0.3 (2025-01-11)
 
 - Added states for objects with high byte 0x03 with reading and writing
 - Recreate device objects on adapter restart

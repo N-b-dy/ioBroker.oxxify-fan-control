@@ -1,6 +1,6 @@
 {
   "name": "iobroker.oxxify-fan-control",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Integrate your Oxxify Fans into your Smart Home.",
   "author": {
     "name": "N-b-dy",
