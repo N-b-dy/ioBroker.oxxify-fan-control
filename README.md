@@ -4,6 +4,8 @@
 
 [![NPM version](https://img.shields.io/npm/v/iobroker.oxxify-fan-control.svg)](https://www.npmjs.com/package/iobroker.oxxify-fan-control)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.oxxify-fan-control.svg)](https://www.npmjs.com/package/iobroker.oxxify-fan-control)
+![node-lts](https://img.shields.io/node/v-lts/iobroker.oxxify-fan-control)
+![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/npm/iobroker.oxxify-fan-control?label=npm%20dependencies)
 ![Number of Installations](https://iobroker.live/badges/oxxify-fan-control-installed.svg)
 ![Current version in stable repository](https://iobroker.live/badges/oxxify-fan-control-stable.svg)
 
