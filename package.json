@@ -9,6 +9,7 @@
   "homepage": "https://github.com/N-b-dy/ioBroker.oxxify-fan-control",
   "license": "GPL-3.0-or-later",
   "keywords": [
+    "ioBroker",
     "oxxify",
     "fan",
     "ventilation"
