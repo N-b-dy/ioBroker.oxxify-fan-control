@@ -69,7 +69,6 @@ This channel contains system data about the hardware and firmware as well as run
 - Added states for objects with high byte 0x03 with reading and writing
 - Recreate device objects on adapter restart
 - Simplified methods for writing fan data based on subscribed states
-- Missing data points for high byte 0x03 implemented as well.
 - Added a first unit test for the parsing of numbers.
 
 <!--
