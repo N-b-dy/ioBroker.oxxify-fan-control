@@ -51,10 +51,11 @@ This channel contains system data about the hardware and firmware as well as run
 
 ## ToDos
 
-- Releasing a stable version on npm :)
-- Implementing tests
+- Releasing a stable version on npm
+- Adding the adapter to the ioBroker repo
+- Implementing more tests
 - Improve documentation
-- Implement missing data points (like time schedule, four data points with high byte 0x03, writing of network data & cloud control)
+- Implement missing data points (like time schedule, writing of network data & cloud control)
 
 ## Changelog
 
@@ -63,6 +64,8 @@ This channel contains system data about the hardware and firmware as well as run
 - Added states for objects with high byte 0x03 with reading and writing
 - Recreate device objects on adapter restart
 - Simplified methods for writing fan data based on subscribed states
+- Missing data points for high byte 0x03 implemented as well.
+- Added a first unit test for the parsing of numbers.
 
 <!--
     Placeholder for the next version (at the beginning of the line):
