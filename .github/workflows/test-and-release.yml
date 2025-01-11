@@ -43,13 +43,13 @@ jobs:
             matrix:
                 node-version: [20.x, 22.x]
                 os: [ubuntu-latest, windows-latest, macos-latest]
-                extra-tests: npm run test:ts
 
         steps:
             - uses: ioBroker/testing-action-adapter@v1
               with:
                   node-version: ${{ matrix.node-version }}
                   os: ${{ matrix.os }}
+                  extra-tests: npm run test:ts
                   # Uncomment the following line if your adapter cannot be installed using 'npm ci'
                   install-command: "npm install"
                   build: true
