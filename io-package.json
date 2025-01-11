@@ -44,7 +44,7 @@
             "zh-cn": "将您的 Oxxify 风扇集成到您的智能家居中。"
         },
         "authors": ["N-b-dy <daten4me@gmx.de>"],
-        "keywords": ["oxxify", "ioBroker"],
+        "keywords": ["oxxify", "fan", "ventilation"],
         "licenseInformation": {
             "type": "free",
             "license": "GPL-3.0-or-later"
