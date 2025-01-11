@@ -7,9 +7,12 @@
 ![node-lts](https://img.shields.io/node/v-lts/iobroker.oxxify-fan-control)
 ![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/npm/iobroker.oxxify-fan-control?label=npm%20dependencies)
 ![Number of Installations](https://iobroker.live/badges/oxxify-fan-control-installed.svg)
-![Current version in stable repository](https://iobroker.live/badges/oxxify-fan-control-stable.svg)
 
 [![NPM](https://nodei.co/npm/iobroker.oxxify-fan-control.png?downloads=true)](https://nodei.co/npm/iobroker.oxxify-fan-control/)
+
+![Beta](https://img.shields.io/npm/v/iobroker.oxxify-fan-control.svg?color=red&label=beta)
+![Stable](http://iobroker.live/badges/oxxify-fan-control-stable.svg)
+![Installed](http://iobroker.live/badges/oxxify-fan-control-installed.svg)
 
 **Tests:** ![Test and Release](https://github.com/N-b-dy/ioBroker.oxxify-fan-control/workflows/Test%20and%20Release/badge.svg)
 
