@@ -13,7 +13,7 @@ import * as udp from "dgram";
 import * as NTP from "ntp-time";
 import Queue from "queue-fifo";
 import { DataHelpers } from "./lib/DataHelpers";
-import { DataToSend, FanRemoteEndpoint, ReceivedData, WriteDataModel } from "./lib/ModelData";
+import { type FanRemoteEndpoint, type ReceivedData, DataToSend, WriteDataModel } from "./lib/ModelData";
 import * as Oxxify from "./lib/OxxifyProtocol";
 
 /**
@@ -77,10 +77,10 @@ class OxxifyFanControl extends utils.Adapter {
 
         const dataDictionary = this.oxxify.DataDictionary;
 
-        this.config.fans.forEach(async (element) => {
-            this.log.debug('Fan configured: "' + element.name + '": ' + element.id + " - " + element.ipaddr);
+        this.config.fans.forEach(async element => {
+            this.log.debug(`Fan configured: "${element.name}": ${element.id} - ${element.ipaddr}`);
 
-            await this.extendObject("devices." + element.id, {
+            await this.extendObject(`devices.${element.id}`, {
                 type: "channel",
                 common: {
                     name: element.name,
@@ -89,7 +89,7 @@ class OxxifyFanControl extends utils.Adapter {
             });
 
             dataDictionary.forEach(async (value: Oxxify.FanData) => {
-                await this.extendObject("devices." + element.id + "." + value.strIdentifer, {
+                await this.extendObject(`devices.${element.id}.${value.strIdentifer}`, {
                     type: "state",
                     common: {
                         name: value.name,
@@ -113,8 +113,8 @@ class OxxifyFanControl extends utils.Adapter {
         this.subscribeStates("devices.*.system.resetAlarms");
 
         // Emits when any error occurs
-        this.udpServer.on("error", (error) => {
-            this.log.error("Error: " + error);
+        this.udpServer.on("error", error => {
+            this.log.error(`Error: ${error}`);
             this.udpServer.close();
         });
 
@@ -130,7 +130,7 @@ class OxxifyFanControl extends utils.Adapter {
 
             if (data.receivedData.length > 0) {
                 data.receivedData.forEach(async (value: ReceivedData) => {
-                    await this.setState("devices." + data.strFanId + "." + value.strIdentifer, value.value, true);
+                    await this.setState(`devices.${data.strFanId}.${value.strIdentifer}`, value.value, true);
                 });
             }
         });
@@ -138,12 +138,12 @@ class OxxifyFanControl extends utils.Adapter {
         this.udpServer.bind(4001);
 
         // emits when socket is ready and listening for datagram msgs
-        this.udpServer.on("listening", async () => {
+        this.udpServer.on("listening", () => {
             const address = this.udpServer.address();
             const port = address.port;
             const family = address.family;
             const ipaddr = address.address;
-            this.log.debug("Server is listening at: " + ipaddr + ":" + port + " (" + family + ")");
+            this.log.debug(`Server is listening at: ${ipaddr}:${port} (${family})`);
 
             this.ReadAllFanData(true);
         });
@@ -158,11 +158,11 @@ class OxxifyFanControl extends utils.Adapter {
                 const sendData = this.sendQuene.dequeue();
 
                 if (sendData != null) {
-                    this.log.silly(
-                        "Sending " + sendData.data.toString("hex") + " to " + sendData.ipAddress + ":" + 4000,
-                    );
-                    this.udpServer.send(sendData.data, 4000, sendData.ipAddress, (err) => {
-                        if (err != null) this.log.error(err.message);
+                    this.log.silly(`Sending ${sendData.data.toString("hex")} to ${sendData.ipAddress}:${4000}`);
+                    this.udpServer.send(sendData.data, 4000, sendData.ipAddress, err => {
+                        if (err != null) {
+                            this.log.error(err.message);
+                        }
                     });
                 }
             }
@@ -174,7 +174,9 @@ class OxxifyFanControl extends utils.Adapter {
     }
 
     /**
-     * Is called when adapter shuts down - callback has to be called under any circumstances!
+     * Is called when adapter shuts down.
+     *
+     * @param callback The callback, which has to be called under any circumstances!
      */
     private onUnload(callback: () => void): void {
         try {
@@ -197,6 +199,7 @@ class OxxifyFanControl extends utils.Adapter {
     /**
      * Is called if a subscribed state changes. Here the subscribed states are dispatched for the
      * dedicated actions regarding the fans.
+     *
      * @param strStateIdentifier The state which has changed.
      * @param state The new value including meta data from ioBroker.
      */
@@ -309,10 +312,11 @@ class OxxifyFanControl extends utils.Adapter {
 
     /**
      * Method to build up the protocol frame to read all data from the fans according to the protocol.
+     *
      * @param bIncludeConstData True contains the const data like the firmware and the version, false excludes them.
      */
     private ReadAllFanData(bIncludeConstData: boolean): void {
-        this.config.fans.forEach((element) => {
+        this.config.fans.forEach(element => {
             this.oxxify.StartNewFrame(element.id, element.password);
             this.oxxify.ReadFanState();
             this.oxxify.ReadFanSpeedMode();
@@ -358,6 +362,7 @@ class OxxifyFanControl extends utils.Adapter {
     /**
      * Parses the fan id from the ioBroker identifer. This fan id has 16 hexadecimal
      * characters and is added from the end user by the fan configuration.
+     *
      * @param strId The identifier from ioBroker for the state, that has changed.
      * @returns The fan id if found or undefined.
      */
@@ -374,26 +379,32 @@ class OxxifyFanControl extends utils.Adapter {
 
     /**
      * Fetchs the configured fan data based on the provided identifier.
+     *
      * @param strFanId The fan identifier, for which the configuration data is requested.
      * @returns The fan config data if found, otherwise undefined.
      */
     private GetFanDataFromConfig(strFanId: string): FanRemoteEndpoint | undefined {
-        const data = this.config.fans.find((f) => f.id == strFanId);
+        const data = this.config.fans.find(f => f.id == strFanId);
 
-        if (data == undefined) return undefined;
+        if (data == undefined) {
+            return undefined;
+        }
 
         return { strIpAddress: data.ipaddr, strPassword: data.password };
     }
 
     /**
      * Generic function to create a protocol frame to write a numeric value to the fan.
+     *
      * @param data The data to write with necessary fan data as well.
      * @param writeNumberMethod The function from the OxxifyProtocol class, which adds the data to write.
      */
     private WriteNumberFanData(data: WriteDataModel, writeNumberMethod: (nValue: number) => void): void {
         const nValue = DataHelpers.ParseInputNumber(data.value, this.log);
 
-        if (isNaN(nValue)) return;
+        if (isNaN(nValue)) {
+            return;
+        }
 
         this.oxxify.StartNewFrame(data.strFanId, data.fanData.strPassword);
         writeNumberMethod(nValue);
@@ -405,8 +416,9 @@ class OxxifyFanControl extends utils.Adapter {
 
     /**
      * Generic function to create a protocol frame to write a string value to the fan.
+     *
      * @param data The data to write with necessary fan data as well.
-     * @param writeNumberMethod The function from the OxxifyProtocol class, which adds the data to write.
+     * @param writeStringMethod The function from the OxxifyProtocol class, which adds the data to write.
      */
     private WriteStringFanData(data: WriteDataModel, writeStringMethod: (strValue: string) => void): void {
         this.oxxify.StartNewFrame(data.strFanId, data.fanData.strPassword);
@@ -419,8 +431,9 @@ class OxxifyFanControl extends utils.Adapter {
 
     /**
      * Generic function to create a protocol frame to write a bool value to the fan.
+     *
      * @param data The data to write with necessary fan data as well.
-     * @param writeNumberMethod The function from the OxxifyProtocol class, which adds the data to write.
+     * @param writeStringMethod The function from the OxxifyProtocol class, which adds the data to write.
      */
     private WriteBoolFanData(data: WriteDataModel, writeStringMethod: (bValue: boolean) => void): void {
         if (typeof data.value !== "boolean") {
@@ -438,8 +451,9 @@ class OxxifyFanControl extends utils.Adapter {
 
     /**
      * Generic function to create a protocol frame to trigger a funtion at the fan. like reseting stuff.
-     * @param writeNumberMethod The function from the OxxifyProtocol class, triggers the function.
-     * @returns void
+     *
+     * @param data The data which contains the necessary fan data.
+     * @param writeVoidMethod The function from the OxxifyProtocol class, triggers the function.
      */
     private WriteVoidFanData(data: WriteDataModel, writeVoidMethod: () => void): void {
         this.oxxify.StartNewFrame(data.strFanId, data.fanData.strPassword);
@@ -452,6 +466,7 @@ class OxxifyFanControl extends utils.Adapter {
 
     /**
      * Fetchs the current time from the configured NTP server and writes the date and time to the provided fan.
+     *
      * @param strFanId The fan id, for which the time sync is processed.
      * @param fanData The related fan data to create the protocol frame.
      */
@@ -460,7 +475,7 @@ class OxxifyFanControl extends utils.Adapter {
             .syncTime()
             .then((value: NTP.NTPPacket) => {
                 const dateTime = DateTime.parse(value.time.toISOString(), "YYYY-MM-DD[T]HH:mm:ss.SSS[Z]", true);
-                this.log.debug("Received local time via ntp: " + dateTime.toLocaleString());
+                this.log.debug(`Received local time via ntp: ${dateTime.toLocaleString()}`);
                 this.oxxify.StartNewFrame(strFanId, fanData.strPassword);
                 this.oxxify.WriteRtcDateTime(dateTime);
                 this.oxxify.FinishFrame();
@@ -468,7 +483,7 @@ class OxxifyFanControl extends utils.Adapter {
                 const packet = this.oxxify.ProtocolPacket;
 
                 // Immediately send the data, as any delay would make the time sync invalid
-                this.udpServer.send(packet, 4000, fanData.strIpAddress, (err) => {
+                this.udpServer.send(packet, 4000, fanData.strIpAddress, err => {
                     if (err != null) {
                         this.log.error(err.message);
                     } else {

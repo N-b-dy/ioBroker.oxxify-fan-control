@@ -62,7 +62,18 @@ This channel contains system data about the hardware and firmware as well as run
 - Improve documentation
 - Implement missing data points (like time schedule, writing of network data & cloud control)
 
+<!--
+    Placeholder for the next version (at the beginning of the line):
+    ### **WORK IN PROGRESS**
+-->
+
 ## Changelog
+
+### **WORK IN PROGRESS**
+
+- Updated ESLint to 9.x.x
+
+
 ### 0.0.3 (2025-01-11)
 
 - Added states for objects with high byte 0x03 with reading and writing
@@ -70,10 +81,6 @@ This channel contains system data about the hardware and firmware as well as run
 - Simplified methods for writing fan data based on subscribed states
 - Added a first unit test for the parsing of numbers.
 
-<!--
-    Placeholder for the next version (at the beginning of the line):
-    ### **WORK IN PROGRESS**
--->
 
 ### 0.0.2 (2025-01-06)
 

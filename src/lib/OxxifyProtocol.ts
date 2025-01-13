@@ -77,9 +77,9 @@ export class FanData {
         strType: ioBroker.CommonType,
         name: ioBroker.StringOrTranslated,
         parseFunction: ParseResult,
-        strUnit?: string | undefined,
-        minValue?: number | undefined,
-        maxValue?: number | undefined,
+        strUnit?: string,
+        minValue?: number,
+        maxValue?: number,
     ) {
         this.nSize = nSize;
         this.strIdentifer = strIdentifer;
@@ -125,9 +125,13 @@ export class OxxifyProtocol {
     }
 
     public StartNewFrame(strFanId: string, strPassword: string): boolean {
-        if (strFanId.length != 16) return false;
+        if (strFanId.length != 16) {
+            return false;
+        }
 
-        if (strPassword.length <= 0) return false;
+        if (strPassword.length <= 0) {
+            return false;
+        }
 
         // Reset the write index
         this.nWriteIndex = 4;
@@ -173,8 +177,11 @@ export class OxxifyProtocol {
         this.AddFunctionCode(FunctionType.WriteRead);
         const data = Buffer.alloc(1);
 
-        if (bEnabled) data[0] = 1;
-        else data[0] = 0;
+        if (bEnabled) {
+            data[0] = 1;
+        } else {
+            data[0] = 0;
+        }
         this.AddParameter(ParameterType.FanState, data);
     }
 
@@ -187,7 +194,7 @@ export class OxxifyProtocol {
         this.AddFunctionCode(FunctionType.WriteRead);
         const data = Buffer.alloc(1);
         data[0] = nValue;
-        console.log("Data in Buffer: " + data[0]);
+        console.log(`Data in Buffer: ${data[0]}`);
         this.AddParameter(ParameterType.FanSpeedMode, data);
     }
 
@@ -218,8 +225,11 @@ export class OxxifyProtocol {
         this.AddFunctionCode(FunctionType.WriteRead);
         const data = Buffer.alloc(1);
 
-        if (bEnabled) data[0] = 1;
-        else data[0] = 0;
+        if (bEnabled) {
+            data[0] = 1;
+        } else {
+            data[0] = 0;
+        }
         this.AddParameter(ParameterType.StateHumiditySensor, data);
     }
 
@@ -232,8 +242,11 @@ export class OxxifyProtocol {
         this.AddFunctionCode(FunctionType.WriteRead);
         const data = Buffer.alloc(1);
 
-        if (bEnabled) data[0] = 1;
-        else data[0] = 0;
+        if (bEnabled) {
+            data[0] = 1;
+        } else {
+            data[0] = 0;
+        }
         this.AddParameter(ParameterType.StateRelaisSensor, data);
     }
 
@@ -246,8 +259,11 @@ export class OxxifyProtocol {
         this.AddFunctionCode(FunctionType.WriteRead);
         const data = Buffer.alloc(1);
 
-        if (bEnabled) data[0] = 1;
-        else data[0] = 0;
+        if (bEnabled) {
+            data[0] = 1;
+        } else {
+            data[0] = 0;
+        }
         this.AddParameter(ParameterType.StateAnalogVoltageSensor, data);
     }
 
@@ -369,8 +385,11 @@ export class OxxifyProtocol {
         this.AddFunctionCode(FunctionType.WriteRead);
         const data = Buffer.alloc(1);
 
-        if (bEnabled) data[0] = 1;
-        else data[0] = 0;
+        if (bEnabled) {
+            data[0] = 1;
+        } else {
+            data[0] = 0;
+        }
         this.AddParameter(ParameterType.TimeControlledMode, data);
     }
 
@@ -651,10 +670,9 @@ export class OxxifyProtocol {
             if (eNextFunction == this.eCurrentFunction) {
                 // Nothing to do if the function code is already the right one - only the parameter index needs to be added
                 return;
-            } else {
-                this.internalBuffer[this.nWriteIndex] = 0xfc;
-                this.nWriteIndex++;
             }
+            this.internalBuffer[this.nWriteIndex] = 0xfc;
+            this.nWriteIndex++;
         }
 
         this.internalBuffer[this.nWriteIndex] = eNextFunction;
@@ -665,6 +683,7 @@ export class OxxifyProtocol {
 
     /**
      * Adds an parameter for an read or an write request.
+     *
      * @param eParameter The predefined enum value for the parameter, which is also teh relevant low-byte of the adressed data.
      * @param bytes The bytes to write in a Write / WriteRead request. Null in case of an read request.
      * @returns True if successful, otherwise false.
@@ -673,7 +692,9 @@ export class OxxifyProtocol {
         const parameterData = this.parameterDictionary.get(eParameter);
 
         // e.g. Variable parameter size
-        if (parameterData == undefined) return false;
+        if (parameterData == undefined) {
+            return false;
+        }
 
         // High byte handling (per protocol frame)
         const nHighByte = (Number(eParameter) & 0xff00) >> 8;
@@ -708,10 +729,15 @@ export class OxxifyProtocol {
         this.nWriteIndex++;
 
         if (this.eCurrentFunction == FunctionType.WriteRead) {
-            if (bytes == null) return false;
+            if (bytes == null) {
+                return false;
+            }
 
-            if (bytes.length == 1) this.internalBuffer.writeUint8(bytes.at(0) ?? 0, this.nWriteIndex);
-            else this.internalBuffer.write(bytes.toString(), this.nWriteIndex);
+            if (bytes.length == 1) {
+                this.internalBuffer.writeUint8(bytes.at(0) ?? 0, this.nWriteIndex);
+            } else {
+                this.internalBuffer.write(bytes.toString(), this.nWriteIndex);
+            }
 
             this.nWriteIndex += bytes.length;
         }

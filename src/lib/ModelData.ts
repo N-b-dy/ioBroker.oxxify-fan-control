@@ -39,7 +39,10 @@ export class ReceivedData {
     value: ioBroker.StateValue;
 }
 
-export type FanRemoteEndpoint = { strIpAddress: string; strPassword: string };
+export type FanRemoteEndpoint = {
+    strIpAddress: string;
+    strPassword: string;
+};
 
 export class WriteDataModel {
     constructor(strFanId: string, fanData: FanRemoteEndpoint, value: ioBroker.StateValue) {
