@@ -19,6 +19,7 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 var ModelData_exports = {};
 __export(ModelData_exports, {
   DataToSend: () => DataToSend,
+  FanData: () => FanData,
   ParsedData: () => ParsedData,
   ParsingStatus: () => ParsingStatus,
   ReceivedData: () => ReceivedData,
@@ -26,6 +27,12 @@ __export(ModelData_exports, {
 });
 module.exports = __toCommonJS(ModelData_exports);
 class DataToSend {
+  /**
+   * Constructor of the class.
+   *
+   * @param data The byte buffer holding the data to send.
+   * @param ipAddress The IP address, to which the data is sent.
+   */
   constructor(data, ipAddress) {
     this.data = data;
     this.ipAddress = ipAddress;
@@ -70,9 +77,34 @@ class WriteDataModel {
   fanData;
   value;
 }
+class FanData {
+  constructor(nSize, strIdentifer, bIsWritable, strRole, strType, name, parseFunction, strUnit, minValue, maxValue) {
+    this.nSize = nSize;
+    this.strIdentifer = strIdentifer;
+    this.bIsWritable = bIsWritable;
+    this.strRole = strRole;
+    this.strType = strType;
+    this.strUnit = strUnit;
+    this.name = name;
+    this.parseFunction = parseFunction;
+    this.minValue = minValue;
+    this.maxValue = maxValue;
+  }
+  nSize;
+  strIdentifer;
+  bIsWritable;
+  strRole;
+  strType;
+  name;
+  parseFunction;
+  strUnit;
+  minValue;
+  maxValue;
+}
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   DataToSend,
+  FanData,
   ParsedData,
   ParsingStatus,
   ReceivedData,

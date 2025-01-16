@@ -13,7 +13,14 @@ import * as udp from "dgram";
 import * as NTP from "ntp-time";
 import Queue from "queue-fifo";
 import { DataHelpers } from "./lib/DataHelpers";
-import { type FanRemoteEndpoint, type ReceivedData, DataToSend, WriteDataModel } from "./lib/ModelData";
+import {
+    DataToSend,
+    type FanData,
+    type FanRemoteEndpoint,
+    ParsingStatus,
+    type ReceivedData,
+    WriteDataModel,
+} from "./lib/ModelData";
 import * as Oxxify from "./lib/OxxifyProtocol";
 
 /**
@@ -75,7 +82,7 @@ class OxxifyFanControl extends utils.Adapter {
             native: {},
         });
 
-        const dataDictionary = this.oxxify.DataDictionary;
+        const stateDictionary = this.oxxify.StateDictionary;
 
         this.config.fans.forEach(async element => {
             this.log.debug(`Fan configured: "${element.name}": ${element.id} - ${element.ipaddr}`);
@@ -88,7 +95,7 @@ class OxxifyFanControl extends utils.Adapter {
                 },
             });
 
-            dataDictionary.forEach(async (value: Oxxify.FanData) => {
+            stateDictionary.forEach(async (value: FanData) => {
                 await this.extendObject(`devices.${element.id}.${value.strIdentifer}`, {
                     type: "state",
                     common: {
@@ -126,12 +133,19 @@ class OxxifyFanControl extends utils.Adapter {
             this.log.silly(
                 `Received ${msg.length} bytes from ${info.address}:${info.port} - Data: ${msg.toString("hex")}`,
             );
+
             const data = this.oxxify.ParseResponseData(msg);
 
-            if (data.receivedData.length > 0) {
-                data.receivedData.forEach(async (value: ReceivedData) => {
-                    await this.setState(`devices.${data.strFanId}.${value.strIdentifer}`, value.value, true);
-                });
+            if (data.status !== ParsingStatus.Ok) {
+                this.log.warn(
+                    `Received frame from IP ${info.address} could not be parsed. Parsing status ${data.status} - data ${msg.toString("hex")}`,
+                );
+            } else {
+                if (data.receivedData.length > 0) {
+                    data.receivedData.forEach(async (value: ReceivedData) => {
+                        await this.setState(`devices.${data.strFanId}.${value.strIdentifer}`, value.value, true);
+                    });
+                }
             }
         });
 

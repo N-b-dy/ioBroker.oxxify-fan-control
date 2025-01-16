@@ -1,4 +1,4 @@
-import { ParsedData, ParsingStatus, ReceivedData } from "./ModelData";
+import { FanData, ParsedData, ParsingStatus, ReceivedData } from "./ModelData";
 
 enum FunctionType {
     Undefined = 0x00,
@@ -10,7 +10,7 @@ enum FunctionType {
     Response = 0x06,
 }
 
-export enum ParameterType {
+enum ParameterType {
     FanState = 1,
     FanSpeedMode = 2,
     BoostState = 6,
@@ -66,47 +66,9 @@ export enum ParameterType {
     AnalogVoltageSensorOverSetPoint = 0x0305,
 }
 
-type ParseResult = (b: Buffer) => ioBroker.StateValue;
-
-export class FanData {
-    constructor(
-        nSize: number,
-        strIdentifer: string,
-        bIsWritable: boolean,
-        strRole: string,
-        strType: ioBroker.CommonType,
-        name: ioBroker.StringOrTranslated,
-        parseFunction: ParseResult,
-        strUnit?: string,
-        minValue?: number,
-        maxValue?: number,
-    ) {
-        this.nSize = nSize;
-        this.strIdentifer = strIdentifer;
-        this.bIsWritable = bIsWritable;
-        this.strRole = strRole;
-        this.strType = strType;
-        this.strUnit = strUnit;
-        this.name = name;
-        this.parseFunction = parseFunction;
-        this.minValue = minValue;
-        this.maxValue = maxValue;
-    }
-
-    nSize: number;
-    strIdentifer: string;
-    bIsWritable: boolean;
-    strRole: string;
-    strType: ioBroker.CommonType;
-    name: ioBroker.StringOrTranslated;
-
-    parseFunction: ParseResult;
-
-    strUnit: string | undefined;
-    minValue?: number | undefined;
-    maxValue?: number | undefined;
-}
-
+/**
+ * This class implements the creating of protocol frames for Oxxify fans and the parsing of received data as well.
+ */
 export class OxxifyProtocol {
     public constructor() {
         // Packet start
@@ -121,7 +83,7 @@ export class OxxifyProtocol {
 
         this.nWriteIndex = 4;
 
-        this.FillParameterDictionary();
+        this.FillstateDictionary();
     }
 
     public StartNewFrame(strFanId: string, strPassword: string): boolean {
@@ -563,6 +525,7 @@ export class OxxifyProtocol {
                 this.nReadIndex += this.ParseData(dataBytes.subarray(this.nReadIndex), result.receivedData);
             }
 
+            result.status = ParsingStatus.Ok;
             return result;
         }
 
@@ -600,8 +563,8 @@ export class OxxifyProtocol {
         const eParameter = ((data.at(nIndex) ?? 0) | (this.nCurrentReadHighByte << 8)) as ParameterType;
         nIndex++;
 
-        if (this.parameterDictionary.has(eParameter)) {
-            const fanData = this.parameterDictionary.get(eParameter);
+        if (this.stateDictionary.has(eParameter)) {
+            const fanData = this.stateDictionary.get(eParameter);
 
             if (fanData != undefined) {
                 const parsedData = new ReceivedData();
@@ -619,8 +582,12 @@ export class OxxifyProtocol {
         return nReturnIndex;
     }
 
-    public get DataDictionary(): Map<ParameterType, FanData> {
-        return this.parameterDictionary;
+    /**
+     * Returns the parameter dictionary, which contains all available data endpoints with the necessary
+     * meta-data to create the states within the object tree.
+     */
+    public get StateDictionary(): Map<ParameterType, FanData> {
+        return this.stateDictionary;
     }
 
     //#region Protected data members
@@ -635,8 +602,8 @@ export class OxxifyProtocol {
     bIsFirstFunction: boolean = false;
     eCurrentFunction: FunctionType = FunctionType.Undefined;
 
-    // Dictionary with parameter low byte as key for the HighByte 0x00
-    parameterDictionary: Map<ParameterType, FanData> = new Map<number, FanData>();
+    // Dictionary with all available parametetrs and the index word as key (High and low byte)
+    stateDictionary: Map<ParameterType, FanData> = new Map<number, FanData>();
 
     //#endregion
 
@@ -689,7 +656,7 @@ export class OxxifyProtocol {
      * @returns True if successful, otherwise false.
      */
     private AddParameter(eParameter: ParameterType, bytes: Buffer | null = null): boolean {
-        const parameterData = this.parameterDictionary.get(eParameter);
+        const parameterData = this.stateDictionary.get(eParameter);
 
         // e.g. Variable parameter size
         if (parameterData == undefined) {
@@ -901,8 +868,8 @@ export class OxxifyProtocol {
         return null;
     }
 
-    private FillParameterDictionary(): void {
-        this.parameterDictionary.set(
+    private FillstateDictionary(): void {
+        this.stateDictionary.set(
             ParameterType.FanState,
             new FanData(
                 1,
@@ -926,7 +893,7 @@ export class OxxifyProtocol {
                 this.ParseBool,
             ),
         );
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.FanSpeedMode,
             new FanData(
                 1,
@@ -950,7 +917,7 @@ export class OxxifyProtocol {
                 this.ParseFanSpeedMode,
             ),
         );
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.BoostState,
             new FanData(
                 1,
@@ -974,7 +941,7 @@ export class OxxifyProtocol {
                 this.ParseBool,
             ),
         );
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.TimerMode,
             new FanData(
                 1,
@@ -1001,7 +968,7 @@ export class OxxifyProtocol {
                 2,
             ),
         );
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.TimerCountdown,
             new FanData(
                 3,
@@ -1026,7 +993,7 @@ export class OxxifyProtocol {
                 "hh:mm:ss",
             ),
         );
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.StateHumiditySensor,
             new FanData(
                 1,
@@ -1050,7 +1017,7 @@ export class OxxifyProtocol {
                 this.ParseBool,
             ),
         );
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.StateRelaisSensor,
             new FanData(
                 1,
@@ -1074,7 +1041,7 @@ export class OxxifyProtocol {
                 this.ParseBool,
             ),
         );
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.StateAnalogVoltageSensor,
             new FanData(
                 1,
@@ -1098,7 +1065,7 @@ export class OxxifyProtocol {
                 this.ParseBool,
             ),
         );
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.TargetHumidityValue,
             new FanData(
                 1,
@@ -1125,7 +1092,7 @@ export class OxxifyProtocol {
                 80,
             ),
         );
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.RtcBatteryVoltage,
             new FanData(
                 2,
@@ -1152,7 +1119,7 @@ export class OxxifyProtocol {
                 5000,
             ),
         );
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.CurrentHumidityValue,
             new FanData(
                 1,
@@ -1179,7 +1146,7 @@ export class OxxifyProtocol {
                 100,
             ),
         );
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.CurrentAnalogVoltageValue,
             new FanData(
                 1,
@@ -1206,7 +1173,7 @@ export class OxxifyProtocol {
                 100,
             ),
         );
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.CurrentRelaisValue,
             new FanData(
                 1,
@@ -1230,7 +1197,7 @@ export class OxxifyProtocol {
                 this.ParseBool,
             ),
         );
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.ManualFanSpeed,
             new FanData(
                 1,
@@ -1257,7 +1224,7 @@ export class OxxifyProtocol {
                 255,
             ),
         );
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.FanSpeedFan1Rpm,
             new FanData(
                 2,
@@ -1282,7 +1249,7 @@ export class OxxifyProtocol {
                 "rpm",
             ),
         );
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.FanSpeedFan2Rpm,
             new FanData(
                 2,
@@ -1307,7 +1274,7 @@ export class OxxifyProtocol {
                 "rpm",
             ),
         );
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.FilterExchangeCountdown,
             new FanData(
                 3,
@@ -1332,7 +1299,7 @@ export class OxxifyProtocol {
                 "dd:hh:mm",
             ),
         );
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.ResetFilterExchangeCountdown,
             new FanData(
                 1,
@@ -1356,7 +1323,7 @@ export class OxxifyProtocol {
                 this.ParseNothing,
             ),
         );
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.BoostModeFollowUpTime,
             new FanData(
                 1,
@@ -1385,7 +1352,7 @@ export class OxxifyProtocol {
         );
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.TriggerTimeSync,
             new FanData(
                 0,
@@ -1410,7 +1377,7 @@ export class OxxifyProtocol {
             ),
         );
 
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.RtcTime,
             new FanData(
                 3,
@@ -1435,7 +1402,7 @@ export class OxxifyProtocol {
                 "hh:mm:ss",
             ),
         );
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.RtcDate,
             new FanData(
                 4,
@@ -1460,7 +1427,7 @@ export class OxxifyProtocol {
                 "dd.mm.yy",
             ),
         );
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.TimeControlledMode,
             new FanData(
                 1,
@@ -1485,11 +1452,11 @@ export class OxxifyProtocol {
             ),
         );
 
-        // this.parameterDictionary.set(ParameterType.TimeControlSchedule, 6);
-        // this.parameterDictionary.set(ParameterType.SearchFanId, 16);
-        // this.parameterDictionary.set(ParameterType.FanPassword, -1);
+        // this.stateDictionary.set(ParameterType.TimeControlSchedule, 6);
+        // this.stateDictionary.set(ParameterType.SearchFanId, 16);
+        // this.stateDictionary.set(ParameterType.FanPassword, -1);
 
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.OperatingTime,
             new FanData(
                 4,
@@ -1514,7 +1481,7 @@ export class OxxifyProtocol {
                 "ddddd:hh:mm",
             ),
         );
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.ResetAlarms,
             new FanData(
                 1,
@@ -1538,7 +1505,7 @@ export class OxxifyProtocol {
                 this.ParseNothing,
             ),
         );
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.AlarmState,
             new FanData(
                 1,
@@ -1562,7 +1529,7 @@ export class OxxifyProtocol {
                 this.ParseAlarmWarningState,
             ),
         );
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.CloudServerEnabled,
             new FanData(
                 1,
@@ -1586,7 +1553,7 @@ export class OxxifyProtocol {
                 this.ParseBool,
             ),
         );
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.FirmwareVersionAndDate,
             new FanData(
                 6,
@@ -1611,11 +1578,11 @@ export class OxxifyProtocol {
             ),
         );
 
-        // this.parameterDictionary.set(ParameterType.ResetFactoryDefaults, 1);
+        // this.stateDictionary.set(ParameterType.ResetFactoryDefaults, 1);
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.FilterExchangeNecessary,
             new FanData(
                 1,
@@ -1639,7 +1606,7 @@ export class OxxifyProtocol {
                 this.ParseBool,
             ),
         );
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.WifiOperatingMode,
             new FanData(
                 1,
@@ -1663,7 +1630,7 @@ export class OxxifyProtocol {
                 this.ParseWifiMode,
             ),
         );
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.WifiName,
             new FanData(
                 -1,
@@ -1687,8 +1654,8 @@ export class OxxifyProtocol {
                 this.ParseText,
             ),
         );
-        // this.parameterDictionary.set(ParameterType.WifiPassword, -1);
-        this.parameterDictionary.set(
+        // this.stateDictionary.set(ParameterType.WifiPassword, -1);
+        this.stateDictionary.set(
             ParameterType.WifiEncryptionMode,
             new FanData(
                 1,
@@ -1712,7 +1679,7 @@ export class OxxifyProtocol {
                 this.ParseWifiEncryptionMode,
             ),
         );
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.WifiChannel,
             new FanData(
                 1,
@@ -1736,7 +1703,7 @@ export class OxxifyProtocol {
                 this.ParseByteNumber,
             ),
         );
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.WifiIpMode,
             new FanData(
                 1,
@@ -1760,7 +1727,7 @@ export class OxxifyProtocol {
                 this.ParseWifiIpMode,
             ),
         );
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.WifiIp,
             new FanData(
                 4,
@@ -1784,7 +1751,7 @@ export class OxxifyProtocol {
                 this.ParseIpV4Value,
             ),
         );
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.WifiSubnetMask,
             new FanData(
                 4,
@@ -1808,7 +1775,7 @@ export class OxxifyProtocol {
                 this.ParseIpV4Value,
             ),
         );
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.WifiGateway,
             new FanData(
                 4,
@@ -1832,9 +1799,9 @@ export class OxxifyProtocol {
                 this.ParseIpV4Value,
             ),
         );
-        // this.parameterDictionary.set(ParameterType.ExitWifiSetupAndSafe, 1);
-        // this.parameterDictionary.set(ParameterType.ExitWifiSetupAndDiscard, 1);
-        this.parameterDictionary.set(
+        // this.stateDictionary.set(ParameterType.ExitWifiSetupAndSafe, 1);
+        // this.stateDictionary.set(ParameterType.ExitWifiSetupAndDiscard, 1);
+        this.stateDictionary.set(
             ParameterType.CurrentWifiIp,
             new FanData(
                 4,
@@ -1858,7 +1825,7 @@ export class OxxifyProtocol {
                 this.ParseIpV4Value,
             ),
         );
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.FanOperatingMode,
             new FanData(
                 1,
@@ -1885,7 +1852,7 @@ export class OxxifyProtocol {
                 2,
             ),
         );
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.TargetAnalogVoltageValue,
             new FanData(
                 1,
@@ -1912,7 +1879,7 @@ export class OxxifyProtocol {
                 100,
             ),
         );
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.FanType,
             new FanData(
                 2,
@@ -1938,7 +1905,7 @@ export class OxxifyProtocol {
         );
 
         // High byte 0x03 starting from here
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.NightModeTimerSetpoint,
             new FanData(
                 2,
@@ -1963,7 +1930,7 @@ export class OxxifyProtocol {
                 "hh:mm",
             ),
         );
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.PartyModeTimerSetPoint,
             new FanData(
                 2,
@@ -1988,7 +1955,7 @@ export class OxxifyProtocol {
                 "hh:mm",
             ),
         );
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.HumiditySensorOverSetPoint,
             new FanData(
                 1,
@@ -2012,7 +1979,7 @@ export class OxxifyProtocol {
                 this.ParseBool,
             ),
         );
-        this.parameterDictionary.set(
+        this.stateDictionary.set(
             ParameterType.AnalogVoltageSensorOverSetPoint,
             new FanData(
                 1,

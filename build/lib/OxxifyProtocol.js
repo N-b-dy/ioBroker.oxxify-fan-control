@@ -18,9 +18,7 @@ var __copyProps = (to, from, except, desc) => {
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 var OxxifyProtocol_exports = {};
 __export(OxxifyProtocol_exports, {
-  FanData: () => FanData,
-  OxxifyProtocol: () => OxxifyProtocol,
-  ParameterType: () => ParameterType
+  OxxifyProtocol: () => OxxifyProtocol
 });
 module.exports = __toCommonJS(OxxifyProtocol_exports);
 var import_ModelData = require("./ModelData");
@@ -86,30 +84,6 @@ var ParameterType = /* @__PURE__ */ ((ParameterType2) => {
   ParameterType2[ParameterType2["AnalogVoltageSensorOverSetPoint"] = 773] = "AnalogVoltageSensorOverSetPoint";
   return ParameterType2;
 })(ParameterType || {});
-class FanData {
-  constructor(nSize, strIdentifer, bIsWritable, strRole, strType, name, parseFunction, strUnit, minValue, maxValue) {
-    this.nSize = nSize;
-    this.strIdentifer = strIdentifer;
-    this.bIsWritable = bIsWritable;
-    this.strRole = strRole;
-    this.strType = strType;
-    this.strUnit = strUnit;
-    this.name = name;
-    this.parseFunction = parseFunction;
-    this.minValue = minValue;
-    this.maxValue = maxValue;
-  }
-  nSize;
-  strIdentifer;
-  bIsWritable;
-  strRole;
-  strType;
-  name;
-  parseFunction;
-  strUnit;
-  minValue;
-  maxValue;
-}
 class OxxifyProtocol {
   constructor() {
     this.internalBuffer[0] = 253;
@@ -117,13 +91,15 @@ class OxxifyProtocol {
     this.internalBuffer[2] = 2;
     this.internalBuffer[3] = 16;
     this.nWriteIndex = 4;
-    this.FillParameterDictionary();
+    this.FillstateDictionary();
   }
   StartNewFrame(strFanId, strPassword) {
-    if (strFanId.length != 16)
+    if (strFanId.length != 16) {
       return false;
-    if (strPassword.length <= 0)
+    }
+    if (strPassword.length <= 0) {
       return false;
+    }
     this.nWriteIndex = 4;
     this.internalBuffer.write(strFanId, this.nWriteIndex);
     this.nWriteIndex += strFanId.length;
@@ -151,10 +127,11 @@ class OxxifyProtocol {
   WriteFanState(bEnabled) {
     this.AddFunctionCode(3 /* WriteRead */);
     const data = Buffer.alloc(1);
-    if (bEnabled)
+    if (bEnabled) {
       data[0] = 1;
-    else
+    } else {
       data[0] = 0;
+    }
     this.AddParameter(1 /* FanState */, data);
   }
   ReadFanSpeedMode() {
@@ -165,7 +142,7 @@ class OxxifyProtocol {
     this.AddFunctionCode(3 /* WriteRead */);
     const data = Buffer.alloc(1);
     data[0] = nValue;
-    console.log("Data in Buffer: " + data[0]);
+    console.log(`Data in Buffer: ${data[0]}`);
     this.AddParameter(2 /* FanSpeedMode */, data);
   }
   ReadBoostState() {
@@ -190,10 +167,11 @@ class OxxifyProtocol {
   WriteHumiditySensorState(bEnabled) {
     this.AddFunctionCode(3 /* WriteRead */);
     const data = Buffer.alloc(1);
-    if (bEnabled)
+    if (bEnabled) {
       data[0] = 1;
-    else
+    } else {
       data[0] = 0;
+    }
     this.AddParameter(15 /* StateHumiditySensor */, data);
   }
   ReadRelaisSensorState() {
@@ -203,10 +181,11 @@ class OxxifyProtocol {
   WriteRelaisSensorState(bEnabled) {
     this.AddFunctionCode(3 /* WriteRead */);
     const data = Buffer.alloc(1);
-    if (bEnabled)
+    if (bEnabled) {
       data[0] = 1;
-    else
+    } else {
       data[0] = 0;
+    }
     this.AddParameter(20 /* StateRelaisSensor */, data);
   }
   ReadAnalogVoltageSensorState() {
@@ -216,10 +195,11 @@ class OxxifyProtocol {
   WriteAnalogVoltageSensorState(bEnabled) {
     this.AddFunctionCode(3 /* WriteRead */);
     const data = Buffer.alloc(1);
-    if (bEnabled)
+    if (bEnabled) {
       data[0] = 1;
-    else
+    } else {
       data[0] = 0;
+    }
     this.AddParameter(22 /* StateAnalogVoltageSensor */, data);
   }
   ReadTargetHumidityValue() {
@@ -313,10 +293,11 @@ class OxxifyProtocol {
   WriteTimeControlledMode(bEnabled) {
     this.AddFunctionCode(3 /* WriteRead */);
     const data = Buffer.alloc(1);
-    if (bEnabled)
+    if (bEnabled) {
       data[0] = 1;
-    else
+    } else {
       data[0] = 0;
+    }
     this.AddParameter(114 /* TimeControlledMode */, data);
   }
   ReadOperatingTime() {
@@ -445,6 +426,7 @@ class OxxifyProtocol {
       while (this.nReadIndex < dataBytes.length - 2) {
         this.nReadIndex += this.ParseData(dataBytes.subarray(this.nReadIndex), result.receivedData);
       }
+      result.status = import_ModelData.ParsingStatus.Ok;
       return result;
     }
     result.status = import_ModelData.ParsingStatus.Undefined;
@@ -472,8 +454,8 @@ class OxxifyProtocol {
     }
     const eParameter = ((_c = data.at(nIndex)) != null ? _c : 0) | this.nCurrentReadHighByte << 8;
     nIndex++;
-    if (this.parameterDictionary.has(eParameter)) {
-      const fanData = this.parameterDictionary.get(eParameter);
+    if (this.stateDictionary.has(eParameter)) {
+      const fanData = this.stateDictionary.get(eParameter);
       if (fanData != void 0) {
         const parsedData = new import_ModelData.ReceivedData();
         parsedData.strIdentifer = (_d = fanData == null ? void 0 : fanData.strIdentifer) != null ? _d : "UNDEFINED";
@@ -484,8 +466,12 @@ class OxxifyProtocol {
     const nReturnIndex = nIndex + nCurrentReadParameterSize;
     return nReturnIndex;
   }
-  get DataDictionary() {
-    return this.parameterDictionary;
+  /**
+   * Returns the parameter dictionary, which contains all available data endpoints with the necessary
+   * meta-data to create the states within the object tree.
+   */
+  get StateDictionary() {
+    return this.stateDictionary;
   }
   //#region Protected data members
   internalBuffer = Buffer.alloc(256);
@@ -495,8 +481,8 @@ class OxxifyProtocol {
   nCurrentWriteHighByte = 0;
   bIsFirstFunction = false;
   eCurrentFunction = 0 /* Undefined */;
-  // Dictionary with parameter low byte as key for the HighByte 0x00
-  parameterDictionary = /* @__PURE__ */ new Map();
+  // Dictionary with all available parametetrs and the index word as key (High and low byte)
+  stateDictionary = /* @__PURE__ */ new Map();
   //#endregion
   CheckProtocol(dataBuffer) {
     if (dataBuffer.at(0) != 253 && dataBuffer.at(1) != 253) {
@@ -521,10 +507,9 @@ class OxxifyProtocol {
     } else {
       if (eNextFunction == this.eCurrentFunction) {
         return;
-      } else {
-        this.internalBuffer[this.nWriteIndex] = 252;
-        this.nWriteIndex++;
       }
+      this.internalBuffer[this.nWriteIndex] = 252;
+      this.nWriteIndex++;
     }
     this.internalBuffer[this.nWriteIndex] = eNextFunction;
     this.nWriteIndex++;
@@ -532,15 +517,17 @@ class OxxifyProtocol {
   }
   /**
    * Adds an parameter for an read or an write request.
+   *
    * @param eParameter The predefined enum value for the parameter, which is also teh relevant low-byte of the adressed data.
    * @param bytes The bytes to write in a Write / WriteRead request. Null in case of an read request.
    * @returns True if successful, otherwise false.
    */
   AddParameter(eParameter, bytes = null) {
     var _a;
-    const parameterData = this.parameterDictionary.get(eParameter);
-    if (parameterData == void 0)
+    const parameterData = this.stateDictionary.get(eParameter);
+    if (parameterData == void 0) {
       return false;
+    }
     const nHighByte = (Number(eParameter) & 65280) >> 8;
     const bChangeHighByte = nHighByte != this.nCurrentWriteHighByte;
     if (bChangeHighByte) {
@@ -561,12 +548,14 @@ class OxxifyProtocol {
     this.internalBuffer[this.nWriteIndex] = eParameter;
     this.nWriteIndex++;
     if (this.eCurrentFunction == 3 /* WriteRead */) {
-      if (bytes == null)
+      if (bytes == null) {
         return false;
-      if (bytes.length == 1)
+      }
+      if (bytes.length == 1) {
         this.internalBuffer.writeUint8((_a = bytes.at(0)) != null ? _a : 0, this.nWriteIndex);
-      else
+      } else {
         this.internalBuffer.write(bytes.toString(), this.nWriteIndex);
+      }
       this.nWriteIndex += bytes.length;
     }
     return true;
@@ -720,10 +709,10 @@ class OxxifyProtocol {
   ParseNothing(_) {
     return null;
   }
-  FillParameterDictionary() {
-    this.parameterDictionary.set(
+  FillstateDictionary() {
+    this.stateDictionary.set(
       1 /* FanState */,
-      new FanData(
+      new import_ModelData.FanData(
         1,
         "fan.fanState",
         true,
@@ -745,9 +734,9 @@ class OxxifyProtocol {
         this.ParseBool
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       2 /* FanSpeedMode */,
-      new FanData(
+      new import_ModelData.FanData(
         1,
         "fan.fanSpeedMode",
         true,
@@ -769,9 +758,9 @@ class OxxifyProtocol {
         this.ParseFanSpeedMode
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       6 /* BoostState */,
-      new FanData(
+      new import_ModelData.FanData(
         1,
         "fan.boostState",
         false,
@@ -793,9 +782,9 @@ class OxxifyProtocol {
         this.ParseBool
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       7 /* TimerMode */,
-      new FanData(
+      new import_ModelData.FanData(
         1,
         "fan.timerMode",
         true,
@@ -820,9 +809,9 @@ class OxxifyProtocol {
         2
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       11 /* TimerCountdown */,
-      new FanData(
+      new import_ModelData.FanData(
         3,
         "fan.timerCountDown",
         false,
@@ -845,9 +834,9 @@ class OxxifyProtocol {
         "hh:mm:ss"
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       15 /* StateHumiditySensor */,
-      new FanData(
+      new import_ModelData.FanData(
         1,
         "sensors.stateHumiditySensor",
         true,
@@ -869,9 +858,9 @@ class OxxifyProtocol {
         this.ParseBool
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       20 /* StateRelaisSensor */,
-      new FanData(
+      new import_ModelData.FanData(
         1,
         "sensors.stateRelaisSensor",
         true,
@@ -893,9 +882,9 @@ class OxxifyProtocol {
         this.ParseBool
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       22 /* StateAnalogVoltageSensor */,
-      new FanData(
+      new import_ModelData.FanData(
         1,
         "sensors.stateAnalogVoltageSensor",
         true,
@@ -917,9 +906,9 @@ class OxxifyProtocol {
         this.ParseBool
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       25 /* TargetHumidityValue */,
-      new FanData(
+      new import_ModelData.FanData(
         1,
         "sensors.targetHumidityValue",
         true,
@@ -944,9 +933,9 @@ class OxxifyProtocol {
         80
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       36 /* RtcBatteryVoltage */,
-      new FanData(
+      new import_ModelData.FanData(
         2,
         "system.rtcBatteryVoltage",
         false,
@@ -971,9 +960,9 @@ class OxxifyProtocol {
         5e3
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       37 /* CurrentHumidityValue */,
-      new FanData(
+      new import_ModelData.FanData(
         1,
         "sensors.currentHumidityValue",
         false,
@@ -998,9 +987,9 @@ class OxxifyProtocol {
         100
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       45 /* CurrentAnalogVoltageValue */,
-      new FanData(
+      new import_ModelData.FanData(
         1,
         "sensors.currentAnalogVoltageValue",
         false,
@@ -1025,9 +1014,9 @@ class OxxifyProtocol {
         100
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       50 /* CurrentRelaisValue */,
-      new FanData(
+      new import_ModelData.FanData(
         1,
         "sensors.currentRelaisValue",
         false,
@@ -1049,9 +1038,9 @@ class OxxifyProtocol {
         this.ParseBool
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       68 /* ManualFanSpeed */,
-      new FanData(
+      new import_ModelData.FanData(
         1,
         "fan.manualFanSpeed",
         true,
@@ -1076,9 +1065,9 @@ class OxxifyProtocol {
         255
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       74 /* FanSpeedFan1Rpm */,
-      new FanData(
+      new import_ModelData.FanData(
         2,
         "fan.fanSpeedFan1Rpm",
         false,
@@ -1101,9 +1090,9 @@ class OxxifyProtocol {
         "rpm"
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       75 /* FanSpeedFan2Rpm */,
-      new FanData(
+      new import_ModelData.FanData(
         2,
         "fan.fanSpeedFan2Rpm",
         false,
@@ -1126,9 +1115,9 @@ class OxxifyProtocol {
         "rpm"
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       100 /* FilterExchangeCountdown */,
-      new FanData(
+      new import_ModelData.FanData(
         3,
         "fan.filterExchangeCountdown",
         false,
@@ -1151,9 +1140,9 @@ class OxxifyProtocol {
         "dd:hh:mm"
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       101 /* ResetFilterExchangeCountdown */,
-      new FanData(
+      new import_ModelData.FanData(
         1,
         "fan.resetFilterExchangeCountdown",
         true,
@@ -1175,9 +1164,9 @@ class OxxifyProtocol {
         this.ParseNothing
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       102 /* BoostModeFollowUpTime */,
-      new FanData(
+      new import_ModelData.FanData(
         1,
         "fan.boostModeFollowUpTime",
         true,
@@ -1202,9 +1191,9 @@ class OxxifyProtocol {
         60
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       256 /* TriggerTimeSync */,
-      new FanData(
+      new import_ModelData.FanData(
         0,
         "system.triggerRtcTimeSync",
         true,
@@ -1226,9 +1215,9 @@ class OxxifyProtocol {
         this.ParseNothing
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       111 /* RtcTime */,
-      new FanData(
+      new import_ModelData.FanData(
         3,
         "system.rtcTime",
         false,
@@ -1251,9 +1240,9 @@ class OxxifyProtocol {
         "hh:mm:ss"
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       112 /* RtcDate */,
-      new FanData(
+      new import_ModelData.FanData(
         4,
         "system.rtcCalendar",
         false,
@@ -1276,9 +1265,9 @@ class OxxifyProtocol {
         "dd.mm.yy"
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       114 /* TimeControlledMode */,
-      new FanData(
+      new import_ModelData.FanData(
         1,
         "fan.timeControlledMode",
         true,
@@ -1300,9 +1289,9 @@ class OxxifyProtocol {
         this.ParseBool
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       126 /* OperatingTime */,
-      new FanData(
+      new import_ModelData.FanData(
         4,
         "system.operatingTime",
         false,
@@ -1325,9 +1314,9 @@ class OxxifyProtocol {
         "ddddd:hh:mm"
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       128 /* ResetAlarms */,
-      new FanData(
+      new import_ModelData.FanData(
         1,
         "system.resetAlarms",
         true,
@@ -1349,9 +1338,9 @@ class OxxifyProtocol {
         this.ParseNothing
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       131 /* AlarmState */,
-      new FanData(
+      new import_ModelData.FanData(
         1,
         "system.alarmState",
         false,
@@ -1373,9 +1362,9 @@ class OxxifyProtocol {
         this.ParseAlarmWarningState
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       133 /* CloudServerEnabled */,
-      new FanData(
+      new import_ModelData.FanData(
         1,
         "network.cloudServerEnabled",
         false,
@@ -1397,9 +1386,9 @@ class OxxifyProtocol {
         this.ParseBool
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       134 /* FirmwareVersionAndDate */,
-      new FanData(
+      new import_ModelData.FanData(
         6,
         "system.firmwareVersionAndDate",
         false,
@@ -1421,9 +1410,9 @@ class OxxifyProtocol {
         this.ParseFirmware
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       136 /* FilterExchangeNecessary */,
-      new FanData(
+      new import_ModelData.FanData(
         1,
         "fan.filterExchangeNecessary",
         false,
@@ -1445,9 +1434,9 @@ class OxxifyProtocol {
         this.ParseBool
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       148 /* WifiOperatingMode */,
-      new FanData(
+      new import_ModelData.FanData(
         1,
         "network.wifiOperatingMode",
         false,
@@ -1469,9 +1458,9 @@ class OxxifyProtocol {
         this.ParseWifiMode
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       149 /* WifiName */,
-      new FanData(
+      new import_ModelData.FanData(
         -1,
         "network.wifiName",
         false,
@@ -1493,9 +1482,9 @@ class OxxifyProtocol {
         this.ParseText
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       153 /* WifiEncryptionMode */,
-      new FanData(
+      new import_ModelData.FanData(
         1,
         "network.wifiEncryptionMode",
         false,
@@ -1517,9 +1506,9 @@ class OxxifyProtocol {
         this.ParseWifiEncryptionMode
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       154 /* WifiChannel */,
-      new FanData(
+      new import_ModelData.FanData(
         1,
         "network.wifiChannel",
         false,
@@ -1541,9 +1530,9 @@ class OxxifyProtocol {
         this.ParseByteNumber
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       155 /* WifiIpMode */,
-      new FanData(
+      new import_ModelData.FanData(
         1,
         "network.wifiIpMode",
         false,
@@ -1565,9 +1554,9 @@ class OxxifyProtocol {
         this.ParseWifiIpMode
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       156 /* WifiIp */,
-      new FanData(
+      new import_ModelData.FanData(
         4,
         "network.wifiIpMode",
         false,
@@ -1589,9 +1578,9 @@ class OxxifyProtocol {
         this.ParseIpV4Value
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       157 /* WifiSubnetMask */,
-      new FanData(
+      new import_ModelData.FanData(
         4,
         "network.wifiSubnetMask",
         false,
@@ -1613,9 +1602,9 @@ class OxxifyProtocol {
         this.ParseIpV4Value
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       158 /* WifiGateway */,
-      new FanData(
+      new import_ModelData.FanData(
         4,
         "network.wifiGateway",
         false,
@@ -1637,9 +1626,9 @@ class OxxifyProtocol {
         this.ParseIpV4Value
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       163 /* CurrentWifiIp */,
-      new FanData(
+      new import_ModelData.FanData(
         4,
         "network.currentWifiIp",
         false,
@@ -1661,9 +1650,9 @@ class OxxifyProtocol {
         this.ParseIpV4Value
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       183 /* FanOperatingMode */,
-      new FanData(
+      new import_ModelData.FanData(
         1,
         "fan.fanOperatingMode",
         true,
@@ -1688,9 +1677,9 @@ class OxxifyProtocol {
         2
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       184 /* TargetAnalogVoltageValue */,
-      new FanData(
+      new import_ModelData.FanData(
         1,
         "sensors.targetAnalogVoltageValue",
         true,
@@ -1715,9 +1704,9 @@ class OxxifyProtocol {
         100
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       185 /* FanType */,
-      new FanData(
+      new import_ModelData.FanData(
         2,
         "system.fanType",
         false,
@@ -1739,9 +1728,9 @@ class OxxifyProtocol {
         this.ParseSystemType
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       770 /* NightModeTimerSetpoint */,
-      new FanData(
+      new import_ModelData.FanData(
         2,
         "fan.nightModeTimerSetpoint",
         true,
@@ -1764,9 +1753,9 @@ class OxxifyProtocol {
         "hh:mm"
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       771 /* PartyModeTimerSetPoint */,
-      new FanData(
+      new import_ModelData.FanData(
         2,
         "fan.partyModeTimerSetpoint",
         true,
@@ -1789,9 +1778,9 @@ class OxxifyProtocol {
         "hh:mm"
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       772 /* HumiditySensorOverSetPoint */,
-      new FanData(
+      new import_ModelData.FanData(
         1,
         "sensors.humiditySensorOverSetPoint",
         false,
@@ -1813,9 +1802,9 @@ class OxxifyProtocol {
         this.ParseBool
       )
     );
-    this.parameterDictionary.set(
+    this.stateDictionary.set(
       773 /* AnalogVoltageSensorOverSetPoint */,
-      new FanData(
+      new import_ModelData.FanData(
         1,
         "sensors.analogVoltageSensorOverSetPoint",
         false,
@@ -1841,8 +1830,6 @@ class OxxifyProtocol {
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  FanData,
-  OxxifyProtocol,
-  ParameterType
+  OxxifyProtocol
 });
 //# sourceMappingURL=OxxifyProtocol.js.map
