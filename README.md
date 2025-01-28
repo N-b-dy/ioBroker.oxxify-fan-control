@@ -80,6 +80,7 @@ This channel contains system data about the hardware and firmware as well as run
 - Added adapter terminiation if multiple udp server errors occured
 - Replaced cyclic checking of the send quene with a timeout approach instead of interval
 - Missing intermediate objects created
+- Roles updated according to the read/write definitions
 
 ### 0.0.3 (2025-01-11)
 

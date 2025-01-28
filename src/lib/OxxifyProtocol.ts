@@ -928,7 +928,7 @@ export class OxxifyProtocol {
                 1,
                 `${OxxifyProtocol.FanFolder}.boostState`,
                 false,
-                "switch",
+                "sensor.switch",
                 "boolean",
                 {
                     en: "Boost operating status on/off",
@@ -979,7 +979,7 @@ export class OxxifyProtocol {
                 3,
                 `${OxxifyProtocol.FanFolder}.timerCountDown`,
                 false,
-                "value.time",
+                "state",
                 "string",
                 {
                     en: "Current countdown of the timer operation",
@@ -1103,7 +1103,7 @@ export class OxxifyProtocol {
                 2,
                 `${OxxifyProtocol.SystemFolder}.rtcBatteryVoltage`,
                 false,
-                "level.battery",
+                "value.battery",
                 "number",
                 {
                     en: "Current RTC battery voltage",
@@ -1184,7 +1184,7 @@ export class OxxifyProtocol {
                 1,
                 `${OxxifyProtocol.SensorsFolder}.currentRelaisValue`,
                 false,
-                "sensor",
+                "sensor.switch",
                 "boolean",
                 {
                     en: "Current value of the relay sensor",
@@ -1208,7 +1208,7 @@ export class OxxifyProtocol {
                 1,
                 `${OxxifyProtocol.FanFolder}.manualFanSpeed`,
                 true,
-                "state",
+                "level.speed",
                 "number",
                 {
                     en: "Ventilation level of the fan in operation of the manual setting",
@@ -1235,7 +1235,7 @@ export class OxxifyProtocol {
                 2,
                 `${OxxifyProtocol.FanFolder}.fanSpeedFan1Rpm`,
                 false,
-                "state",
+                "value",
                 "number",
                 {
                     en: "Ventilation level of fan no. 1",
@@ -1260,7 +1260,7 @@ export class OxxifyProtocol {
                 2,
                 `${OxxifyProtocol.FanFolder}.fanSpeedFan2Rpm`,
                 false,
-                "state",
+                "value",
                 "number",
                 {
                     en: "Ventilation level of fan no. 2",
@@ -1334,7 +1334,7 @@ export class OxxifyProtocol {
                 1,
                 `${OxxifyProtocol.FanFolder}.boostModeFollowUpTime`,
                 true,
-                "state",
+                "level.timer",
                 "number",
                 {
                     en: "Setpoint of the run-on time for boost mode",
@@ -1516,7 +1516,7 @@ export class OxxifyProtocol {
                 1,
                 `${OxxifyProtocol.SystemFolder}.alarmState`,
                 false,
-                "switch",
+                "state",
                 "string",
                 {
                     en: "Alarm/warning display",
@@ -1540,7 +1540,7 @@ export class OxxifyProtocol {
                 1,
                 `${OxxifyProtocol.NetworkFolder}.cloudServerEnabled`,
                 false,
-                "switch",
+                "sensor.switch",
                 "boolean",
                 {
                     en: "Approval of operation via cloud server",
@@ -1593,7 +1593,7 @@ export class OxxifyProtocol {
                 1,
                 `${OxxifyProtocol.FanFolder}.filterExchangeNecessary`,
                 false,
-                "state",
+                "sensor.switch",
                 "boolean",
                 {
                     en: "Filter change indicator",
@@ -1863,7 +1863,7 @@ export class OxxifyProtocol {
                 1,
                 `${OxxifyProtocol.SensorsFolder}.targetAnalogVoltageValue`,
                 true,
-                "state",
+                "level",
                 "number",
                 {
                     en: "Setpoint of the sensor 0-10 V",
@@ -1890,7 +1890,7 @@ export class OxxifyProtocol {
                 2,
                 `${OxxifyProtocol.SystemFolder}.fanType`,
                 false,
-                "state",
+                "info.name",
                 "string",
                 {
                     en: "System type",
@@ -1966,7 +1966,7 @@ export class OxxifyProtocol {
                 1,
                 `${OxxifyProtocol.SensorsFolder}.humiditySensorOverSetPoint`,
                 false,
-                "state",
+                "sensor.switch",
                 "boolean",
                 {
                     en: "Humidity sensor is above set value",
@@ -1990,7 +1990,7 @@ export class OxxifyProtocol {
                 1,
                 `${OxxifyProtocol.SensorsFolder}.analogVoltageSensorOverSetPoint`,
                 false,
-                "state",
+                "sensor.switch",
                 "boolean",
                 {
                     en: "Analog voltage sensor is above setpoint",
