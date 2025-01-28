@@ -79,6 +79,7 @@ This channel contains system data about the hardware and firmware as well as run
 - Added restart logic of UDP server in case of an error
 - Added adapter terminiation if multiple udp server errors occured
 - Replaced cyclic checking of the send quene with a timeout approach instead of interval
+- Missing intermediate objects created
 
 ### 0.0.3 (2025-01-11)
 

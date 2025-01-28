@@ -92,11 +92,11 @@ class OxxifyFanControl extends utils.Adapter {
 
         await Promise.all(
             this.config.fans.map(async element => {
-                const checkedId = this.RemoveInvalidCharacters(element.id);
+                const strCheckedId = this.RemoveInvalidCharacters(element.id);
 
-                this.log.debug(`Fan configured: "${element.name}": ${checkedId} - ${element.ipaddr}`);
+                this.log.debug(`Fan configured: "${element.name}": ${strCheckedId} - ${element.ipaddr}`);
 
-                await this.extendObject(`devices.${checkedId}`, {
+                await this.extendObject(`devices.${strCheckedId}`, {
                     type: "device",
                     common: {
                         name: element.name,
@@ -104,8 +104,88 @@ class OxxifyFanControl extends utils.Adapter {
                     },
                 });
 
+                await this.extendObject(`devices.${strCheckedId}.${Oxxify.OxxifyProtocol.FanFolder}`, {
+                    type: "channel",
+                    common: {
+                        name: {
+                            en: "fans",
+                            de: "Lüfter",
+                            ru: "вентиляторы",
+                            pt: "fãs",
+                            nl: "ventilatoren",
+                            fr: "fans",
+                            it: "tifosi",
+                            es: "ventiladores",
+                            pl: "fani",
+                            uk: "шанувальники",
+                            "zh-cn": "fans",
+                        },
+                        role: undefined,
+                    },
+                });
+
+                await this.extendObject(`devices.${strCheckedId}.${Oxxify.OxxifyProtocol.NetworkFolder}`, {
+                    type: "channel",
+                    common: {
+                        name: {
+                            en: "Network",
+                            de: "Netzwerk",
+                            ru: "Сеть",
+                            pt: "Rede",
+                            nl: "Netwerk",
+                            fr: "Réseau",
+                            it: "Rete",
+                            es: "Red",
+                            pl: "Sieć",
+                            uk: "Мережа",
+                            "zh-cn": "Network",
+                        },
+                        role: undefined,
+                    },
+                });
+
+                await this.extendObject(`devices.${strCheckedId}.${Oxxify.OxxifyProtocol.SensorsFolder}`, {
+                    type: "channel",
+                    common: {
+                        name: {
+                            en: "Sensors",
+                            de: "Sensoren",
+                            ru: "Датчики",
+                            pt: "Sensores",
+                            nl: "Sensoren",
+                            fr: "Capteurs",
+                            it: "Sensori",
+                            es: "Sensores",
+                            pl: "Czujniki",
+                            uk: "Датчики",
+                            "zh-cn": "Sensors",
+                        },
+                        role: undefined,
+                    },
+                });
+
+                await this.extendObject(`devices.${strCheckedId}.${Oxxify.OxxifyProtocol.SystemFolder}`, {
+                    type: "channel",
+                    common: {
+                        name: {
+                            en: "System",
+                            de: "System",
+                            ru: "Система",
+                            pt: "Sistema",
+                            nl: "Systeem",
+                            fr: "Système",
+                            it: "Sistema",
+                            es: "Sistema",
+                            pl: "System",
+                            uk: "Система",
+                            "zh-cn": "System",
+                        },
+                        role: undefined,
+                    },
+                });
+
                 stateDictionary.forEach(async (value: FanData) => {
-                    await this.extendObject(`devices.${checkedId}.${value.strIdentifer}`, {
+                    await this.extendObject(`devices.${strCheckedId}.${value.strIdentifer}`, {
                         type: "state",
                         common: {
                             name: value.name,
@@ -121,7 +201,7 @@ class OxxifyFanControl extends utils.Adapter {
                 });
 
                 // Remove the configured fans from the avaialble ones in the object tree
-                missingDevices = missingDevices.filter(d => d != checkedId);
+                missingDevices = missingDevices.filter(d => d != strCheckedId);
             }),
         );
 
@@ -349,9 +429,9 @@ class OxxifyFanControl extends utils.Adapter {
      */
     private ReadAllFanData(bIncludeConstData: boolean): void {
         this.config.fans.forEach(element => {
-            const checkedId = this.RemoveInvalidCharacters(element.id);
+            const strCheckedId = this.RemoveInvalidCharacters(element.id);
 
-            this.oxxify.StartNewFrame(checkedId, element.password);
+            this.oxxify.StartNewFrame(strCheckedId, element.password);
             this.oxxify.ReadFanState();
             this.oxxify.ReadFanSpeedMode();
             this.oxxify.ReadOperatingMode();
@@ -543,11 +623,11 @@ class OxxifyFanControl extends utils.Adapter {
      * Replaces the invalid characters from the provided input variable. If any is found, it is
      * replaced with underscore character "_".
      *
-     * @param userInput The string to be checked for invalid characters.
+     * @param strUserInput The string to be checked for invalid characters.
      * @returns The input string with all invalid characters replaced.
      */
-    private RemoveInvalidCharacters(userInput: string): string {
-        return (userInput || "").replace(this.FORBIDDEN_CHARS, "_");
+    private RemoveInvalidCharacters(strUserInput: string): string {
+        return (strUserInput || "").replace(this.FORBIDDEN_CHARS, "_");
     }
 
     /**

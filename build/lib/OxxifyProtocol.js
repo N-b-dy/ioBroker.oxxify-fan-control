@@ -473,6 +473,10 @@ class OxxifyProtocol {
   get StateDictionary() {
     return this.stateDictionary;
   }
+  static FanFolder = "fan";
+  static NetworkFolder = "network";
+  static SensorsFolder = "sensors";
+  static SystemFolder = "system";
   //#region Protected data members
   internalBuffer = Buffer.alloc(256);
   nWriteIndex = 0;
@@ -714,7 +718,7 @@ class OxxifyProtocol {
       1 /* FanState */,
       new import_ModelData.FanData(
         1,
-        "fan.fanState",
+        `${OxxifyProtocol.FanFolder}.fanState`,
         true,
         "switch",
         "boolean",
@@ -738,7 +742,7 @@ class OxxifyProtocol {
       2 /* FanSpeedMode */,
       new import_ModelData.FanData(
         1,
-        "fan.fanSpeedMode",
+        `${OxxifyProtocol.FanFolder}.fanSpeedMode`,
         true,
         "state",
         "string",
@@ -762,7 +766,7 @@ class OxxifyProtocol {
       6 /* BoostState */,
       new import_ModelData.FanData(
         1,
-        "fan.boostState",
+        `${OxxifyProtocol.FanFolder}.boostState`,
         false,
         "switch",
         "boolean",
@@ -786,7 +790,7 @@ class OxxifyProtocol {
       7 /* TimerMode */,
       new import_ModelData.FanData(
         1,
-        "fan.timerMode",
+        `${OxxifyProtocol.FanFolder}.timerMode`,
         true,
         "state",
         "mixed",
@@ -813,7 +817,7 @@ class OxxifyProtocol {
       11 /* TimerCountdown */,
       new import_ModelData.FanData(
         3,
-        "fan.timerCountDown",
+        `${OxxifyProtocol.FanFolder}.timerCountDown`,
         false,
         "value.time",
         "string",
@@ -838,7 +842,7 @@ class OxxifyProtocol {
       15 /* StateHumiditySensor */,
       new import_ModelData.FanData(
         1,
-        "sensors.stateHumiditySensor",
+        `${OxxifyProtocol.SensorsFolder}.stateHumiditySensor`,
         true,
         "switch",
         "boolean",
@@ -862,7 +866,7 @@ class OxxifyProtocol {
       20 /* StateRelaisSensor */,
       new import_ModelData.FanData(
         1,
-        "sensors.stateRelaisSensor",
+        `${OxxifyProtocol.SensorsFolder}.stateRelaisSensor`,
         true,
         "switch",
         "boolean",
@@ -886,7 +890,7 @@ class OxxifyProtocol {
       22 /* StateAnalogVoltageSensor */,
       new import_ModelData.FanData(
         1,
-        "sensors.stateAnalogVoltageSensor",
+        `${OxxifyProtocol.SensorsFolder}.stateAnalogVoltageSensor`,
         true,
         "switch",
         "boolean",
@@ -910,7 +914,7 @@ class OxxifyProtocol {
       25 /* TargetHumidityValue */,
       new import_ModelData.FanData(
         1,
-        "sensors.targetHumidityValue",
+        `${OxxifyProtocol.SensorsFolder}.targetHumidityValue`,
         true,
         "level.humidity",
         "number",
@@ -937,7 +941,7 @@ class OxxifyProtocol {
       36 /* RtcBatteryVoltage */,
       new import_ModelData.FanData(
         2,
-        "system.rtcBatteryVoltage",
+        `${OxxifyProtocol.SystemFolder}.rtcBatteryVoltage`,
         false,
         "level.battery",
         "number",
@@ -964,7 +968,7 @@ class OxxifyProtocol {
       37 /* CurrentHumidityValue */,
       new import_ModelData.FanData(
         1,
-        "sensors.currentHumidityValue",
+        `${OxxifyProtocol.SensorsFolder}.currentHumidityValue`,
         false,
         "value.humidity",
         "number",
@@ -991,7 +995,7 @@ class OxxifyProtocol {
       45 /* CurrentAnalogVoltageValue */,
       new import_ModelData.FanData(
         1,
-        "sensors.currentAnalogVoltageValue",
+        `${OxxifyProtocol.SensorsFolder}.currentAnalogVoltageValue`,
         false,
         "value.voltage",
         "number",
@@ -1018,7 +1022,7 @@ class OxxifyProtocol {
       50 /* CurrentRelaisValue */,
       new import_ModelData.FanData(
         1,
-        "sensors.currentRelaisValue",
+        `${OxxifyProtocol.SensorsFolder}.currentRelaisValue`,
         false,
         "sensor",
         "boolean",
@@ -1042,7 +1046,7 @@ class OxxifyProtocol {
       68 /* ManualFanSpeed */,
       new import_ModelData.FanData(
         1,
-        "fan.manualFanSpeed",
+        `${OxxifyProtocol.FanFolder}.manualFanSpeed`,
         true,
         "state",
         "number",
@@ -1069,7 +1073,7 @@ class OxxifyProtocol {
       74 /* FanSpeedFan1Rpm */,
       new import_ModelData.FanData(
         2,
-        "fan.fanSpeedFan1Rpm",
+        `${OxxifyProtocol.FanFolder}.fanSpeedFan1Rpm`,
         false,
         "state",
         "number",
@@ -1094,7 +1098,7 @@ class OxxifyProtocol {
       75 /* FanSpeedFan2Rpm */,
       new import_ModelData.FanData(
         2,
-        "fan.fanSpeedFan2Rpm",
+        `${OxxifyProtocol.FanFolder}.fanSpeedFan2Rpm`,
         false,
         "state",
         "number",
@@ -1119,7 +1123,7 @@ class OxxifyProtocol {
       100 /* FilterExchangeCountdown */,
       new import_ModelData.FanData(
         3,
-        "fan.filterExchangeCountdown",
+        `${OxxifyProtocol.FanFolder}.filterExchangeCountdown`,
         false,
         "state",
         "string",
@@ -1144,7 +1148,7 @@ class OxxifyProtocol {
       101 /* ResetFilterExchangeCountdown */,
       new import_ModelData.FanData(
         1,
-        "fan.resetFilterExchangeCountdown",
+        `${OxxifyProtocol.FanFolder}.resetFilterExchangeCountdown`,
         true,
         "button",
         "boolean",
@@ -1168,7 +1172,7 @@ class OxxifyProtocol {
       102 /* BoostModeFollowUpTime */,
       new import_ModelData.FanData(
         1,
-        "fan.boostModeFollowUpTime",
+        `${OxxifyProtocol.FanFolder}.boostModeFollowUpTime`,
         true,
         "state",
         "number",
@@ -1195,7 +1199,7 @@ class OxxifyProtocol {
       256 /* TriggerTimeSync */,
       new import_ModelData.FanData(
         0,
-        "system.triggerRtcTimeSync",
+        `${OxxifyProtocol.SystemFolder}.triggerRtcTimeSync`,
         true,
         "button",
         "boolean",
@@ -1219,7 +1223,7 @@ class OxxifyProtocol {
       111 /* RtcTime */,
       new import_ModelData.FanData(
         3,
-        "system.rtcTime",
+        `${OxxifyProtocol.SystemFolder}.rtcTime`,
         false,
         "value.time",
         "string",
@@ -1244,7 +1248,7 @@ class OxxifyProtocol {
       112 /* RtcDate */,
       new import_ModelData.FanData(
         4,
-        "system.rtcCalendar",
+        `${OxxifyProtocol.SystemFolder}.rtcCalendar`,
         false,
         "value.date",
         "string",
@@ -1269,7 +1273,7 @@ class OxxifyProtocol {
       114 /* TimeControlledMode */,
       new import_ModelData.FanData(
         1,
-        "fan.timeControlledMode",
+        `${OxxifyProtocol.FanFolder}.timeControlledMode`,
         true,
         "switch",
         "boolean",
@@ -1293,7 +1297,7 @@ class OxxifyProtocol {
       126 /* OperatingTime */,
       new import_ModelData.FanData(
         4,
-        "system.operatingTime",
+        `${OxxifyProtocol.SystemFolder}.operatingTime`,
         false,
         "state",
         "string",
@@ -1318,7 +1322,7 @@ class OxxifyProtocol {
       128 /* ResetAlarms */,
       new import_ModelData.FanData(
         1,
-        "system.resetAlarms",
+        `${OxxifyProtocol.SystemFolder}.resetAlarms`,
         true,
         "button",
         "boolean",
@@ -1342,7 +1346,7 @@ class OxxifyProtocol {
       131 /* AlarmState */,
       new import_ModelData.FanData(
         1,
-        "system.alarmState",
+        `${OxxifyProtocol.SystemFolder}.alarmState`,
         false,
         "switch",
         "string",
@@ -1366,7 +1370,7 @@ class OxxifyProtocol {
       133 /* CloudServerEnabled */,
       new import_ModelData.FanData(
         1,
-        "network.cloudServerEnabled",
+        `${OxxifyProtocol.NetworkFolder}.cloudServerEnabled`,
         false,
         "switch",
         "boolean",
@@ -1390,7 +1394,7 @@ class OxxifyProtocol {
       134 /* FirmwareVersionAndDate */,
       new import_ModelData.FanData(
         6,
-        "system.firmwareVersionAndDate",
+        `${OxxifyProtocol.SystemFolder}.firmwareVersionAndDate`,
         false,
         "info.firmware",
         "string",
@@ -1414,7 +1418,7 @@ class OxxifyProtocol {
       136 /* FilterExchangeNecessary */,
       new import_ModelData.FanData(
         1,
-        "fan.filterExchangeNecessary",
+        `${OxxifyProtocol.FanFolder}.filterExchangeNecessary`,
         false,
         "state",
         "boolean",
@@ -1438,7 +1442,7 @@ class OxxifyProtocol {
       148 /* WifiOperatingMode */,
       new import_ModelData.FanData(
         1,
-        "network.wifiOperatingMode",
+        `${OxxifyProtocol.NetworkFolder}.wifiOperatingMode`,
         false,
         "state",
         "string",
@@ -1462,7 +1466,7 @@ class OxxifyProtocol {
       149 /* WifiName */,
       new import_ModelData.FanData(
         -1,
-        "network.wifiName",
+        `${OxxifyProtocol.NetworkFolder}.wifiName`,
         false,
         "state",
         "string",
@@ -1486,7 +1490,7 @@ class OxxifyProtocol {
       153 /* WifiEncryptionMode */,
       new import_ModelData.FanData(
         1,
-        "network.wifiEncryptionMode",
+        `${OxxifyProtocol.NetworkFolder}.wifiEncryptionMode`,
         false,
         "state",
         "string",
@@ -1510,7 +1514,7 @@ class OxxifyProtocol {
       154 /* WifiChannel */,
       new import_ModelData.FanData(
         1,
-        "network.wifiChannel",
+        `${OxxifyProtocol.NetworkFolder}.wifiChannel`,
         false,
         "state",
         "number",
@@ -1534,7 +1538,7 @@ class OxxifyProtocol {
       155 /* WifiIpMode */,
       new import_ModelData.FanData(
         1,
-        "network.wifiIpMode",
+        `${OxxifyProtocol.NetworkFolder}.wifiIpMode`,
         false,
         "state",
         "string",
@@ -1558,7 +1562,7 @@ class OxxifyProtocol {
       156 /* WifiIp */,
       new import_ModelData.FanData(
         4,
-        "network.wifiIpMode",
+        `${OxxifyProtocol.NetworkFolder}.wifiIpMode`,
         false,
         "info.ip",
         "string",
@@ -1582,7 +1586,7 @@ class OxxifyProtocol {
       157 /* WifiSubnetMask */,
       new import_ModelData.FanData(
         4,
-        "network.wifiSubnetMask",
+        `${OxxifyProtocol.NetworkFolder}.wifiSubnetMask`,
         false,
         "info.ip",
         "string",
@@ -1606,7 +1610,7 @@ class OxxifyProtocol {
       158 /* WifiGateway */,
       new import_ModelData.FanData(
         4,
-        "network.wifiGateway",
+        `${OxxifyProtocol.NetworkFolder}.wifiGateway`,
         false,
         "info.ip",
         "string",
@@ -1630,7 +1634,7 @@ class OxxifyProtocol {
       163 /* CurrentWifiIp */,
       new import_ModelData.FanData(
         4,
-        "network.currentWifiIp",
+        `${OxxifyProtocol.NetworkFolder}.currentWifiIp`,
         false,
         "info.ip",
         "string",
@@ -1654,7 +1658,7 @@ class OxxifyProtocol {
       183 /* FanOperatingMode */,
       new import_ModelData.FanData(
         1,
-        "fan.fanOperatingMode",
+        `${OxxifyProtocol.FanFolder}.fanOperatingMode`,
         true,
         "state",
         "mixed",
@@ -1681,7 +1685,7 @@ class OxxifyProtocol {
       184 /* TargetAnalogVoltageValue */,
       new import_ModelData.FanData(
         1,
-        "sensors.targetAnalogVoltageValue",
+        `${OxxifyProtocol.SensorsFolder}.targetAnalogVoltageValue`,
         true,
         "state",
         "number",
@@ -1708,7 +1712,7 @@ class OxxifyProtocol {
       185 /* FanType */,
       new import_ModelData.FanData(
         2,
-        "system.fanType",
+        `${OxxifyProtocol.SystemFolder}.fanType`,
         false,
         "state",
         "string",
@@ -1732,7 +1736,7 @@ class OxxifyProtocol {
       770 /* NightModeTimerSetpoint */,
       new import_ModelData.FanData(
         2,
-        "fan.nightModeTimerSetpoint",
+        `${OxxifyProtocol.FanFolder}.nightModeTimerSetpoint`,
         true,
         "state",
         "string",
@@ -1757,7 +1761,7 @@ class OxxifyProtocol {
       771 /* PartyModeTimerSetPoint */,
       new import_ModelData.FanData(
         2,
-        "fan.partyModeTimerSetpoint",
+        `${OxxifyProtocol.FanFolder}.partyModeTimerSetpoint`,
         true,
         "state",
         "string",
@@ -1782,7 +1786,7 @@ class OxxifyProtocol {
       772 /* HumiditySensorOverSetPoint */,
       new import_ModelData.FanData(
         1,
-        "sensors.humiditySensorOverSetPoint",
+        `${OxxifyProtocol.SensorsFolder}.humiditySensorOverSetPoint`,
         false,
         "state",
         "boolean",
@@ -1806,7 +1810,7 @@ class OxxifyProtocol {
       773 /* AnalogVoltageSensorOverSetPoint */,
       new import_ModelData.FanData(
         1,
-        "sensors.analogVoltageSensorOverSetPoint",
+        `${OxxifyProtocol.SensorsFolder}.analogVoltageSensorOverSetPoint`,
         false,
         "state",
         "boolean",

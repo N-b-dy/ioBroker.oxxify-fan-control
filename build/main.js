@@ -83,17 +83,93 @@ class OxxifyFanControl extends utils.Adapter {
     });
     await Promise.all(
       this.config.fans.map(async (element) => {
-        const checkedId = this.RemoveInvalidCharacters(element.id);
-        this.log.debug(`Fan configured: "${element.name}": ${checkedId} - ${element.ipaddr}`);
-        await this.extendObject(`devices.${checkedId}`, {
+        const strCheckedId = this.RemoveInvalidCharacters(element.id);
+        this.log.debug(`Fan configured: "${element.name}": ${strCheckedId} - ${element.ipaddr}`);
+        await this.extendObject(`devices.${strCheckedId}`, {
           type: "device",
           common: {
             name: element.name,
             role: void 0
           }
         });
+        await this.extendObject(`devices.${strCheckedId}.${Oxxify.OxxifyProtocol.FanFolder}`, {
+          type: "channel",
+          common: {
+            name: {
+              en: "fans",
+              de: "L\xFCfter",
+              ru: "\u0432\u0435\u043D\u0442\u0438\u043B\u044F\u0442\u043E\u0440\u044B",
+              pt: "f\xE3s",
+              nl: "ventilatoren",
+              fr: "fans",
+              it: "tifosi",
+              es: "ventiladores",
+              pl: "fani",
+              uk: "\u0448\u0430\u043D\u0443\u0432\u0430\u043B\u044C\u043D\u0438\u043A\u0438",
+              "zh-cn": "fans"
+            },
+            role: void 0
+          }
+        });
+        await this.extendObject(`devices.${strCheckedId}.${Oxxify.OxxifyProtocol.NetworkFolder}`, {
+          type: "channel",
+          common: {
+            name: {
+              en: "Network",
+              de: "Netzwerk",
+              ru: "\u0421\u0435\u0442\u044C",
+              pt: "Rede",
+              nl: "Netwerk",
+              fr: "R\xE9seau",
+              it: "Rete",
+              es: "Red",
+              pl: "Sie\u0107",
+              uk: "\u041C\u0435\u0440\u0435\u0436\u0430",
+              "zh-cn": "Network"
+            },
+            role: void 0
+          }
+        });
+        await this.extendObject(`devices.${strCheckedId}.${Oxxify.OxxifyProtocol.SensorsFolder}`, {
+          type: "channel",
+          common: {
+            name: {
+              en: "Sensors",
+              de: "Sensoren",
+              ru: "\u0414\u0430\u0442\u0447\u0438\u043A\u0438",
+              pt: "Sensores",
+              nl: "Sensoren",
+              fr: "Capteurs",
+              it: "Sensori",
+              es: "Sensores",
+              pl: "Czujniki",
+              uk: "\u0414\u0430\u0442\u0447\u0438\u043A\u0438",
+              "zh-cn": "Sensors"
+            },
+            role: void 0
+          }
+        });
+        await this.extendObject(`devices.${strCheckedId}.${Oxxify.OxxifyProtocol.SystemFolder}`, {
+          type: "channel",
+          common: {
+            name: {
+              en: "System",
+              de: "System",
+              ru: "\u0421\u0438\u0441\u0442\u0435\u043C\u0430",
+              pt: "Sistema",
+              nl: "Systeem",
+              fr: "Syst\xE8me",
+              it: "Sistema",
+              es: "Sistema",
+              pl: "System",
+              uk: "\u0421\u0438\u0441\u0442\u0435\u043C\u0430",
+              "zh-cn": "System"
+            },
+            role: void 0
+          }
+        });
         stateDictionary.forEach(async (value) => {
-          await this.extendObject(`devices.${checkedId}.${value.strIdentifer}`, {
+          await this.extendObject(`devices.${strCheckedId}.${value.strIdentifer}`, {
             type: "state",
             common: {
               name: value.name,
@@ -107,7 +183,7 @@ class OxxifyFanControl extends utils.Adapter {
             }
           });
         });
-        missingDevices = missingDevices.filter((d) => d != checkedId);
+        missingDevices = missingDevices.filter((d) => d != strCheckedId);
       })
     );
     if (this.supportsFeature && this.supportsFeature("ADAPTER_DEL_OBJECT_RECURSIVE")) {
@@ -284,8 +360,8 @@ class OxxifyFanControl extends utils.Adapter {
    */
   ReadAllFanData(bIncludeConstData) {
     this.config.fans.forEach((element) => {
-      const checkedId = this.RemoveInvalidCharacters(element.id);
-      this.oxxify.StartNewFrame(checkedId, element.password);
+      const strCheckedId = this.RemoveInvalidCharacters(element.id);
+      this.oxxify.StartNewFrame(strCheckedId, element.password);
       this.oxxify.ReadFanState();
       this.oxxify.ReadFanSpeedMode();
       this.oxxify.ReadOperatingMode();
@@ -449,11 +525,11 @@ class OxxifyFanControl extends utils.Adapter {
    * Replaces the invalid characters from the provided input variable. If any is found, it is
    * replaced with underscore character "_".
    *
-   * @param userInput The string to be checked for invalid characters.
+   * @param strUserInput The string to be checked for invalid characters.
    * @returns The input string with all invalid characters replaced.
    */
-  RemoveInvalidCharacters(userInput) {
-    return (userInput || "").replace(this.FORBIDDEN_CHARS, "_");
+  RemoveInvalidCharacters(strUserInput) {
+    return (strUserInput || "").replace(this.FORBIDDEN_CHARS, "_");
   }
   /**
    * Adds the provided data to the send quene and starts the timeout for sending it.

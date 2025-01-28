@@ -590,6 +590,11 @@ export class OxxifyProtocol {
         return this.stateDictionary;
     }
 
+    public static readonly FanFolder = "fan";
+    public static readonly NetworkFolder = "network";
+    public static readonly SensorsFolder = "sensors";
+    public static readonly SystemFolder = "system";
+
     //#region Protected data members
 
     internalBuffer: Buffer = Buffer.alloc(256);
@@ -873,7 +878,7 @@ export class OxxifyProtocol {
             ParameterType.FanState,
             new FanData(
                 1,
-                "fan.fanState",
+                `${OxxifyProtocol.FanFolder}.fanState`,
                 true,
                 "switch",
                 "boolean",
@@ -897,7 +902,7 @@ export class OxxifyProtocol {
             ParameterType.FanSpeedMode,
             new FanData(
                 1,
-                "fan.fanSpeedMode",
+                `${OxxifyProtocol.FanFolder}.fanSpeedMode`,
                 true,
                 "state",
                 "string",
@@ -921,7 +926,7 @@ export class OxxifyProtocol {
             ParameterType.BoostState,
             new FanData(
                 1,
-                "fan.boostState",
+                `${OxxifyProtocol.FanFolder}.boostState`,
                 false,
                 "switch",
                 "boolean",
@@ -945,7 +950,7 @@ export class OxxifyProtocol {
             ParameterType.TimerMode,
             new FanData(
                 1,
-                "fan.timerMode",
+                `${OxxifyProtocol.FanFolder}.timerMode`,
                 true,
                 "state",
                 "mixed",
@@ -972,7 +977,7 @@ export class OxxifyProtocol {
             ParameterType.TimerCountdown,
             new FanData(
                 3,
-                "fan.timerCountDown",
+                `${OxxifyProtocol.FanFolder}.timerCountDown`,
                 false,
                 "value.time",
                 "string",
@@ -997,7 +1002,7 @@ export class OxxifyProtocol {
             ParameterType.StateHumiditySensor,
             new FanData(
                 1,
-                "sensors.stateHumiditySensor",
+                `${OxxifyProtocol.SensorsFolder}.stateHumiditySensor`,
                 true,
                 "switch",
                 "boolean",
@@ -1021,7 +1026,7 @@ export class OxxifyProtocol {
             ParameterType.StateRelaisSensor,
             new FanData(
                 1,
-                "sensors.stateRelaisSensor",
+                `${OxxifyProtocol.SensorsFolder}.stateRelaisSensor`,
                 true,
                 "switch",
                 "boolean",
@@ -1045,7 +1050,7 @@ export class OxxifyProtocol {
             ParameterType.StateAnalogVoltageSensor,
             new FanData(
                 1,
-                "sensors.stateAnalogVoltageSensor",
+                `${OxxifyProtocol.SensorsFolder}.stateAnalogVoltageSensor`,
                 true,
                 "switch",
                 "boolean",
@@ -1069,7 +1074,7 @@ export class OxxifyProtocol {
             ParameterType.TargetHumidityValue,
             new FanData(
                 1,
-                "sensors.targetHumidityValue",
+                `${OxxifyProtocol.SensorsFolder}.targetHumidityValue`,
                 true,
                 "level.humidity",
                 "number",
@@ -1096,7 +1101,7 @@ export class OxxifyProtocol {
             ParameterType.RtcBatteryVoltage,
             new FanData(
                 2,
-                "system.rtcBatteryVoltage",
+                `${OxxifyProtocol.SystemFolder}.rtcBatteryVoltage`,
                 false,
                 "level.battery",
                 "number",
@@ -1123,7 +1128,7 @@ export class OxxifyProtocol {
             ParameterType.CurrentHumidityValue,
             new FanData(
                 1,
-                "sensors.currentHumidityValue",
+                `${OxxifyProtocol.SensorsFolder}.currentHumidityValue`,
                 false,
                 "value.humidity",
                 "number",
@@ -1150,7 +1155,7 @@ export class OxxifyProtocol {
             ParameterType.CurrentAnalogVoltageValue,
             new FanData(
                 1,
-                "sensors.currentAnalogVoltageValue",
+                `${OxxifyProtocol.SensorsFolder}.currentAnalogVoltageValue`,
                 false,
                 "value.voltage",
                 "number",
@@ -1177,7 +1182,7 @@ export class OxxifyProtocol {
             ParameterType.CurrentRelaisValue,
             new FanData(
                 1,
-                "sensors.currentRelaisValue",
+                `${OxxifyProtocol.SensorsFolder}.currentRelaisValue`,
                 false,
                 "sensor",
                 "boolean",
@@ -1201,7 +1206,7 @@ export class OxxifyProtocol {
             ParameterType.ManualFanSpeed,
             new FanData(
                 1,
-                "fan.manualFanSpeed",
+                `${OxxifyProtocol.FanFolder}.manualFanSpeed`,
                 true,
                 "state",
                 "number",
@@ -1228,7 +1233,7 @@ export class OxxifyProtocol {
             ParameterType.FanSpeedFan1Rpm,
             new FanData(
                 2,
-                "fan.fanSpeedFan1Rpm",
+                `${OxxifyProtocol.FanFolder}.fanSpeedFan1Rpm`,
                 false,
                 "state",
                 "number",
@@ -1253,7 +1258,7 @@ export class OxxifyProtocol {
             ParameterType.FanSpeedFan2Rpm,
             new FanData(
                 2,
-                "fan.fanSpeedFan2Rpm",
+                `${OxxifyProtocol.FanFolder}.fanSpeedFan2Rpm`,
                 false,
                 "state",
                 "number",
@@ -1278,7 +1283,7 @@ export class OxxifyProtocol {
             ParameterType.FilterExchangeCountdown,
             new FanData(
                 3,
-                "fan.filterExchangeCountdown",
+                `${OxxifyProtocol.FanFolder}.filterExchangeCountdown`,
                 false,
                 "state",
                 "string",
@@ -1303,7 +1308,7 @@ export class OxxifyProtocol {
             ParameterType.ResetFilterExchangeCountdown,
             new FanData(
                 1,
-                "fan.resetFilterExchangeCountdown",
+                `${OxxifyProtocol.FanFolder}.resetFilterExchangeCountdown`,
                 true,
                 "button",
                 "boolean",
@@ -1327,7 +1332,7 @@ export class OxxifyProtocol {
             ParameterType.BoostModeFollowUpTime,
             new FanData(
                 1,
-                "fan.boostModeFollowUpTime",
+                `${OxxifyProtocol.FanFolder}.boostModeFollowUpTime`,
                 true,
                 "state",
                 "number",
@@ -1356,7 +1361,7 @@ export class OxxifyProtocol {
             ParameterType.TriggerTimeSync,
             new FanData(
                 0,
-                "system.triggerRtcTimeSync",
+                `${OxxifyProtocol.SystemFolder}.triggerRtcTimeSync`,
                 true,
                 "button",
                 "boolean",
@@ -1381,7 +1386,7 @@ export class OxxifyProtocol {
             ParameterType.RtcTime,
             new FanData(
                 3,
-                "system.rtcTime",
+                `${OxxifyProtocol.SystemFolder}.rtcTime`,
                 false,
                 "value.time",
                 "string",
@@ -1406,7 +1411,7 @@ export class OxxifyProtocol {
             ParameterType.RtcDate,
             new FanData(
                 4,
-                "system.rtcCalendar",
+                `${OxxifyProtocol.SystemFolder}.rtcCalendar`,
                 false,
                 "value.date",
                 "string",
@@ -1431,7 +1436,7 @@ export class OxxifyProtocol {
             ParameterType.TimeControlledMode,
             new FanData(
                 1,
-                "fan.timeControlledMode",
+                `${OxxifyProtocol.FanFolder}.timeControlledMode`,
                 true,
                 "switch",
                 "boolean",
@@ -1460,7 +1465,7 @@ export class OxxifyProtocol {
             ParameterType.OperatingTime,
             new FanData(
                 4,
-                "system.operatingTime",
+                `${OxxifyProtocol.SystemFolder}.operatingTime`,
                 false,
                 "state",
                 "string",
@@ -1485,7 +1490,7 @@ export class OxxifyProtocol {
             ParameterType.ResetAlarms,
             new FanData(
                 1,
-                "system.resetAlarms",
+                `${OxxifyProtocol.SystemFolder}.resetAlarms`,
                 true,
                 "button",
                 "boolean",
@@ -1509,7 +1514,7 @@ export class OxxifyProtocol {
             ParameterType.AlarmState,
             new FanData(
                 1,
-                "system.alarmState",
+                `${OxxifyProtocol.SystemFolder}.alarmState`,
                 false,
                 "switch",
                 "string",
@@ -1533,7 +1538,7 @@ export class OxxifyProtocol {
             ParameterType.CloudServerEnabled,
             new FanData(
                 1,
-                "network.cloudServerEnabled",
+                `${OxxifyProtocol.NetworkFolder}.cloudServerEnabled`,
                 false,
                 "switch",
                 "boolean",
@@ -1557,7 +1562,7 @@ export class OxxifyProtocol {
             ParameterType.FirmwareVersionAndDate,
             new FanData(
                 6,
-                "system.firmwareVersionAndDate",
+                `${OxxifyProtocol.SystemFolder}.firmwareVersionAndDate`,
                 false,
                 "info.firmware",
                 "string",
@@ -1586,7 +1591,7 @@ export class OxxifyProtocol {
             ParameterType.FilterExchangeNecessary,
             new FanData(
                 1,
-                "fan.filterExchangeNecessary",
+                `${OxxifyProtocol.FanFolder}.filterExchangeNecessary`,
                 false,
                 "state",
                 "boolean",
@@ -1610,7 +1615,7 @@ export class OxxifyProtocol {
             ParameterType.WifiOperatingMode,
             new FanData(
                 1,
-                "network.wifiOperatingMode",
+                `${OxxifyProtocol.NetworkFolder}.wifiOperatingMode`,
                 false,
                 "state",
                 "string",
@@ -1634,7 +1639,7 @@ export class OxxifyProtocol {
             ParameterType.WifiName,
             new FanData(
                 -1,
-                "network.wifiName",
+                `${OxxifyProtocol.NetworkFolder}.wifiName`,
                 false,
                 "state",
                 "string",
@@ -1659,7 +1664,7 @@ export class OxxifyProtocol {
             ParameterType.WifiEncryptionMode,
             new FanData(
                 1,
-                "network.wifiEncryptionMode",
+                `${OxxifyProtocol.NetworkFolder}.wifiEncryptionMode`,
                 false,
                 "state",
                 "string",
@@ -1683,7 +1688,7 @@ export class OxxifyProtocol {
             ParameterType.WifiChannel,
             new FanData(
                 1,
-                "network.wifiChannel",
+                `${OxxifyProtocol.NetworkFolder}.wifiChannel`,
                 false,
                 "state",
                 "number",
@@ -1707,7 +1712,7 @@ export class OxxifyProtocol {
             ParameterType.WifiIpMode,
             new FanData(
                 1,
-                "network.wifiIpMode",
+                `${OxxifyProtocol.NetworkFolder}.wifiIpMode`,
                 false,
                 "state",
                 "string",
@@ -1731,7 +1736,7 @@ export class OxxifyProtocol {
             ParameterType.WifiIp,
             new FanData(
                 4,
-                "network.wifiIpMode",
+                `${OxxifyProtocol.NetworkFolder}.wifiIpMode`,
                 false,
                 "info.ip",
                 "string",
@@ -1755,7 +1760,7 @@ export class OxxifyProtocol {
             ParameterType.WifiSubnetMask,
             new FanData(
                 4,
-                "network.wifiSubnetMask",
+                `${OxxifyProtocol.NetworkFolder}.wifiSubnetMask`,
                 false,
                 "info.ip",
                 "string",
@@ -1779,7 +1784,7 @@ export class OxxifyProtocol {
             ParameterType.WifiGateway,
             new FanData(
                 4,
-                "network.wifiGateway",
+                `${OxxifyProtocol.NetworkFolder}.wifiGateway`,
                 false,
                 "info.ip",
                 "string",
@@ -1805,7 +1810,7 @@ export class OxxifyProtocol {
             ParameterType.CurrentWifiIp,
             new FanData(
                 4,
-                "network.currentWifiIp",
+                `${OxxifyProtocol.NetworkFolder}.currentWifiIp`,
                 false,
                 "info.ip",
                 "string",
@@ -1829,7 +1834,7 @@ export class OxxifyProtocol {
             ParameterType.FanOperatingMode,
             new FanData(
                 1,
-                "fan.fanOperatingMode",
+                `${OxxifyProtocol.FanFolder}.fanOperatingMode`,
                 true,
                 "state",
                 "mixed",
@@ -1856,7 +1861,7 @@ export class OxxifyProtocol {
             ParameterType.TargetAnalogVoltageValue,
             new FanData(
                 1,
-                "sensors.targetAnalogVoltageValue",
+                `${OxxifyProtocol.SensorsFolder}.targetAnalogVoltageValue`,
                 true,
                 "state",
                 "number",
@@ -1883,7 +1888,7 @@ export class OxxifyProtocol {
             ParameterType.FanType,
             new FanData(
                 2,
-                "system.fanType",
+                `${OxxifyProtocol.SystemFolder}.fanType`,
                 false,
                 "state",
                 "string",
@@ -1909,7 +1914,7 @@ export class OxxifyProtocol {
             ParameterType.NightModeTimerSetpoint,
             new FanData(
                 2,
-                "fan.nightModeTimerSetpoint",
+                `${OxxifyProtocol.FanFolder}.nightModeTimerSetpoint`,
                 true,
                 "state",
                 "string",
@@ -1934,7 +1939,7 @@ export class OxxifyProtocol {
             ParameterType.PartyModeTimerSetPoint,
             new FanData(
                 2,
-                "fan.partyModeTimerSetpoint",
+                `${OxxifyProtocol.FanFolder}.partyModeTimerSetpoint`,
                 true,
                 "state",
                 "string",
@@ -1959,7 +1964,7 @@ export class OxxifyProtocol {
             ParameterType.HumiditySensorOverSetPoint,
             new FanData(
                 1,
-                "sensors.humiditySensorOverSetPoint",
+                `${OxxifyProtocol.SensorsFolder}.humiditySensorOverSetPoint`,
                 false,
                 "state",
                 "boolean",
@@ -1983,7 +1988,7 @@ export class OxxifyProtocol {
             ParameterType.AnalogVoltageSensorOverSetPoint,
             new FanData(
                 1,
-                "sensors.analogVoltageSensorOverSetPoint",
+                `${OxxifyProtocol.SensorsFolder}.analogVoltageSensorOverSetPoint`,
                 false,
                 "state",
                 "boolean",
