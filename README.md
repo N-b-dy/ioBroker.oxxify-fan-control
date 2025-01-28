@@ -72,7 +72,7 @@ This channel contains system data about the hardware and firmware as well as run
 ### **WORK IN PROGRESS**
 
 - Updated ESLint to 9.x.x
-
+- Fixed copyright issue
 
 ### 0.0.3 (2025-01-11)
 
@@ -81,12 +81,13 @@ This channel contains system data about the hardware and firmware as well as run
 - Simplified methods for writing fan data based on subscribed states
 - Added a first unit test for the parsing of numbers.
 
-
 ### 0.0.2 (2025-01-06)
 
 - (N-b-dy) initial release
 
 ## License
+
+Copyright (c) 2025 N-b-dy <daten4me@gmx.de>
 
                     GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
@@ -113,5 +114,3 @@ DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD
 PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS),
 EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF
 SUCH DAMAGES.
-
-Copyright (c) 2025 N-b-dy <daten4me@gmx.de>
