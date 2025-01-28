@@ -121,6 +121,19 @@ class OxxifyFanControl extends utils.Adapter {
     this.udpServer.on("error", (error) => {
       this.log.error(`Error: ${error}`);
       this.udpServer.close();
+      this.udpServerErrorCount++;
+      if (this.udpServerErrorCount < 3) {
+        this.udpServer.bind(4001);
+      } else {
+        this.log.error(
+          `This adapter had ${this.udpServerErrorCount} errors regarding the listening of the udp server to port 4001. Adapter is terminated now.`
+        );
+        if (typeof this.terminate === "function") {
+          this.terminate();
+        } else {
+          process.exit();
+        }
+      }
     });
     this.udpServer.on("message", async (msg, info) => {
       await this.setState("info.connection", true, true);
@@ -456,6 +469,7 @@ class OxxifyFanControl extends utils.Adapter {
   }
   //#region Protected data members
   udpServer;
+  udpServerErrorCount = 0;
   oxxify = new Oxxify.OxxifyProtocol();
   sendQuene = new import_queue_fifo.default();
   queneInterval;

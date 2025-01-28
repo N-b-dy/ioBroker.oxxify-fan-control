@@ -76,6 +76,8 @@ This channel contains system data about the hardware and firmware as well as run
 - Replaced deletion of all objects with deletion of missing devices from config only
 - Avoided illegal characters from user input for fan id within code
 - Changed state subscription to all states below the devices folder
+- Added restart logic of UDP server in case of an error
+- Added adapter terminiation if multiple udp server errors occured
 
 ### 0.0.3 (2025-01-11)
 

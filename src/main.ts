@@ -141,6 +141,23 @@ class OxxifyFanControl extends utils.Adapter {
         this.udpServer.on("error", error => {
             this.log.error(`Error: ${error}`);
             this.udpServer.close();
+
+            this.udpServerErrorCount++;
+
+            // give it some retrys before exiting
+            if (this.udpServerErrorCount < 3) {
+                this.udpServer.bind(4001);
+            } else {
+                this.log.error(
+                    `This adapter had ${this.udpServerErrorCount} errors regarding the listening of the udp server to port 4001. Adapter is terminated now.`,
+                );
+
+                if (typeof this.terminate === "function") {
+                    this.terminate();
+                } else {
+                    process.exit();
+                }
+            }
         });
 
         // Emits on new datagram msg
@@ -553,6 +570,7 @@ class OxxifyFanControl extends utils.Adapter {
     //#region Protected data members
 
     udpServer: udp.Socket;
+    udpServerErrorCount: number = 0;
     oxxify: Oxxify.OxxifyProtocol = new Oxxify.OxxifyProtocol();
     sendQuene: Queue<DataToSend> = new Queue<DataToSend>();
     queneInterval: ioBroker.Interval | undefined;
