@@ -37,6 +37,7 @@ class OxxifyFanControl extends utils.Adapter {
         this.on("unload", this.onUnload.bind(this));
 
         this.udpServer = udp.createSocket("udp4");
+        this.udpServerErrorCount = 0;
     }
 
     /**
@@ -202,21 +203,6 @@ class OxxifyFanControl extends utils.Adapter {
             this.log.warn("Socket is closed");
         });
 
-        this.queneInterval = this.setInterval(() => {
-            if (this.sendQuene.isEmpty() == false) {
-                const sendData = this.sendQuene.dequeue();
-
-                if (sendData != null) {
-                    this.log.silly(`Sending ${sendData.data.toString("hex")} to ${sendData.ipAddress}:${4000}`);
-                    this.udpServer.send(sendData.data, 4000, sendData.ipAddress, err => {
-                        if (err != null) {
-                            this.log.error(err.message);
-                        }
-                    });
-                }
-            }
-        }, 25);
-
         this.pollingInterval = this.setInterval(() => {
             this.ReadAllFanData(false);
         }, this.config.pollingInterval * 1000);
@@ -230,10 +216,7 @@ class OxxifyFanControl extends utils.Adapter {
     private onUnload(callback: () => void): void {
         try {
             // Here you must clear all timeouts or intervals that may still be active
-            // clearTimeout(timeout1);
-            // clearTimeout(timeout2);
-            // ...
-            this.clearInterval(this.queneInterval);
+            this.clearTimeout(this.queneTimeout);
             this.clearInterval(this.pollingInterval);
 
             this.udpServer.close();
@@ -406,7 +389,7 @@ class OxxifyFanControl extends utils.Adapter {
             this.oxxify.FinishFrame();
 
             const packet = this.oxxify.ProtocolPacket;
-            this.sendQuene.enqueue(new DataToSend(packet, element.ipaddr));
+            this.SendData(new DataToSend(packet, element.ipaddr));
         });
     }
 
@@ -462,7 +445,7 @@ class OxxifyFanControl extends utils.Adapter {
         this.oxxify.FinishFrame();
 
         const packet = this.oxxify.ProtocolPacket;
-        this.sendQuene.enqueue(new DataToSend(packet, data.fanData.strIpAddress));
+        this.SendData(new DataToSend(packet, data.fanData.strIpAddress));
     }
 
     /**
@@ -477,7 +460,7 @@ class OxxifyFanControl extends utils.Adapter {
         this.oxxify.FinishFrame();
 
         const packet = this.oxxify.ProtocolPacket;
-        this.sendQuene.enqueue(new DataToSend(packet, data.fanData.strIpAddress));
+        this.SendData(new DataToSend(packet, data.fanData.strIpAddress));
     }
 
     /**
@@ -497,7 +480,7 @@ class OxxifyFanControl extends utils.Adapter {
         this.oxxify.FinishFrame();
 
         const packet = this.oxxify.ProtocolPacket;
-        this.sendQuene.enqueue(new DataToSend(packet, data.fanData.strIpAddress));
+        this.SendData(new DataToSend(packet, data.fanData.strIpAddress));
     }
 
     /**
@@ -512,7 +495,7 @@ class OxxifyFanControl extends utils.Adapter {
         this.oxxify.FinishFrame();
 
         const packet = this.oxxify.ProtocolPacket;
-        this.sendQuene.enqueue(new DataToSend(packet, data.fanData.strIpAddress));
+        this.SendData(new DataToSend(packet, data.fanData.strIpAddress));
     }
 
     /**
@@ -545,7 +528,7 @@ class OxxifyFanControl extends utils.Adapter {
 
                         const packet = this.oxxify.ProtocolPacket;
                         const timeout = this.setTimeout(() => {
-                            this.sendQuene.enqueue(new DataToSend(packet, fanData.strIpAddress));
+                            this.SendData(new DataToSend(packet, fanData.strIpAddress));
                             this.clearTimeout(timeout);
                         }, 1000);
                     }
@@ -567,13 +550,59 @@ class OxxifyFanControl extends utils.Adapter {
         return (userInput || "").replace(this.FORBIDDEN_CHARS, "_");
     }
 
+    /**
+     * Adds the provided data to the send quene and starts the timeout for sending it.
+     *
+     * @param data The data which is added to the send quene.
+     */
+    private SendData(data: DataToSend): void {
+        this.sendQuene.enqueue(data);
+
+        if (this.queneTimeout == undefined) {
+            this.queneTimeout = this.setTimeout(() => {
+                this.ProcessSendQuene();
+            }, 50);
+        }
+    }
+
+    /**
+     * Checks if any data is available within the send quene and sends it. If there is any data left, the
+     * method retriggers itself within a timeout, if there is some data left in the quene.
+     */
+    private ProcessSendQuene(): void {
+        if (this.sendQuene.isEmpty() == false) {
+            const sendData = this.sendQuene.dequeue();
+
+            if (sendData != null) {
+                this.log.silly(`Sending ${sendData.data.toString("hex")} to ${sendData.ipAddress}:${4000}`);
+                this.udpServer.send(sendData.data, 4000, sendData.ipAddress, err => {
+                    if (err != null) {
+                        this.log.error(err.message);
+                    }
+                });
+            }
+        }
+
+        this.clearTimeout(this.queneTimeout);
+        this.queneTimeout = undefined;
+
+        if (this.sendQuene.isEmpty() == false) {
+            // Avoid recreating a timeout, if it was already defined
+            if (this.queneTimeout == undefined) {
+                this.queneTimeout = this.setTimeout(() => {
+                    this.ProcessSendQuene();
+                }, 50);
+            }
+        }
+    }
+
     //#region Protected data members
 
     udpServer: udp.Socket;
-    udpServerErrorCount: number = 0;
+    udpServerErrorCount: number;
     oxxify: Oxxify.OxxifyProtocol = new Oxxify.OxxifyProtocol();
     sendQuene: Queue<DataToSend> = new Queue<DataToSend>();
-    queneInterval: ioBroker.Interval | undefined;
+    queneTimeout: ioBroker.Timeout | undefined = undefined;
     pollingInterval: ioBroker.Interval | undefined;
     ntpClient: NTP.Client = new NTP.Client();
 

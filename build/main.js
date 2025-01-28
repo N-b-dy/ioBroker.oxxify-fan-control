@@ -39,6 +39,7 @@ class OxxifyFanControl extends utils.Adapter {
     this.on("stateChange", this.onStateChange.bind(this));
     this.on("unload", this.onUnload.bind(this));
     this.udpServer = udp.createSocket("udp4");
+    this.udpServerErrorCount = 0;
   }
   /**
    * Is called when databases are connected and adapter received configuration.
@@ -165,19 +166,6 @@ class OxxifyFanControl extends utils.Adapter {
     this.udpServer.on("close", () => {
       this.log.warn("Socket is closed");
     });
-    this.queneInterval = this.setInterval(() => {
-      if (this.sendQuene.isEmpty() == false) {
-        const sendData = this.sendQuene.dequeue();
-        if (sendData != null) {
-          this.log.silly(`Sending ${sendData.data.toString("hex")} to ${sendData.ipAddress}:${4e3}`);
-          this.udpServer.send(sendData.data, 4e3, sendData.ipAddress, (err) => {
-            if (err != null) {
-              this.log.error(err.message);
-            }
-          });
-        }
-      }
-    }, 25);
     this.pollingInterval = this.setInterval(() => {
       this.ReadAllFanData(false);
     }, this.config.pollingInterval * 1e3);
@@ -189,7 +177,7 @@ class OxxifyFanControl extends utils.Adapter {
    */
   onUnload(callback) {
     try {
-      this.clearInterval(this.queneInterval);
+      this.clearTimeout(this.queneTimeout);
       this.clearInterval(this.pollingInterval);
       this.udpServer.close();
       callback();
@@ -334,7 +322,7 @@ class OxxifyFanControl extends utils.Adapter {
       this.oxxify.ReadAnalogVoltageSensorOverSetPoint();
       this.oxxify.FinishFrame();
       const packet = this.oxxify.ProtocolPacket;
-      this.sendQuene.enqueue(new import_ModelData.DataToSend(packet, element.ipaddr));
+      this.SendData(new import_ModelData.DataToSend(packet, element.ipaddr));
     });
   }
   /**
@@ -380,7 +368,7 @@ class OxxifyFanControl extends utils.Adapter {
     writeNumberMethod(nValue);
     this.oxxify.FinishFrame();
     const packet = this.oxxify.ProtocolPacket;
-    this.sendQuene.enqueue(new import_ModelData.DataToSend(packet, data.fanData.strIpAddress));
+    this.SendData(new import_ModelData.DataToSend(packet, data.fanData.strIpAddress));
   }
   /**
    * Generic function to create a protocol frame to write a string value to the fan.
@@ -393,7 +381,7 @@ class OxxifyFanControl extends utils.Adapter {
     writeStringMethod(String(data.value));
     this.oxxify.FinishFrame();
     const packet = this.oxxify.ProtocolPacket;
-    this.sendQuene.enqueue(new import_ModelData.DataToSend(packet, data.fanData.strIpAddress));
+    this.SendData(new import_ModelData.DataToSend(packet, data.fanData.strIpAddress));
   }
   /**
    * Generic function to create a protocol frame to write a bool value to the fan.
@@ -410,7 +398,7 @@ class OxxifyFanControl extends utils.Adapter {
     writeStringMethod(Boolean(data.value));
     this.oxxify.FinishFrame();
     const packet = this.oxxify.ProtocolPacket;
-    this.sendQuene.enqueue(new import_ModelData.DataToSend(packet, data.fanData.strIpAddress));
+    this.SendData(new import_ModelData.DataToSend(packet, data.fanData.strIpAddress));
   }
   /**
    * Generic function to create a protocol frame to trigger a funtion at the fan. like reseting stuff.
@@ -423,7 +411,7 @@ class OxxifyFanControl extends utils.Adapter {
     writeVoidMethod();
     this.oxxify.FinishFrame();
     const packet = this.oxxify.ProtocolPacket;
-    this.sendQuene.enqueue(new import_ModelData.DataToSend(packet, data.fanData.strIpAddress));
+    this.SendData(new import_ModelData.DataToSend(packet, data.fanData.strIpAddress));
   }
   /**
    * Fetchs the current time from the configured NTP server and writes the date and time to the provided fan.
@@ -448,7 +436,7 @@ class OxxifyFanControl extends utils.Adapter {
           this.oxxify.FinishFrame();
           const packet2 = this.oxxify.ProtocolPacket;
           const timeout = this.setTimeout(() => {
-            this.sendQuene.enqueue(new import_ModelData.DataToSend(packet2, fanData.strIpAddress));
+            this.SendData(new import_ModelData.DataToSend(packet2, fanData.strIpAddress));
             this.clearTimeout(timeout);
           }, 1e3);
         }
@@ -467,12 +455,51 @@ class OxxifyFanControl extends utils.Adapter {
   RemoveInvalidCharacters(userInput) {
     return (userInput || "").replace(this.FORBIDDEN_CHARS, "_");
   }
+  /**
+   * Adds the provided data to the send quene and starts the timeout for sending it.
+   *
+   * @param data The data which is added to the send quene.
+   */
+  SendData(data) {
+    this.sendQuene.enqueue(data);
+    if (this.queneTimeout == void 0) {
+      this.queneTimeout = this.setTimeout(() => {
+        this.ProcessSendQuene();
+      }, 50);
+    }
+  }
+  /**
+   * Checks if any data is available within the send quene and sends it. If there is any data left, the
+   * method retriggers itself within a timeout, if there is some data left in the quene.
+   */
+  ProcessSendQuene() {
+    if (this.sendQuene.isEmpty() == false) {
+      const sendData = this.sendQuene.dequeue();
+      if (sendData != null) {
+        this.log.silly(`Sending ${sendData.data.toString("hex")} to ${sendData.ipAddress}:${4e3}`);
+        this.udpServer.send(sendData.data, 4e3, sendData.ipAddress, (err) => {
+          if (err != null) {
+            this.log.error(err.message);
+          }
+        });
+      }
+    }
+    this.clearTimeout(this.queneTimeout);
+    this.queneTimeout = void 0;
+    if (this.sendQuene.isEmpty() == false) {
+      if (this.queneTimeout == void 0) {
+        this.queneTimeout = this.setTimeout(() => {
+          this.ProcessSendQuene();
+        }, 50);
+      }
+    }
+  }
   //#region Protected data members
   udpServer;
-  udpServerErrorCount = 0;
+  udpServerErrorCount;
   oxxify = new Oxxify.OxxifyProtocol();
   sendQuene = new import_queue_fifo.default();
-  queneInterval;
+  queneTimeout = void 0;
   pollingInterval;
   ntpClient = new NTP.Client();
   //#endregion
