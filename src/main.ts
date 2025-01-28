@@ -52,17 +52,12 @@ class OxxifyFanControl extends utils.Adapter {
         this.ntpClient = new NTP.Client(this.config.ntpServer);
 
         if (typeof this.config.fans == "undefined" || this.config.fans.length == 0) {
-            this.log.error("Please set at least one vent in the adapter configuration!");
+            this.log.error("Please set at least one fan in the adapter configuration!");
             return;
         }
 
-        // Remove any old objects and recreate them on adapter start
-        if (this.supportsFeature && this.supportsFeature("ADAPTER_DEL_OBJECT_RECURSIVE")) {
-            await this.delObjectAsync("devices", { recursive: true });
-        }
-
         await this.extendObject("devices", {
-            type: "channel",
+            type: "folder",
             common: {
                 name: {
                     en: "Devices",
@@ -84,33 +79,60 @@ class OxxifyFanControl extends utils.Adapter {
 
         const stateDictionary = this.oxxify.StateDictionary;
 
-        this.config.fans.forEach(async element => {
-            this.log.debug(`Fan configured: "${element.name}": ${element.id} - ${element.ipaddr}`);
+        // Collect all available configured devices within a list to find the no longer configured ones
+        const availableObjects = await this.getDevicesAsync();
+        let missingDevices: Array<string> = [];
 
-            await this.extendObject(`devices.${element.id}`, {
-                type: "channel",
-                common: {
-                    name: element.name,
-                    role: undefined,
-                },
-            });
+        availableObjects.forEach(device => {
+            const parts = device._id.split(".");
+            const lastPart = parts[parts.length - 1];
+            missingDevices.push(lastPart);
+            this.log.error(`available device: ${lastPart}`);
+        });
+        this.log.error(`available devices: ${availableObjects.toString()}`);
 
-            stateDictionary.forEach(async (value: FanData) => {
-                await this.extendObject(`devices.${element.id}.${value.strIdentifer}`, {
-                    type: "state",
+        await Promise.all(
+            this.config.fans.map(async element => {
+                this.log.debug(`Fan configured: "${element.name}": ${element.id} - ${element.ipaddr}`);
+
+                await this.extendObject(`devices.${element.id}`, {
+                    type: "device",
                     common: {
-                        name: value.name,
-                        role: value.strRole,
-                        read: true,
-                        write: value.bIsWritable,
-                        type: value.strType,
-                        unit: value.strUnit,
-                        min: value.minValue,
-                        max: value.maxValue,
+                        name: element.name,
+                        role: undefined,
                     },
                 });
+
+                stateDictionary.forEach(async (value: FanData) => {
+                    await this.extendObject(`devices.${element.id}.${value.strIdentifer}`, {
+                        type: "state",
+                        common: {
+                            name: value.name,
+                            role: value.strRole,
+                            read: true,
+                            write: value.bIsWritable,
+                            type: value.strType,
+                            unit: value.strUnit,
+                            min: value.minValue,
+                            max: value.maxValue,
+                        },
+                    });
+                });
+
+                // Remove the configured fans from the avaialble ones in the object tree
+                missingDevices = missingDevices.filter(d => d != element.id);
+            }),
+        );
+        this.log.error(`missing devices: ${missingDevices.toString()}`);
+        // Remove any no longer available objects in the config
+        if (this.supportsFeature && this.supportsFeature("ADAPTER_DEL_OBJECT_RECURSIVE")) {
+            missingDevices.forEach(async missingDeviceId => {
+                this.log.info(
+                    `Objects and states regarding missing device ${this.namespace}.devices.${missingDeviceId} are deleted now.`,
+                );
+                await this.delObjectAsync(`devices.${missingDeviceId}`, { recursive: true });
             });
-        });
+        }
 
         // In order to get state updates, you need to subscribe to them. The following line adds a subscription for our variable we have created above.
         this.subscribeStates("devices.*.fan.*");

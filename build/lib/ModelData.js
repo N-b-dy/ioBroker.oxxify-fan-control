@@ -50,6 +50,9 @@ var ParsingStatus = /* @__PURE__ */ ((ParsingStatus2) => {
   return ParsingStatus2;
 })(ParsingStatus || {});
 class ParsedData {
+  /**
+   * Default constructor to initialize the data members.
+   */
   constructor() {
     this.strFanId = "";
     this.status = 6 /* Undefined */;
@@ -60,6 +63,12 @@ class ParsedData {
   receivedData;
 }
 class ReceivedData {
+  /**
+   * Constructor of the class.
+   *
+   * @param identifer The unique identifier of the fan, to which the data belongs.
+   * @param value The data which can be written to an ioBroker state.
+   */
   constructor(identifer = "", value = null) {
     this.strIdentifer = identifer;
     this.value = value;
@@ -68,6 +77,13 @@ class ReceivedData {
   value;
 }
 class WriteDataModel {
+  /**
+   * Constructor of the class.
+   *
+   * @param strFanId The unique fan identifier.
+   * @param fanData The remote endpoint data to access the fan.
+   * @param value The ioBroker state, which is requested to be written.
+   */
   constructor(strFanId, fanData, value) {
     this.strFanId = strFanId;
     this.fanData = fanData;
@@ -78,6 +94,20 @@ class WriteDataModel {
   value;
 }
 class FanData {
+  /**
+   * Constructor of the class.
+   *
+   * @param nSize The size of the state/parameter within the protocol in bytes.
+   * @param strIdentifer The unique identifier from the fan (16 hex chars).
+   * @param bIsWritable True means the parameter is writable towards the fan, false means it can only be read.
+   * @param strRole The role of the state within the object tree.
+   * @param strType The data type of the state within the object tree.
+   * @param name The name of the state within the object tree.
+   * @param parseFunction The function which is used to parse the received data into the ioBroker state value.
+   * @param strUnit The unit of the state, if available.
+   * @param minValue The minimum value of the state, if available (e.g. in case of a number).
+   * @param maxValue The maximum value of the state, if available (e.g. in case of a number).
+   */
   constructor(nSize, strIdentifer, bIsWritable, strRole, strType, name, parseFunction, strUnit, minValue, maxValue) {
     this.nSize = nSize;
     this.strIdentifer = strIdentifer;

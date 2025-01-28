@@ -49,14 +49,11 @@ class OxxifyFanControl extends utils.Adapter {
     this.log.debug(`Fan data polling invervall: ${this.config.pollingInterval} seconds`);
     this.ntpClient = new NTP.Client(this.config.ntpServer);
     if (typeof this.config.fans == "undefined" || this.config.fans.length == 0) {
-      this.log.error("Please set at least one vent in the adapter configuration!");
+      this.log.error("Please set at least one fan in the adapter configuration!");
       return;
     }
-    if (this.supportsFeature && this.supportsFeature("ADAPTER_DEL_OBJECT_RECURSIVE")) {
-      await this.delObjectAsync("devices", { recursive: true });
-    }
     await this.extendObject("devices", {
-      type: "channel",
+      type: "folder",
       common: {
         name: {
           en: "Devices",
@@ -76,31 +73,52 @@ class OxxifyFanControl extends utils.Adapter {
       native: {}
     });
     const stateDictionary = this.oxxify.StateDictionary;
-    this.config.fans.forEach(async (element) => {
-      this.log.debug(`Fan configured: "${element.name}": ${element.id} - ${element.ipaddr}`);
-      await this.extendObject(`devices.${element.id}`, {
-        type: "channel",
-        common: {
-          name: element.name,
-          role: void 0
-        }
-      });
-      stateDictionary.forEach(async (value) => {
-        await this.extendObject(`devices.${element.id}.${value.strIdentifer}`, {
-          type: "state",
+    const availableObjects = await this.getDevicesAsync();
+    let missingDevices = [];
+    availableObjects.forEach((device) => {
+      const parts = device._id.split(".");
+      const lastPart = parts[parts.length - 1];
+      missingDevices.push(lastPart);
+      this.log.error(`available device: ${lastPart}`);
+    });
+    this.log.error(`available devices: ${availableObjects.toString()}`);
+    await Promise.all(
+      this.config.fans.map(async (element) => {
+        this.log.debug(`Fan configured: "${element.name}": ${element.id} - ${element.ipaddr}`);
+        await this.extendObject(`devices.${element.id}`, {
+          type: "device",
           common: {
-            name: value.name,
-            role: value.strRole,
-            read: true,
-            write: value.bIsWritable,
-            type: value.strType,
-            unit: value.strUnit,
-            min: value.minValue,
-            max: value.maxValue
+            name: element.name,
+            role: void 0
           }
         });
+        stateDictionary.forEach(async (value) => {
+          await this.extendObject(`devices.${element.id}.${value.strIdentifer}`, {
+            type: "state",
+            common: {
+              name: value.name,
+              role: value.strRole,
+              read: true,
+              write: value.bIsWritable,
+              type: value.strType,
+              unit: value.strUnit,
+              min: value.minValue,
+              max: value.maxValue
+            }
+          });
+        });
+        missingDevices = missingDevices.filter((d) => d != element.id);
+      })
+    );
+    this.log.error(`missing devices: ${missingDevices.toString()}`);
+    if (this.supportsFeature && this.supportsFeature("ADAPTER_DEL_OBJECT_RECURSIVE")) {
+      missingDevices.forEach(async (missingDeviceId) => {
+        this.log.info(
+          `Objects and states regarding missing device ${this.namespace}.devices.${missingDeviceId} are deleted now.`
+        );
+        await this.delObjectAsync(`devices.${missingDeviceId}`, { recursive: true });
       });
-    });
+    }
     this.subscribeStates("devices.*.fan.*");
     this.subscribeStates("devices.*.sensors.state*");
     this.subscribeStates("devices.*.sensors.target*");

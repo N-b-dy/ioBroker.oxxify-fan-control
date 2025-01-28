@@ -72,7 +72,8 @@ This channel contains system data about the hardware and firmware as well as run
 ### **WORK IN PROGRESS**
 
 - Updated ESLint to 9.x.x
-- Fixed copyright issue
+- Fixed copyright issue from adapter checker
+- Replaced deletion of all objects with deletion of missing devices from config only
 
 ### 0.0.3 (2025-01-11)
 
