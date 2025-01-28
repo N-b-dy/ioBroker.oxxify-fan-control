@@ -79,13 +79,12 @@ class OxxifyFanControl extends utils.Adapter {
       const parts = device._id.split(".");
       const lastPart = parts[parts.length - 1];
       missingDevices.push(lastPart);
-      this.log.error(`available device: ${lastPart}`);
     });
-    this.log.error(`available devices: ${availableObjects.toString()}`);
     await Promise.all(
       this.config.fans.map(async (element) => {
-        this.log.debug(`Fan configured: "${element.name}": ${element.id} - ${element.ipaddr}`);
-        await this.extendObject(`devices.${element.id}`, {
+        const checkedId = this.RemoveInvalidCharacters(element.id);
+        this.log.debug(`Fan configured: "${element.name}": ${checkedId} - ${element.ipaddr}`);
+        await this.extendObject(`devices.${checkedId}`, {
           type: "device",
           common: {
             name: element.name,
@@ -93,7 +92,7 @@ class OxxifyFanControl extends utils.Adapter {
           }
         });
         stateDictionary.forEach(async (value) => {
-          await this.extendObject(`devices.${element.id}.${value.strIdentifer}`, {
+          await this.extendObject(`devices.${checkedId}.${value.strIdentifer}`, {
             type: "state",
             common: {
               name: value.name,
@@ -107,7 +106,7 @@ class OxxifyFanControl extends utils.Adapter {
             }
           });
         });
-        missingDevices = missingDevices.filter((d) => d != element.id);
+        missingDevices = missingDevices.filter((d) => d != checkedId);
       })
     );
     this.log.error(`missing devices: ${missingDevices.toString()}`);
@@ -289,7 +288,8 @@ class OxxifyFanControl extends utils.Adapter {
    */
   ReadAllFanData(bIncludeConstData) {
     this.config.fans.forEach((element) => {
-      this.oxxify.StartNewFrame(element.id, element.password);
+      const checkedId = this.RemoveInvalidCharacters(element.id);
+      this.oxxify.StartNewFrame(checkedId, element.password);
       this.oxxify.ReadFanState();
       this.oxxify.ReadFanSpeedMode();
       this.oxxify.ReadOperatingMode();
@@ -448,6 +448,15 @@ class OxxifyFanControl extends utils.Adapter {
     }).catch((reason) => {
       this.log.error(reason);
     });
+  }
+  /**
+   * Replaces the invalid characters from the provided input variable. If any is found, it is
+   * replaced with underscore character "_".
+   * @param userInput The string to be checked for invalid characters.
+   * @returns The input string with all invalid characters replaced.
+   */
+  RemoveInvalidCharacters(userInput) {
+    return (userInput || "").replace(this.FORBIDDEN_CHARS, "_");
   }
   //#region Protected data members
   udpServer;
