@@ -75,6 +75,7 @@ This channel contains system data about the hardware and firmware as well as run
 - Fixed copyright issue from adapter checker
 - Replaced deletion of all objects with deletion of missing devices from config only
 - Avoided illegal characters from user input for fan id within code
+- Changed state subscription to all states below the devices folder
 
 ### 0.0.3 (2025-01-11)
 

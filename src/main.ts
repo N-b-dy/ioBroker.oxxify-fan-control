@@ -123,7 +123,7 @@ class OxxifyFanControl extends utils.Adapter {
                 missingDevices = missingDevices.filter(d => d != checkedId);
             }),
         );
-        this.log.error(`missing devices: ${missingDevices.toString()}`);
+
         // Remove any no longer available objects in the config
         if (this.supportsFeature && this.supportsFeature("ADAPTER_DEL_OBJECT_RECURSIVE")) {
             missingDevices.forEach(async missingDeviceId => {
@@ -134,12 +134,8 @@ class OxxifyFanControl extends utils.Adapter {
             });
         }
 
-        // In order to get state updates, you need to subscribe to them. The following line adds a subscription for our variable we have created above.
-        this.subscribeStates("devices.*.fan.*");
-        this.subscribeStates("devices.*.sensors.state*");
-        this.subscribeStates("devices.*.sensors.target*");
-        this.subscribeStates("devices.*.system.triggerRtcTimeSync");
-        this.subscribeStates("devices.*.system.resetAlarms");
+        // Subscribing to the states on the root level, parsing of relevent data is in method onStateChange()
+        this.subscribeStates("devices.*");
 
         // Emits when any error occurs
         this.udpServer.on("error", error => {
@@ -546,6 +542,7 @@ class OxxifyFanControl extends utils.Adapter {
     /**
      * Replaces the invalid characters from the provided input variable. If any is found, it is
      * replaced with underscore character "_".
+     *
      * @param userInput The string to be checked for invalid characters.
      * @returns The input string with all invalid characters replaced.
      */

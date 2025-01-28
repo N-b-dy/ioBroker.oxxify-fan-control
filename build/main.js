@@ -109,7 +109,6 @@ class OxxifyFanControl extends utils.Adapter {
         missingDevices = missingDevices.filter((d) => d != checkedId);
       })
     );
-    this.log.error(`missing devices: ${missingDevices.toString()}`);
     if (this.supportsFeature && this.supportsFeature("ADAPTER_DEL_OBJECT_RECURSIVE")) {
       missingDevices.forEach(async (missingDeviceId) => {
         this.log.info(
@@ -118,11 +117,7 @@ class OxxifyFanControl extends utils.Adapter {
         await this.delObjectAsync(`devices.${missingDeviceId}`, { recursive: true });
       });
     }
-    this.subscribeStates("devices.*.fan.*");
-    this.subscribeStates("devices.*.sensors.state*");
-    this.subscribeStates("devices.*.sensors.target*");
-    this.subscribeStates("devices.*.system.triggerRtcTimeSync");
-    this.subscribeStates("devices.*.system.resetAlarms");
+    this.subscribeStates("devices.*");
     this.udpServer.on("error", (error) => {
       this.log.error(`Error: ${error}`);
       this.udpServer.close();
@@ -452,6 +447,7 @@ class OxxifyFanControl extends utils.Adapter {
   /**
    * Replaces the invalid characters from the provided input variable. If any is found, it is
    * replaced with underscore character "_".
+   *
    * @param userInput The string to be checked for invalid characters.
    * @returns The input string with all invalid characters replaced.
    */
