@@ -283,9 +283,20 @@ class OxxifyFanControl extends utils.Adapter {
             this.log.warn("Socket is closed");
         });
 
+        // Limit the configured polling interval to the min/max values from json config
+        let nPollingInterval = this.config.pollingInterval;
+
+        if (nPollingInterval <= 1) {
+            nPollingInterval = 1;
+        }
+
+        if (nPollingInterval > 86400) {
+            nPollingInterval = 86400;
+        }
+
         this.pollingInterval = this.setInterval(() => {
             this.ReadAllFanData(false);
-        }, this.config.pollingInterval * 1000);
+        }, nPollingInterval * 1000);
     }
 
     /**

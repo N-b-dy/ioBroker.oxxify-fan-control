@@ -242,9 +242,16 @@ class OxxifyFanControl extends utils.Adapter {
     this.udpServer.on("close", () => {
       this.log.warn("Socket is closed");
     });
+    let nPollingInterval = this.config.pollingInterval;
+    if (nPollingInterval <= 1) {
+      nPollingInterval = 1;
+    }
+    if (nPollingInterval > 86400) {
+      nPollingInterval = 86400;
+    }
     this.pollingInterval = this.setInterval(() => {
       this.ReadAllFanData(false);
-    }, this.config.pollingInterval * 1e3);
+    }, nPollingInterval * 1e3);
   }
   /**
    * Is called when adapter shuts down.
