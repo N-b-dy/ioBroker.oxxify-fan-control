@@ -117,7 +117,8 @@ export class FanData {
      *
      * @param nSize The size of the state/parameter within the protocol in bytes.
      * @param strIdentifer The unique identifier from the fan (16 hex chars).
-     * @param bIsWritable True means the parameter is writable towards the fan, false means it can only be read.
+     * @param bIsReadable True means the parameter is readable from the fan, false means it can not be read.
+     * @param bIsWritable True means the parameter is writable towards the fan, false means it can not be written.
      * @param strRole The role of the state within the object tree.
      * @param strType The data type of the state within the object tree.
      * @param name The name of the state within the object tree.
@@ -129,6 +130,7 @@ export class FanData {
     constructor(
         nSize: number,
         strIdentifer: string,
+        bIsReadable: boolean,
         bIsWritable: boolean,
         strRole: string,
         strType: ioBroker.CommonType,
@@ -140,6 +142,7 @@ export class FanData {
     ) {
         this.nSize = nSize;
         this.strIdentifer = strIdentifer;
+        this.bIsReadable = bIsReadable;
         this.bIsWritable = bIsWritable;
         this.strRole = strRole;
         this.strType = strType;
@@ -152,6 +155,7 @@ export class FanData {
 
     nSize: number;
     strIdentifer: string;
+    bIsReadable: boolean;
     bIsWritable: boolean;
     strRole: string;
     strType: ioBroker.CommonType;

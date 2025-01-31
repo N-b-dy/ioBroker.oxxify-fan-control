@@ -99,7 +99,8 @@ class FanData {
    *
    * @param nSize The size of the state/parameter within the protocol in bytes.
    * @param strIdentifer The unique identifier from the fan (16 hex chars).
-   * @param bIsWritable True means the parameter is writable towards the fan, false means it can only be read.
+   * @param bIsReadable True means the parameter is readable from the fan, false means it can not be read.
+   * @param bIsWritable True means the parameter is writable towards the fan, false means it can not be written.
    * @param strRole The role of the state within the object tree.
    * @param strType The data type of the state within the object tree.
    * @param name The name of the state within the object tree.
@@ -108,9 +109,10 @@ class FanData {
    * @param minValue The minimum value of the state, if available (e.g. in case of a number).
    * @param maxValue The maximum value of the state, if available (e.g. in case of a number).
    */
-  constructor(nSize, strIdentifer, bIsWritable, strRole, strType, name, parseFunction, strUnit, minValue, maxValue) {
+  constructor(nSize, strIdentifer, bIsReadable, bIsWritable, strRole, strType, name, parseFunction, strUnit, minValue, maxValue) {
     this.nSize = nSize;
     this.strIdentifer = strIdentifer;
+    this.bIsReadable = bIsReadable;
     this.bIsWritable = bIsWritable;
     this.strRole = strRole;
     this.strType = strType;
@@ -122,6 +124,7 @@ class FanData {
   }
   nSize;
   strIdentifer;
+  bIsReadable;
   bIsWritable;
   strRole;
   strType;

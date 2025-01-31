@@ -190,7 +190,7 @@ class OxxifyFanControl extends utils.Adapter {
                         common: {
                             name: value.name,
                             role: value.strRole,
-                            read: true,
+                            read: value.bIsReadable,
                             write: value.bIsWritable,
                             type: value.strType,
                             unit: value.strUnit,
