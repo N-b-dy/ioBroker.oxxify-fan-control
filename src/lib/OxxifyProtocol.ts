@@ -1425,7 +1425,6 @@ export class OxxifyProtocol {
                     "zh-cn": "RTC time",
                 },
                 this.ParseTimeSmallToLarge,
-                "hh:mm:ss",
             ),
         );
         this.stateDictionary.set(
@@ -1451,7 +1450,6 @@ export class OxxifyProtocol {
                     "zh-cn": "RTC calendar",
                 },
                 this.ParseRtcDate,
-                "dd.mm.yy",
             ),
         );
         this.stateDictionary.set(

@@ -82,6 +82,7 @@ This channel contains system data about the hardware and firmware as well as run
 - Missing intermediate objects created
 - Roles updated according to the read/write definitions
 - Polling interval limited in JSON config and code
+- ioBroker unit in object tree for RTC date & time removed
 
 ### 0.0.3 (2025-01-11)
 
