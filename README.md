@@ -68,8 +68,7 @@ This channel contains system data about the hardware and firmware as well as run
 -->
 
 ## Changelog
-
-### **WORK IN PROGRESS**
+### 0.0.4 (2025-01-31)
 
 - Updated ESLint to 9.x.x
 - Fixed copyright issue from adapter checker

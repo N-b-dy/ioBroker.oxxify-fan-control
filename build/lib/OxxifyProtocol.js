@@ -1261,8 +1261,7 @@ class OxxifyProtocol {
           uk: "\u0427\u0430\u0441 \u0437\u0430 \u043A\u0438\u0457\u0432\u0441\u044C\u043A\u0438\u043C \u0447\u0430\u0441\u043E\u043C",
           "zh-cn": "RTC time"
         },
-        this.ParseTimeSmallToLarge,
-        "hh:mm:ss"
+        this.ParseTimeSmallToLarge
       )
     );
     this.stateDictionary.set(
@@ -1287,8 +1286,7 @@ class OxxifyProtocol {
           uk: "\u041A\u0430\u043B\u0435\u043D\u0434\u0430\u0440 RTC",
           "zh-cn": "RTC calendar"
         },
-        this.ParseRtcDate,
-        "dd.mm.yy"
+        this.ParseRtcDate
       )
     );
     this.stateDictionary.set(
