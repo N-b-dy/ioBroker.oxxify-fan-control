@@ -12,7 +12,6 @@
 
 ![Beta](https://img.shields.io/npm/v/iobroker.oxxify-fan-control.svg?color=red&label=beta)
 ![Stable](http://iobroker.live/badges/oxxify-fan-control-stable.svg)
-![Installed](http://iobroker.live/badges/oxxify-fan-control-installed.svg)
 
 **Tests:** ![Test and Release](https://github.com/N-b-dy/ioBroker.oxxify-fan-control/workflows/Test%20and%20Release/badge.svg)
 
@@ -68,6 +67,7 @@ This channel contains system data about the hardware and firmware as well as run
 -->
 
 ## Changelog
+
 ### 0.0.4 (2025-01-31)
 
 - Updated ESLint to 9.x.x
