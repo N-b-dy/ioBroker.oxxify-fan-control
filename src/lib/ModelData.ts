@@ -70,7 +70,18 @@ export class ReceivedData {
 /**
  * Model class which holds the necessary data for a remote endpoint together, to access it.
  */
-export type FanRemoteEndpoint = {
+export class FanRemoteEndpoint {
+    /**
+     * Constructor of the class.
+     *
+     * @param strIpAddress The IP address of the fan.
+     * @param strPassword The password of the fan for the protocol.
+     */
+    constructor(strIpAddress: string = "", strPassword: string) {
+        this.strIpAddress = strIpAddress;
+        this.strPassword = strPassword;
+    }
+
     /**
      * The IP address of the fan.
      */
@@ -80,7 +91,7 @@ export type FanRemoteEndpoint = {
      * The password of the fan for the protocol.
      */
     strPassword: string;
-};
+}
 
 /**
  * The data model which combines all necessary information from an ioBroker state and an fan, to create a protocol frame
