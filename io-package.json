@@ -109,7 +109,7 @@
                 "name": "fan1",
                 "id": "1234567890123456",
                 "ipaddr": "192.168.1.1",
-                "password": "topsecret"
+                "password": ""
             }
         ]
     },

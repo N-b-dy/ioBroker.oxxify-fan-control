@@ -20,6 +20,7 @@ var ModelData_exports = {};
 __export(ModelData_exports, {
   DataToSend: () => DataToSend,
   FanData: () => FanData,
+  FanRemoteEndpoint: () => FanRemoteEndpoint,
   ParsedData: () => ParsedData,
   ParsingStatus: () => ParsingStatus,
   ReceivedData: () => ReceivedData,
@@ -75,6 +76,26 @@ class ReceivedData {
   }
   strIdentifer;
   value;
+}
+class FanRemoteEndpoint {
+  /**
+   * Constructor of the class.
+   *
+   * @param strIpAddress The IP address of the fan.
+   * @param strPassword The password of the fan for the protocol.
+   */
+  constructor(strIpAddress = "", strPassword) {
+    this.strIpAddress = strIpAddress;
+    this.strPassword = strPassword;
+  }
+  /**
+   * The IP address of the fan.
+   */
+  strIpAddress;
+  /**
+   * The password of the fan for the protocol.
+   */
+  strPassword;
 }
 class WriteDataModel {
   /**
@@ -138,6 +159,7 @@ class FanData {
 0 && (module.exports = {
   DataToSend,
   FanData,
+  FanRemoteEndpoint,
   ParsedData,
   ParsingStatus,
   ReceivedData,
