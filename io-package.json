@@ -113,8 +113,8 @@
             }
         ]
     },
-    "protectedNative": ["fans.password"],
-    "encryptedNative": ["fans.password"],
+    "protectedNative": [],
+    "encryptedNative": [],
     "objects": [],
     "instanceObjects": [
         {
