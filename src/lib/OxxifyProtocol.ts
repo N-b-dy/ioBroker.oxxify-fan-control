@@ -1,4 +1,4 @@
-import { FanData, ParsedData, ParsingStatus, ReceivedData } from "./ModelData";
+import { FanData, IoBrokerDataPoint, ParsedData, ParsingStatus } from "./ModelData";
 
 enum FunctionType {
     Undefined = 0x00,
@@ -10,7 +10,7 @@ enum FunctionType {
     Response = 0x06,
 }
 
-enum ParameterType {
+export enum ParameterType {
     FanState = 1,
     FanSpeedMode = 2,
     BoostState = 6,
@@ -135,7 +135,7 @@ export class OxxifyProtocol {
         this.AddParameter(ParameterType.FanState);
     }
 
-    public WriteFanState(bEnabled: boolean): void {
+    public WriteFanState(bEnabled: boolean): ParameterType {
         this.AddFunctionCode(FunctionType.WriteRead);
         const data = Buffer.alloc(1);
 
@@ -144,7 +144,9 @@ export class OxxifyProtocol {
         } else {
             data[0] = 0;
         }
+
         this.AddParameter(ParameterType.FanState, data);
+        return ParameterType.FanState;
     }
 
     public ReadFanSpeedMode(): void {
@@ -152,12 +154,13 @@ export class OxxifyProtocol {
         this.AddParameter(ParameterType.FanSpeedMode);
     }
 
-    public WriteFanSpeedMode(nValue: number): void {
+    public WriteFanSpeedMode(nValue: number): ParameterType {
         this.AddFunctionCode(FunctionType.WriteRead);
         const data = Buffer.alloc(1);
         data[0] = nValue;
         console.log(`Data in Buffer: ${data[0]}`);
         this.AddParameter(ParameterType.FanSpeedMode, data);
+        return ParameterType.FanSpeedMode;
     }
 
     public ReadBoostState(): void {
@@ -171,11 +174,12 @@ export class OxxifyProtocol {
         this.AddParameter(ParameterType.TimerCountdown);
     }
 
-    public WriteTimerMode(nValue: number): void {
+    public WriteTimerMode(nValue: number): ParameterType {
         this.AddFunctionCode(FunctionType.WriteRead);
         const data = Buffer.alloc(1);
         data[0] = nValue;
         this.AddParameter(ParameterType.TimerMode, data);
+        return ParameterType.TimerMode;
     }
 
     public ReadHumiditySensorState(): void {
@@ -183,7 +187,7 @@ export class OxxifyProtocol {
         this.AddParameter(ParameterType.StateHumiditySensor);
     }
 
-    public WriteHumiditySensorState(bEnabled: boolean): void {
+    public WriteHumiditySensorState(bEnabled: boolean): ParameterType {
         this.AddFunctionCode(FunctionType.WriteRead);
         const data = Buffer.alloc(1);
 
@@ -192,7 +196,9 @@ export class OxxifyProtocol {
         } else {
             data[0] = 0;
         }
+
         this.AddParameter(ParameterType.StateHumiditySensor, data);
+        return ParameterType.StateHumiditySensor;
     }
 
     public ReadRelaisSensorState(): void {
@@ -200,7 +206,7 @@ export class OxxifyProtocol {
         this.AddParameter(ParameterType.StateRelaisSensor);
     }
 
-    public WriteRelaisSensorState(bEnabled: boolean): void {
+    public WriteRelaisSensorState(bEnabled: boolean): ParameterType {
         this.AddFunctionCode(FunctionType.WriteRead);
         const data = Buffer.alloc(1);
 
@@ -209,7 +215,9 @@ export class OxxifyProtocol {
         } else {
             data[0] = 0;
         }
+
         this.AddParameter(ParameterType.StateRelaisSensor, data);
+        return ParameterType.StateRelaisSensor;
     }
 
     public ReadAnalogVoltageSensorState(): void {
@@ -217,7 +225,7 @@ export class OxxifyProtocol {
         this.AddParameter(ParameterType.StateAnalogVoltageSensor);
     }
 
-    public WriteAnalogVoltageSensorState(bEnabled: boolean): void {
+    public WriteAnalogVoltageSensorState(bEnabled: boolean): ParameterType {
         this.AddFunctionCode(FunctionType.WriteRead);
         const data = Buffer.alloc(1);
 
@@ -226,7 +234,9 @@ export class OxxifyProtocol {
         } else {
             data[0] = 0;
         }
+
         this.AddParameter(ParameterType.StateAnalogVoltageSensor, data);
+        return ParameterType.StateAnalogVoltageSensor;
     }
 
     public ReadTargetHumidityValue(): void {
@@ -234,12 +244,13 @@ export class OxxifyProtocol {
         this.AddParameter(ParameterType.TargetHumidityValue);
     }
 
-    public WriteTargetHumidityValue(nValue: number): void {
+    public WriteTargetHumidityValue(nValue: number): ParameterType {
         this.AddFunctionCode(FunctionType.WriteRead);
         const data = Buffer.alloc(1);
 
         data[0] = nValue;
         this.AddParameter(ParameterType.TargetHumidityValue, data);
+        return ParameterType.TargetHumidityValue;
     }
 
     public ReadRtcBattery(): void {
@@ -267,12 +278,13 @@ export class OxxifyProtocol {
         this.AddParameter(ParameterType.ManualFanSpeed);
     }
 
-    public WriteManualFanSpeed(nValue: number): void {
+    public WriteManualFanSpeed(nValue: number): ParameterType {
         this.AddFunctionCode(FunctionType.WriteRead);
         const data = Buffer.alloc(1);
 
         data[0] = nValue;
         this.AddParameter(ParameterType.ManualFanSpeed, data);
+        return ParameterType.ManualFanSpeed;
     }
 
     public ReadFan1Speed(): void {
@@ -303,12 +315,13 @@ export class OxxifyProtocol {
         this.AddParameter(ParameterType.BoostModeFollowUpTime);
     }
 
-    public WriteBoostModeFollowUpTime(nValue: number): void {
+    public WriteBoostModeFollowUpTime(nValue: number): ParameterType {
         this.AddFunctionCode(FunctionType.WriteRead);
         const data = Buffer.alloc(1);
 
         data[0] = nValue;
         this.AddParameter(ParameterType.BoostModeFollowUpTime, data);
+        return ParameterType.BoostModeFollowUpTime;
     }
 
     public ReadRtcDateTime(): void {
@@ -343,7 +356,7 @@ export class OxxifyProtocol {
         this.AddParameter(ParameterType.TimeControlledMode);
     }
 
-    public WriteTimeControlledMode(bEnabled: boolean): void {
+    public WriteTimeControlledMode(bEnabled: boolean): ParameterType {
         this.AddFunctionCode(FunctionType.WriteRead);
         const data = Buffer.alloc(1);
 
@@ -352,7 +365,9 @@ export class OxxifyProtocol {
         } else {
             data[0] = 0;
         }
+
         this.AddParameter(ParameterType.TimeControlledMode, data);
+        return ParameterType.TimeControlledMode;
     }
 
     public ReadOperatingTime(): void {
@@ -407,12 +422,13 @@ export class OxxifyProtocol {
         this.AddParameter(ParameterType.FanOperatingMode);
     }
 
-    public WriteOperatingMode(nValue: number): void {
+    public WriteOperatingMode(nValue: number): ParameterType {
         this.AddFunctionCode(FunctionType.WriteRead);
         const data = Buffer.alloc(1);
 
         data[0] = nValue;
         this.AddParameter(ParameterType.FanOperatingMode, data);
+        return ParameterType.FanOperatingMode;
     }
 
     public ReadTargetAnalogVoltageValue(): void {
@@ -420,12 +436,13 @@ export class OxxifyProtocol {
         this.AddParameter(ParameterType.TargetAnalogVoltageValue);
     }
 
-    public WriteTargetAnalogVoltageValue(nValue: number): void {
+    public WriteTargetAnalogVoltageValue(nValue: number): ParameterType {
         this.AddFunctionCode(FunctionType.WriteRead);
         const data = Buffer.alloc(1);
 
         data[0] = nValue;
         this.AddParameter(ParameterType.TargetAnalogVoltageValue, data);
+        return ParameterType.TargetAnalogVoltageValue;
     }
 
     public ReadFanType(): void {
@@ -438,7 +455,7 @@ export class OxxifyProtocol {
         this.AddParameter(ParameterType.NightModeTimerSetpoint);
     }
 
-    public WriteNightModeTimerSetPoint(strTimeValue: string): void {
+    public WriteNightModeTimerSetPoint(strTimeValue: string): ParameterType {
         const [nHours, nMinutes] = strTimeValue.split(":").map(Number);
 
         const data = Buffer.alloc(2);
@@ -447,6 +464,8 @@ export class OxxifyProtocol {
 
         this.AddFunctionCode(FunctionType.WriteRead);
         this.AddParameter(ParameterType.NightModeTimerSetpoint, data);
+
+        return ParameterType.NightModeTimerSetpoint;
     }
 
     public ReadPartyModeTimerSetPoint(): void {
@@ -454,7 +473,7 @@ export class OxxifyProtocol {
         this.AddParameter(ParameterType.PartyModeTimerSetPoint);
     }
 
-    public WritePartyModeTimerSetPoint(strTimeValue: string): void {
+    public WritePartyModeTimerSetPoint(strTimeValue: string): ParameterType {
         const [nHours, nMinutes] = strTimeValue.split(":").map(Number);
 
         const data = Buffer.alloc(2);
@@ -463,6 +482,8 @@ export class OxxifyProtocol {
 
         this.AddFunctionCode(FunctionType.WriteRead);
         this.AddParameter(ParameterType.PartyModeTimerSetPoint, data);
+
+        return ParameterType.PartyModeTimerSetPoint;
     }
 
     public ReadHumiditySensorOverSetPoint(): void {
@@ -533,7 +554,7 @@ export class OxxifyProtocol {
         return result;
     }
 
-    private ParseData(data: Buffer, receivedData: ReceivedData[]): number {
+    private ParseData(data: Buffer, receivedData: IoBrokerDataPoint[]): number {
         let nIndex = 0;
         let nCurrentReadParameterSize = 1;
 
@@ -567,7 +588,7 @@ export class OxxifyProtocol {
             const fanData = this.stateDictionary.get(eParameter);
 
             if (fanData != undefined) {
-                const parsedData = new ReceivedData();
+                const parsedData = new IoBrokerDataPoint();
                 parsedData.strIdentifer = fanData?.strIdentifer ?? "UNDEFINED";
 
                 parsedData.value =

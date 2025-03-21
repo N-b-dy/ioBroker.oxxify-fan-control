@@ -45,26 +45,44 @@ export class ParsedData {
 
     strFanId: string;
     status: ParsingStatus;
-    receivedData: ReceivedData[];
+    receivedData: IoBrokerDataPoint[];
 }
 
 /**
  * Model class to store the received data in a format, which can directly applied to the ioBroker states.
  */
-export class ReceivedData {
+export class IoBrokerDataPoint {
     /**
      * Constructor of the class.
      *
-     * @param identifer The unique identifier of the fan, to which the data belongs.
+     * @param strIdentifer The unique identifier of the fan, to which the data belongs.
      * @param value The data which can be written to an ioBroker state.
      */
-    constructor(identifer: string = "", value: ioBroker.StateValue = null) {
-        this.strIdentifer = identifer;
+    constructor(strIdentifer: string = "", value: ioBroker.StateValue = null) {
+        this.strIdentifer = strIdentifer;
         this.value = value;
     }
 
     strIdentifer: string;
     value: ioBroker.StateValue;
+}
+
+/**
+ * Model class to store the received data in a format, which can directly applied to the ioBroker states.
+ */
+export class IoBrokerRewriteDataPoint extends IoBrokerDataPoint {
+    /**
+     * Constructor of the class.
+     *
+     * @param strIdentifer The unique identifier of the fan, to which the data belongs.
+     * @param value The data which can be written to an ioBroker state.
+     */
+    constructor(strIdentifer: string = "", value: ioBroker.StateValue = null) {
+        super(strIdentifer, value);
+        this.nRetryCount = 0;
+    }
+
+    nRetryCount: number;
 }
 
 /**
@@ -103,16 +121,19 @@ export class WriteDataModel {
      *
      * @param strFanId The unique fan identifier.
      * @param fanData The remote endpoint data to access the fan.
+     * @param strStateIdentifier The ioBroker related state identifier within the object tree.
      * @param value The ioBroker state, which is requested to be written.
      */
-    constructor(strFanId: string, fanData: FanRemoteEndpoint, value: ioBroker.StateValue) {
+    constructor(strFanId: string, fanData: FanRemoteEndpoint, strStateIdentifier: string, value: ioBroker.StateValue) {
         this.strFanId = strFanId;
         this.fanData = fanData;
+        this.strStateIdentifier = strStateIdentifier;
         this.value = value;
     }
 
     strFanId: string;
     fanData: FanRemoteEndpoint;
+    strStateIdentifier: string;
     value: ioBroker.StateValue;
 }
 

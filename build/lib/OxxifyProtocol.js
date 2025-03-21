@@ -18,7 +18,8 @@ var __copyProps = (to, from, except, desc) => {
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 var OxxifyProtocol_exports = {};
 __export(OxxifyProtocol_exports, {
-  OxxifyProtocol: () => OxxifyProtocol
+  OxxifyProtocol: () => OxxifyProtocol,
+  ParameterType: () => ParameterType
 });
 module.exports = __toCommonJS(OxxifyProtocol_exports);
 var import_ModelData = require("./ModelData");
@@ -133,6 +134,7 @@ class OxxifyProtocol {
       data[0] = 0;
     }
     this.AddParameter(1 /* FanState */, data);
+    return 1 /* FanState */;
   }
   ReadFanSpeedMode() {
     this.AddFunctionCode(1 /* Read */);
@@ -144,6 +146,7 @@ class OxxifyProtocol {
     data[0] = nValue;
     console.log(`Data in Buffer: ${data[0]}`);
     this.AddParameter(2 /* FanSpeedMode */, data);
+    return 2 /* FanSpeedMode */;
   }
   ReadBoostState() {
     this.AddFunctionCode(1 /* Read */);
@@ -159,6 +162,7 @@ class OxxifyProtocol {
     const data = Buffer.alloc(1);
     data[0] = nValue;
     this.AddParameter(7 /* TimerMode */, data);
+    return 7 /* TimerMode */;
   }
   ReadHumiditySensorState() {
     this.AddFunctionCode(1 /* Read */);
@@ -173,6 +177,7 @@ class OxxifyProtocol {
       data[0] = 0;
     }
     this.AddParameter(15 /* StateHumiditySensor */, data);
+    return 15 /* StateHumiditySensor */;
   }
   ReadRelaisSensorState() {
     this.AddFunctionCode(1 /* Read */);
@@ -187,6 +192,7 @@ class OxxifyProtocol {
       data[0] = 0;
     }
     this.AddParameter(20 /* StateRelaisSensor */, data);
+    return 20 /* StateRelaisSensor */;
   }
   ReadAnalogVoltageSensorState() {
     this.AddFunctionCode(1 /* Read */);
@@ -201,6 +207,7 @@ class OxxifyProtocol {
       data[0] = 0;
     }
     this.AddParameter(22 /* StateAnalogVoltageSensor */, data);
+    return 22 /* StateAnalogVoltageSensor */;
   }
   ReadTargetHumidityValue() {
     this.AddFunctionCode(1 /* Read */);
@@ -211,6 +218,7 @@ class OxxifyProtocol {
     const data = Buffer.alloc(1);
     data[0] = nValue;
     this.AddParameter(25 /* TargetHumidityValue */, data);
+    return 25 /* TargetHumidityValue */;
   }
   ReadRtcBattery() {
     this.AddFunctionCode(1 /* Read */);
@@ -237,6 +245,7 @@ class OxxifyProtocol {
     const data = Buffer.alloc(1);
     data[0] = nValue;
     this.AddParameter(68 /* ManualFanSpeed */, data);
+    return 68 /* ManualFanSpeed */;
   }
   ReadFan1Speed() {
     this.AddFunctionCode(1 /* Read */);
@@ -265,6 +274,7 @@ class OxxifyProtocol {
     const data = Buffer.alloc(1);
     data[0] = nValue;
     this.AddParameter(102 /* BoostModeFollowUpTime */, data);
+    return 102 /* BoostModeFollowUpTime */;
   }
   ReadRtcDateTime() {
     this.AddFunctionCode(1 /* Read */);
@@ -299,6 +309,7 @@ class OxxifyProtocol {
       data[0] = 0;
     }
     this.AddParameter(114 /* TimeControlledMode */, data);
+    return 114 /* TimeControlledMode */;
   }
   ReadOperatingTime() {
     this.AddFunctionCode(1 /* Read */);
@@ -348,6 +359,7 @@ class OxxifyProtocol {
     const data = Buffer.alloc(1);
     data[0] = nValue;
     this.AddParameter(183 /* FanOperatingMode */, data);
+    return 183 /* FanOperatingMode */;
   }
   ReadTargetAnalogVoltageValue() {
     this.AddFunctionCode(1 /* Read */);
@@ -358,6 +370,7 @@ class OxxifyProtocol {
     const data = Buffer.alloc(1);
     data[0] = nValue;
     this.AddParameter(184 /* TargetAnalogVoltageValue */, data);
+    return 184 /* TargetAnalogVoltageValue */;
   }
   ReadFanType() {
     this.AddFunctionCode(1 /* Read */);
@@ -374,6 +387,7 @@ class OxxifyProtocol {
     data[1] = nHours;
     this.AddFunctionCode(3 /* WriteRead */);
     this.AddParameter(770 /* NightModeTimerSetpoint */, data);
+    return 770 /* NightModeTimerSetpoint */;
   }
   ReadPartyModeTimerSetPoint() {
     this.AddFunctionCode(1 /* Read */);
@@ -386,6 +400,7 @@ class OxxifyProtocol {
     data[1] = nHours;
     this.AddFunctionCode(3 /* WriteRead */);
     this.AddParameter(771 /* PartyModeTimerSetPoint */, data);
+    return 771 /* PartyModeTimerSetPoint */;
   }
   ReadHumiditySensorOverSetPoint() {
     this.AddFunctionCode(1 /* Read */);
@@ -457,7 +472,7 @@ class OxxifyProtocol {
     if (this.stateDictionary.has(eParameter)) {
       const fanData = this.stateDictionary.get(eParameter);
       if (fanData != void 0) {
-        const parsedData = new import_ModelData.ReceivedData();
+        const parsedData = new import_ModelData.IoBrokerDataPoint();
         parsedData.strIdentifer = (_d = fanData == null ? void 0 : fanData.strIdentifer) != null ? _d : "UNDEFINED";
         parsedData.value = (_e = fanData == null ? void 0 : fanData.parseFunction(data.subarray(nIndex, nIndex + nCurrentReadParameterSize))) != null ? _e : null;
         receivedData.push(parsedData);
@@ -1877,6 +1892,7 @@ class OxxifyProtocol {
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  OxxifyProtocol
+  OxxifyProtocol,
+  ParameterType
 });
 //# sourceMappingURL=OxxifyProtocol.js.map

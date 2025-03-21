@@ -21,9 +21,10 @@ __export(ModelData_exports, {
   DataToSend: () => DataToSend,
   FanData: () => FanData,
   FanRemoteEndpoint: () => FanRemoteEndpoint,
+  IoBrokerDataPoint: () => IoBrokerDataPoint,
+  IoBrokerRewriteDataPoint: () => IoBrokerRewriteDataPoint,
   ParsedData: () => ParsedData,
   ParsingStatus: () => ParsingStatus,
-  ReceivedData: () => ReceivedData,
   WriteDataModel: () => WriteDataModel
 });
 module.exports = __toCommonJS(ModelData_exports);
@@ -63,19 +64,32 @@ class ParsedData {
   status;
   receivedData;
 }
-class ReceivedData {
+class IoBrokerDataPoint {
   /**
    * Constructor of the class.
    *
-   * @param identifer The unique identifier of the fan, to which the data belongs.
+   * @param strIdentifer The unique identifier of the fan, to which the data belongs.
    * @param value The data which can be written to an ioBroker state.
    */
-  constructor(identifer = "", value = null) {
-    this.strIdentifer = identifer;
+  constructor(strIdentifer = "", value = null) {
+    this.strIdentifer = strIdentifer;
     this.value = value;
   }
   strIdentifer;
   value;
+}
+class IoBrokerRewriteDataPoint extends IoBrokerDataPoint {
+  /**
+   * Constructor of the class.
+   *
+   * @param strIdentifer The unique identifier of the fan, to which the data belongs.
+   * @param value The data which can be written to an ioBroker state.
+   */
+  constructor(strIdentifer = "", value = null) {
+    super(strIdentifer, value);
+    this.nRetryCount = 0;
+  }
+  nRetryCount;
 }
 class FanRemoteEndpoint {
   /**
@@ -103,15 +117,18 @@ class WriteDataModel {
    *
    * @param strFanId The unique fan identifier.
    * @param fanData The remote endpoint data to access the fan.
+   * @param strStateIdentifier The ioBroker related state identifier within the object tree.
    * @param value The ioBroker state, which is requested to be written.
    */
-  constructor(strFanId, fanData, value) {
+  constructor(strFanId, fanData, strStateIdentifier, value) {
     this.strFanId = strFanId;
     this.fanData = fanData;
+    this.strStateIdentifier = strStateIdentifier;
     this.value = value;
   }
   strFanId;
   fanData;
+  strStateIdentifier;
   value;
 }
 class FanData {
@@ -160,9 +177,10 @@ class FanData {
   DataToSend,
   FanData,
   FanRemoteEndpoint,
+  IoBrokerDataPoint,
+  IoBrokerRewriteDataPoint,
   ParsedData,
   ParsingStatus,
-  ReceivedData,
   WriteDataModel
 });
 //# sourceMappingURL=ModelData.js.map

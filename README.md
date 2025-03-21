@@ -68,6 +68,11 @@ This channel contains system data about the hardware and firmware as well as run
 
 ## Changelog
 
+### **WORK IN PROGRESS**
+
+- Added automatic write retry mechanism for writing values within the fan, as writing with UDP is not very reliable in connection with poor network conditions
+- Adapter checker issues fixed
+
 ### 0.0.4 (2025-01-31)
 
 - Updated ESLint to 9.x.x
