@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "oxxify-fan-control",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "news": {
+      "0.0.6": {
+        "en": "Vulnerable dependency updated",
+        "de": "Schwache Abhängigkeit aktualisiert",
+        "ru": "Обновлена уязвимая зависимость",
+        "pt": "Dependência Vulnerável atualizada",
+        "nl": "Kwetsbare afhankelijkheid bijgewerkt",
+        "fr": "Dépendance vulnérable mise à jour",
+        "it": "Dipendenza attiva aggiornata",
+        "es": "Actualización de la dependencia vulnerable",
+        "pl": "Uaktualniona podatna zależność",
+        "uk": "Vulnerable залежність оновлено",
+        "zh-cn": "更新脆弱依赖性"
+      },
       "0.0.5": {
         "en": "Added automatic write retry mechanism for writing values within the fan, as writing with UDP is not very reliable in connection with poor network conditions\nAdapter checker issues fixed",
         "de": "Automatischer Schreibwiedergabemechanismus für Schreibwerte innerhalb des Lüfters hinzugefügt, da das Schreiben mit UDP nicht sehr zuverlässig in Verbindung mit schlechten Netzbedingungen ist\nAdapter Checker Probleme behoben",
