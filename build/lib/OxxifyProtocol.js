@@ -457,11 +457,13 @@ class OxxifyProtocol {
       nIndex++;
     }
     switch (data.at(nIndex)) {
+      // Change response size
       case 254:
         nIndex++;
         nCurrentReadParameterSize = (_b = data.at(nIndex)) != null ? _b : 1;
         nIndex++;
         break;
+      // Not supported low byte
       case 253:
         nIndex++;
         nIndex++;
