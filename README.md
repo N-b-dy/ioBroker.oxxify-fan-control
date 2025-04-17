@@ -66,6 +66,10 @@ This channel contains system data about the hardware and firmware as well as run
 
 ## Changelog
 
+### **WORK IN PROGRESS**
+
+- Vulnerable dependency updated
+
 ### 0.0.5 (2025-03-21)
 
 - Added automatic write retry mechanism for writing values within the fan, as writing with UDP is not very reliable in connection with poor network conditions
