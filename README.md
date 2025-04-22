@@ -65,6 +65,12 @@ This channel contains system data about the hardware and firmware as well as run
 -->
 
 ## Changelog
+
+### **WORK IN PROGRESS**
+
+- Some dependency work
+- Code documentation extended
+
 ### 0.0.6 (2025-04-17)
 
 - Vulnerable dependency updated

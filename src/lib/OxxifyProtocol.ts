@@ -70,6 +70,9 @@ export enum ParameterType {
  * This class implements the creating of protocol frames for Oxxify fans and the parsing of received data as well.
  */
 export class OxxifyProtocol {
+    /**
+     * Constructor of the class.
+     */
     public constructor() {
         // Packet start
         this.internalBuffer[0] = 0xfd;
@@ -86,6 +89,13 @@ export class OxxifyProtocol {
         this.FillstateDictionary();
     }
 
+    /**
+     * Starts a new protocol frame by resetting internal variables and performing some input data checks.
+     *
+     * @param strFanId The unique fan id, for which the protocol frame is built.
+     * @param strPassword The password of the fan, which is necessary for the frame to be processed.
+     * @returns True if successful, otherwise false.
+     */
     public StartNewFrame(strFanId: string, strPassword: string): boolean {
         if (strFanId.length != 16) {
             return false;
@@ -118,6 +128,10 @@ export class OxxifyProtocol {
         return true;
     }
 
+    /**
+     * Finishs the created protocol frame by calculating the checksum and appending it to the protocol data accoring to the protocol definition.
+     *
+     */
     public FinishFrame(): void {
         const checksum = this.CalculateChecksum(this.internalBuffer.subarray(2, this.nWriteIndex));
 
@@ -801,15 +815,24 @@ export class OxxifyProtocol {
     }
 
     private ParseTimeSmallToLarge(bytes: Buffer): ioBroker.StateValue {
-        return `${bytes.at(2)?.toString().padStart(2, "0")}:${bytes.at(1)?.toString().padStart(2, "0")}:${bytes.at(0)?.toString().padStart(2, "0")}`;
+        return `${bytes.at(2)?.toString().padStart(2, "0")}:${bytes
+            .at(1)
+            ?.toString()
+            .padStart(2, "0")}:${bytes.at(0)?.toString().padStart(2, "0")}`;
     }
 
     private ParseRtcDate(bytes: Buffer): ioBroker.StateValue {
-        return `${bytes.at(0)?.toString().padStart(2, "0")}.${bytes.at(2)?.toString().padStart(2, "0")}.${bytes.at(3)?.toString().padStart(2, "0")} (${bytes.at(1)} day of the week)`;
+        return `${bytes.at(0)?.toString().padStart(2, "0")}.${bytes.at(2)?.toString().padStart(2, "0")}.${bytes
+            .at(3)
+            ?.toString()
+            .padStart(2, "0")} (${bytes.at(1)} day of the week)`;
     }
 
     private ParseOperatingTime(bytes: Buffer): ioBroker.StateValue {
-        return `${(bytes.at(2) ?? 0) | ((bytes.at(3) ?? 0) << 8)}:${bytes.at(1)?.toString().padStart(2, "0")}:${bytes.at(0)?.toString().padStart(2, "0")}`;
+        return `${(bytes.at(2) ?? 0) | ((bytes.at(3) ?? 0) << 8)}:${bytes
+            .at(1)
+            ?.toString()
+            .padStart(2, "0")}:${bytes.at(0)?.toString().padStart(2, "0")}`;
     }
 
     private ParseAlarmWarningState(byte: Buffer): ioBroker.StateValue {

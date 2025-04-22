@@ -86,6 +86,9 @@ var ParameterType = /* @__PURE__ */ ((ParameterType2) => {
   return ParameterType2;
 })(ParameterType || {});
 class OxxifyProtocol {
+  /**
+   * Constructor of the class.
+   */
   constructor() {
     this.internalBuffer[0] = 253;
     this.internalBuffer[1] = 253;
@@ -94,6 +97,13 @@ class OxxifyProtocol {
     this.nWriteIndex = 4;
     this.FillstateDictionary();
   }
+  /**
+   * Starts a new protocol frame by resetting internal variables and performing some input data checks.
+   *
+   * @param strFanId The unique fan id, for which the protocol frame is built.
+   * @param strPassword The password of the fan, which is necessary for the frame to be processed.
+   * @returns True if successful, otherwise false.
+   */
   StartNewFrame(strFanId, strPassword) {
     if (strFanId.length != 16) {
       return false;
@@ -113,6 +123,10 @@ class OxxifyProtocol {
     this.nCurrentWriteHighByte = 0;
     return true;
   }
+  /**
+   * Finishs the created protocol frame by calculating the checksum and appending it to the protocol data accoring to the protocol definition.
+   *
+   */
   FinishFrame() {
     const checksum = this.CalculateChecksum(this.internalBuffer.subarray(2, this.nWriteIndex));
     this.internalBuffer[this.nWriteIndex] = checksum & 255;
