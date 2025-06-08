@@ -600,7 +600,7 @@ class OxxifyFanControl extends utils.Adapter {
       if (this.verifyTargetValuesTimeout == void 0) {
         this.verifyTargetValuesTimeout = this.setTimeout(() => {
           this.verifyTargetValues();
-        }, 1500);
+        }, 2500);
       }
     }
   }
