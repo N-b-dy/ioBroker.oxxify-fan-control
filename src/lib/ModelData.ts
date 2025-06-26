@@ -158,6 +158,7 @@ export class FanData {
      * @param strUnit The unit of the state, if available.
      * @param minValue The minimum value of the state, if available (e.g. in case of a number).
      * @param maxValue The maximum value of the state, if available (e.g. in case of a number).
+     * @param states The availabe states in case of an enum, if available.
      */
     constructor(
         nSize: number,
@@ -171,6 +172,7 @@ export class FanData {
         strUnit?: string,
         minValue?: number,
         maxValue?: number,
+        states?: Record<string, string>,
     ) {
         this.nSize = nSize;
         this.strIdentifer = strIdentifer;
@@ -183,6 +185,7 @@ export class FanData {
         this.parseFunction = parseFunction;
         this.minValue = minValue;
         this.maxValue = maxValue;
+        this.states = states;
     }
 
     nSize: number;
@@ -198,4 +201,6 @@ export class FanData {
     strUnit: string | undefined;
     minValue?: number | undefined;
     maxValue?: number | undefined;
+
+    states?: Record<string, string> | undefined;
 }

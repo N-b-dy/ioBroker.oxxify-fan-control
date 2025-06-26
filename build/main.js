@@ -179,7 +179,8 @@ class OxxifyFanControl extends utils.Adapter {
               type: value.strType,
               unit: value.strUnit,
               min: value.minValue,
-              max: value.maxValue
+              max: value.maxValue,
+              states: value.states
             }
           });
         });
@@ -305,7 +306,7 @@ class OxxifyFanControl extends utils.Adapter {
           this.WriteNumberFanData(data, this.oxxify.WriteOperatingMode.bind(this.oxxify));
           break;
         case "fanSpeedMode":
-          this.WriteNumberFanData(data, this.oxxify.WriteFanSpeedMode.bind(this.oxxify));
+          this.WriteStringFanData(data, this.oxxify.WriteFanSpeedMode.bind(this.oxxify));
           break;
         case "fanState":
           this.WriteBoolFanData(data, this.oxxify.WriteFanState.bind(this.oxxify));

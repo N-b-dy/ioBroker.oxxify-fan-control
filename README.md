@@ -72,6 +72,7 @@ This channel contains system data about the hardware and firmware as well as run
 - Code documentation extended
 - Added Node.js 24. to test and release pipeline
 - Resending interval of not overtaken values changed from 1,5 seconds to 2,5 seconds
+- Changed mixed numerical/string values for enums into selectable values, to show available configurations (breaking change if already used to remote control fans)
 
 ### 0.0.6 (2025-04-17)
 

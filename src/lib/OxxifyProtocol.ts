@@ -168,10 +168,10 @@ export class OxxifyProtocol {
         this.AddParameter(ParameterType.FanSpeedMode);
     }
 
-    public WriteFanSpeedMode(nValue: number): ParameterType {
+    public WriteFanSpeedMode(strValue: string): ParameterType {
         this.AddFunctionCode(FunctionType.WriteRead);
         const data = Buffer.alloc(1);
-        data[0] = nValue;
+        data[0] = this.ParseFanSpeedModeEnum(strValue);
         console.log(`Data in Buffer: ${data[0]}`);
         this.AddParameter(ParameterType.FanSpeedMode, data);
         return ParameterType.FanSpeedMode;
@@ -803,15 +803,29 @@ export class OxxifyProtocol {
     private ParseFanSpeedMode(byte: Buffer): ioBroker.StateValue {
         switch (byte.at(0) ?? 255) {
             case 1:
-                return "1 - Ventilation level 1";
+                return "ventilationLevel1";
             case 2:
-                return "2 - Ventilation level 2";
+                return "ventilationLevel2";
             case 3:
-                return "3 - Ventilation level 3";
+                return "ventilationLevel3";
             case 255:
-                return "255 - Manual ventilation level";
+                return "ventilationLevelManual";
         }
         return null;
+    }
+
+    private ParseFanSpeedModeEnum(strEnum: string): number {
+        switch (strEnum) {
+            case "ventilationLevel1":
+                return 1;
+            case "ventilationLevel2":
+                return 2;
+            case "ventilationLevel3":
+                return 3;
+            case "ventilationLevelManual":
+                return 255;
+        }
+        return 1;
     }
 
     private ParseTimeSmallToLarge(bytes: Buffer): ioBroker.StateValue {
@@ -966,6 +980,15 @@ export class OxxifyProtocol {
                     "zh-cn": "Number of the ventilation level",
                 },
                 this.ParseFanSpeedMode,
+                undefined,
+                undefined,
+                undefined,
+                {
+                    ventilationLevel1: "Ventilation Level 1",
+                    ventilationLevel2: "Ventilation Level 2",
+                    ventilationLevel3: "Ventilation Level 3",
+                    ventilationLevelManual: "Manual ventilation level",
+                },
             ),
         );
         this.stateDictionary.set(

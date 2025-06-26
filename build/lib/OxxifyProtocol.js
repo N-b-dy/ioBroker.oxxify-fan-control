@@ -154,10 +154,10 @@ class OxxifyProtocol {
     this.AddFunctionCode(1 /* Read */);
     this.AddParameter(2 /* FanSpeedMode */);
   }
-  WriteFanSpeedMode(nValue) {
+  WriteFanSpeedMode(strValue) {
     this.AddFunctionCode(3 /* WriteRead */);
     const data = Buffer.alloc(1);
-    data[0] = nValue;
+    data[0] = this.ParseFanSpeedModeEnum(strValue);
     console.log(`Data in Buffer: ${data[0]}`);
     this.AddParameter(2 /* FanSpeedMode */, data);
     return 2 /* FanSpeedMode */;
@@ -643,15 +643,28 @@ class OxxifyProtocol {
     var _a;
     switch ((_a = byte.at(0)) != null ? _a : 255) {
       case 1:
-        return "1 - Ventilation level 1";
+        return "ventilationLevel1";
       case 2:
-        return "2 - Ventilation level 2";
+        return "ventilationLevel2";
       case 3:
-        return "3 - Ventilation level 3";
+        return "ventilationLevel3";
       case 255:
-        return "255 - Manual ventilation level";
+        return "ventilationLevelManual";
     }
     return null;
+  }
+  ParseFanSpeedModeEnum(strEnum) {
+    switch (strEnum) {
+      case "ventilationLevel1":
+        return 1;
+      case "ventilationLevel2":
+        return 2;
+      case "ventilationLevel3":
+        return 3;
+      case "ventilationLevelManual":
+        return 255;
+    }
+    return 1;
   }
   ParseTimeSmallToLarge(bytes) {
     var _a, _b, _c;
@@ -792,7 +805,16 @@ class OxxifyProtocol {
           uk: "\u041D\u043E\u043C\u0435\u0440 \u0440\u0456\u0432\u043D\u044F \u0432\u0435\u043D\u0442\u0438\u043B\u044F\u0446\u0456\u0457",
           "zh-cn": "Number of the ventilation level"
         },
-        this.ParseFanSpeedMode
+        this.ParseFanSpeedMode,
+        void 0,
+        void 0,
+        void 0,
+        {
+          ventilationLevel1: "Ventilation Level 1",
+          ventilationLevel2: "Ventilation Level 2",
+          ventilationLevel3: "Ventilation Level 3",
+          ventilationLevelManual: "Manual ventilation level"
+        }
       )
     );
     this.stateDictionary.set(

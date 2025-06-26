@@ -146,8 +146,9 @@ class FanData {
    * @param strUnit The unit of the state, if available.
    * @param minValue The minimum value of the state, if available (e.g. in case of a number).
    * @param maxValue The maximum value of the state, if available (e.g. in case of a number).
+   * @param states The availabe states in case of an enum, if available.
    */
-  constructor(nSize, strIdentifer, bIsReadable, bIsWritable, strRole, strType, name, parseFunction, strUnit, minValue, maxValue) {
+  constructor(nSize, strIdentifer, bIsReadable, bIsWritable, strRole, strType, name, parseFunction, strUnit, minValue, maxValue, states) {
     this.nSize = nSize;
     this.strIdentifer = strIdentifer;
     this.bIsReadable = bIsReadable;
@@ -159,6 +160,7 @@ class FanData {
     this.parseFunction = parseFunction;
     this.minValue = minValue;
     this.maxValue = maxValue;
+    this.states = states;
   }
   nSize;
   strIdentifer;
@@ -171,6 +173,7 @@ class FanData {
   strUnit;
   minValue;
   maxValue;
+  states;
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
