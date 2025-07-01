@@ -171,10 +171,10 @@ class OxxifyProtocol {
     this.AddParameter(7 /* TimerMode */);
     this.AddParameter(11 /* TimerCountdown */);
   }
-  WriteTimerMode(nValue) {
+  WriteTimerMode(strValue) {
     this.AddFunctionCode(3 /* WriteRead */);
     const data = Buffer.alloc(1);
-    data[0] = nValue;
+    data[0] = this.ParseTimerModeEnum(strValue);
     this.AddParameter(7 /* TimerMode */, data);
     return 7 /* TimerMode */;
   }
@@ -368,10 +368,10 @@ class OxxifyProtocol {
     this.AddFunctionCode(1 /* Read */);
     this.AddParameter(183 /* FanOperatingMode */);
   }
-  WriteOperatingMode(nValue) {
+  WriteOperatingMode(strValue) {
     this.AddFunctionCode(3 /* WriteRead */);
     const data = Buffer.alloc(1);
-    data[0] = nValue;
+    data[0] = this.ParseOperatingModeEnum(strValue);
     this.AddParameter(183 /* FanOperatingMode */, data);
     return 183 /* FanOperatingMode */;
   }
@@ -631,13 +631,24 @@ class OxxifyProtocol {
     var _a;
     switch ((_a = byte.at(0)) != null ? _a : 255) {
       case 0:
-        return "0 - Off";
+        return "off";
       case 1:
-        return "1 - Night mode";
+        return "nightMode";
       case 2:
-        return "2 - Party mode";
+        return "partyMode";
     }
     return null;
+  }
+  ParseTimerModeEnum(strEnum) {
+    switch (strEnum) {
+      case "off":
+        return 0;
+      case "nightMode":
+        return 1;
+      case "partyMode":
+        return 2;
+    }
+    return 0;
   }
   ParseFanSpeedMode(byte) {
     var _a;
@@ -734,13 +745,24 @@ class OxxifyProtocol {
     var _a;
     switch ((_a = byte.at(0)) != null ? _a : 255) {
       case 0:
-        return "0 - Ventilation";
+        return "ventilation";
       case 1:
-        return "1 - Heat recovery";
+        return "heatRecovery";
       case 2:
-        return "2 - Supply air";
+        return "supplyAir";
     }
     return null;
+  }
+  ParseOperatingModeEnum(strEnum) {
+    switch (strEnum) {
+      case "ventilation":
+        return 0;
+      case "heatRecovery":
+        return 1;
+      case "supplyAir":
+        return 2;
+    }
+    return 0;
   }
   ParseSystemType(bytes) {
     var _a;
@@ -865,9 +887,14 @@ class OxxifyProtocol {
           "zh-cn": "Timer mode"
         },
         this.ParseTimerMode,
-        "",
-        0,
-        2
+        void 0,
+        void 0,
+        void 0,
+        {
+          off: "Off",
+          nightMode: "Night Mode",
+          partyMode: "Party Mode"
+        }
       )
     );
     this.stateDictionary.set(
@@ -1766,9 +1793,14 @@ class OxxifyProtocol {
           "zh-cn": "Operating mode of the fan"
         },
         this.ParseOperatingMode,
-        "",
-        0,
-        2
+        void 0,
+        void 0,
+        void 0,
+        {
+          ventilation: "Ventilation",
+          heatRecovery: "Heat Recovery",
+          supplyAir: "Supply Air"
+        }
       )
     );
     this.stateDictionary.set(

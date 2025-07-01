@@ -303,7 +303,7 @@ class OxxifyFanControl extends utils.Adapter {
           this.WriteNumberFanData(data, this.oxxify.WriteBoostModeFollowUpTime.bind(this.oxxify));
           break;
         case "fanOperatingMode":
-          this.WriteNumberFanData(data, this.oxxify.WriteOperatingMode.bind(this.oxxify));
+          this.WriteStringFanData(data, this.oxxify.WriteOperatingMode.bind(this.oxxify));
           break;
         case "fanSpeedMode":
           this.WriteStringFanData(data, this.oxxify.WriteFanSpeedMode.bind(this.oxxify));
@@ -327,7 +327,7 @@ class OxxifyFanControl extends utils.Adapter {
           this.WriteBoolFanData(data, this.oxxify.WriteTimeControlledMode.bind(this.oxxify));
           break;
         case "timerMode":
-          this.WriteNumberFanData(data, this.oxxify.WriteTimerMode.bind(this.oxxify));
+          this.WriteStringFanData(data, this.oxxify.WriteTimerMode.bind(this.oxxify));
           break;
         case "stateAnalogVoltageSensor":
           this.WriteBoolFanData(data, this.oxxify.WriteAnalogVoltageSensorState.bind(this.oxxify));

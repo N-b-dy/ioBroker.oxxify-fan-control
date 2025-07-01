@@ -188,10 +188,10 @@ export class OxxifyProtocol {
         this.AddParameter(ParameterType.TimerCountdown);
     }
 
-    public WriteTimerMode(nValue: number): ParameterType {
+    public WriteTimerMode(strValue: string): ParameterType {
         this.AddFunctionCode(FunctionType.WriteRead);
         const data = Buffer.alloc(1);
-        data[0] = nValue;
+        data[0] = this.ParseTimerModeEnum(strValue);
         this.AddParameter(ParameterType.TimerMode, data);
         return ParameterType.TimerMode;
     }
@@ -436,11 +436,11 @@ export class OxxifyProtocol {
         this.AddParameter(ParameterType.FanOperatingMode);
     }
 
-    public WriteOperatingMode(nValue: number): ParameterType {
+    public WriteOperatingMode(strValue: string): ParameterType {
         this.AddFunctionCode(FunctionType.WriteRead);
         const data = Buffer.alloc(1);
 
-        data[0] = nValue;
+        data[0] = this.ParseOperatingModeEnum(strValue);
         this.AddParameter(ParameterType.FanOperatingMode, data);
         return ParameterType.FanOperatingMode;
     }
@@ -791,13 +791,25 @@ export class OxxifyProtocol {
     private ParseTimerMode(byte: Buffer): ioBroker.StateValue {
         switch (byte.at(0) ?? 255) {
             case 0:
-                return "0 - Off";
+                return "off";
             case 1:
-                return "1 - Night mode";
+                return "nightMode";
             case 2:
-                return "2 - Party mode";
+                return "partyMode";
         }
         return null;
+    }
+
+    private ParseTimerModeEnum(strEnum: string): number {
+        switch (strEnum) {
+            case "off":
+                return 0;
+            case "nightMode":
+                return 1;
+            case "partyMode":
+                return 2;
+        }
+        return 0;
     }
 
     private ParseFanSpeedMode(byte: Buffer): ioBroker.StateValue {
@@ -906,13 +918,25 @@ export class OxxifyProtocol {
     private ParseOperatingMode(byte: Buffer): ioBroker.StateValue {
         switch (byte.at(0) ?? 255) {
             case 0:
-                return "0 - Ventilation";
+                return "ventilation";
             case 1:
-                return "1 - Heat recovery";
+                return "heatRecovery";
             case 2:
-                return "2 - Supply air";
+                return "supplyAir";
         }
         return null;
+    }
+
+    private ParseOperatingModeEnum(strEnum: string): number {
+        switch (strEnum) {
+            case "ventilation":
+                return 0;
+            case "heatRecovery":
+                return 1;
+            case "supplyAir":
+                return 2;
+        }
+        return 0;
     }
 
     private ParseSystemType(bytes: Buffer): ioBroker.StateValue {
@@ -1039,9 +1063,14 @@ export class OxxifyProtocol {
                     "zh-cn": "Timer mode",
                 },
                 this.ParseTimerMode,
-                "",
-                0,
-                2,
+                undefined,
+                undefined,
+                undefined,
+                {
+                    off: "Off",
+                    nightMode: "Night Mode",
+                    partyMode: "Party Mode",
+                },
             ),
         );
         this.stateDictionary.set(
@@ -1956,9 +1985,14 @@ export class OxxifyProtocol {
                     "zh-cn": "Operating mode of the fan",
                 },
                 this.ParseOperatingMode,
-                "",
-                0,
-                2,
+                undefined,
+                undefined,
+                undefined,
+                {
+                    ventilation: "Ventilation",
+                    heatRecovery: "Heat Recovery",
+                    supplyAir: "Supply Air",
+                },
             ),
         );
         this.stateDictionary.set(
