@@ -737,7 +737,7 @@ class OxxifyFanControl extends utils.Adapter {
     private verifyTargetValues(): void {
         this.targetValuesDictionary.forEach(
             (targetFanData: Map<Oxxify.ParameterType, IoBrokerRewriteDataPoint>, strFanId: string) => {
-                targetFanData.forEach(async (dataPoint: IoBrokerRewriteDataPoint) => {
+                targetFanData.forEach(async (dataPoint: IoBrokerRewriteDataPoint, key: Oxxify.ParameterType) => {
                     const currentState = await this.getStateAsync(dataPoint.strIdentifer);
 
                     if (currentState?.val != dataPoint.value) {
@@ -756,7 +756,8 @@ class OxxifyFanControl extends utils.Adapter {
                             }
                         }
                     } else {
-                        dataPoint.nRetryCount = 0;
+                        // Remove the entry, once it was successfully written to the fan, because otherwise no external changes can happen (e.g. manual button press at the fan)
+                        targetFanData.delete(key);
                     }
                 });
             },

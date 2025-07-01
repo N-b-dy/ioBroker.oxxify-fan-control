@@ -608,7 +608,7 @@ class OxxifyFanControl extends utils.Adapter {
   verifyTargetValues() {
     this.targetValuesDictionary.forEach(
       (targetFanData, strFanId) => {
-        targetFanData.forEach(async (dataPoint) => {
+        targetFanData.forEach(async (dataPoint, key) => {
           const currentState = await this.getStateAsync(dataPoint.strIdentifer);
           if ((currentState == null ? void 0 : currentState.val) != dataPoint.value) {
             if (dataPoint.nRetryCount <= this.nMaxRetryCount) {
@@ -625,7 +625,7 @@ class OxxifyFanControl extends utils.Adapter {
               }
             }
           } else {
-            dataPoint.nRetryCount = 0;
+            targetFanData.delete(key);
           }
         });
       }
