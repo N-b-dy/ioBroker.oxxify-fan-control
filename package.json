@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@iobroker/adapter-core": "^3.2.3",
-    "date-and-time": "^3.6.0",
+    "date-and-time": "^4.0.1",
     "ntp-time": "^2.0.8",
     "queue-fifo": "^0.2.6"
   },
