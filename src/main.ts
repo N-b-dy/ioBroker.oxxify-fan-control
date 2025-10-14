@@ -8,7 +8,6 @@ import * as utils from "@iobroker/adapter-core";
 
 // Load your modules here, e.g.:
 // import * as fs from "fs";
-import * as DateTime from "date-and-time";
 import * as udp from "dgram";
 import * as NTP from "ntp-time";
 import Queue from "queue-fifo";
@@ -639,8 +638,8 @@ class OxxifyFanControl extends utils.Adapter {
         this.ntpClient
             .syncTime()
             .then((value: NTP.NTPPacket) => {
-                const dateTime = DateTime.parse(value.time.toISOString(), "YYYY-MM-DD[T]HH:mm:ss.SSS[Z]", true);
-                this.log.debug(`Received local time via ntp: ${dateTime.toLocaleString()}`);
+                const dateTime = value.time;
+                this.log.debug(`Received local time via ntp: ${dateTime.toString()}`);
                 this.oxxify.StartNewFrame(strFanId, fanData.strPassword);
                 this.oxxify.WriteRtcDateTime(dateTime);
                 this.oxxify.FinishFrame();

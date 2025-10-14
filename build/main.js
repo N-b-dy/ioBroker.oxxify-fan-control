@@ -22,7 +22,6 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 var utils = __toESM(require("@iobroker/adapter-core"));
-var DateTime = __toESM(require("date-and-time"));
 var udp = __toESM(require("dgram"));
 var NTP = __toESM(require("ntp-time"));
 var import_queue_fifo = __toESM(require("queue-fifo"));
@@ -526,8 +525,8 @@ class OxxifyFanControl extends utils.Adapter {
    */
   SyncRtcClock(strFanId, fanData) {
     this.ntpClient.syncTime().then((value) => {
-      const dateTime = DateTime.parse(value.time.toISOString(), "YYYY-MM-DD[T]HH:mm:ss.SSS[Z]", true);
-      this.log.debug(`Received local time via ntp: ${dateTime.toLocaleString()}`);
+      const dateTime = value.time;
+      this.log.debug(`Received local time via ntp: ${dateTime.toString()}`);
       this.oxxify.StartNewFrame(strFanId, fanData.strPassword);
       this.oxxify.WriteRtcDateTime(dateTime);
       this.oxxify.FinishFrame();
