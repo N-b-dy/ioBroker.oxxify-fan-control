@@ -66,6 +66,10 @@ This channel contains system data about the hardware and firmware as well as run
 
 ## Changelog
 
+### **WORK IN PROGRESS**
+
+- Some dependency work
+
 ### 0.0.7 (2025-07-01)
 
 - Some dependency work
