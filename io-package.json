@@ -1,181 +1,200 @@
 {
-    "common": {
-        "name": "oxxify-fan-control",
-        "version": "0.0.7",
-        "news": {
-            "0.0.7": {
-                "en": "Some dependency work\nCode documentation extended\nAdded Node.js 24. to test and release pipeline\nResending interval of not overtaken values changed from 1,5 seconds to 2,5 seconds\nChanged writable mixed numerical/string values for enums into selectable values, to show available configurations (**breaking change** if already used to remote control fans)\nRewrite mechanism allows now manual changes within the buttons of the fan, which were overridden by the internal stored value before",
-                "de": "Einige Abhängigkeitsarbeit\nCodedokumentation erweitert\nNode.js 24. hinzugefügt, um Pipeline zu testen und freizugeben\nÄnderungsintervall von nicht überholten Werten von 1,5 Sekunden auf 2,5 Sekunden\nGeänderte schreibbare gemischte numerische/string-Werte für enums in wählbare Werte, um verfügbare Konfigurationen anzuzeigen (** brechende Änderung**, wenn bereits für Fernbedienungsfans verwendet)\nRewrite-Mechanismus ermöglicht nun manuelle Änderungen innerhalb der Tasten des Lüfters, die durch den internen gespeicherten Wert vor übergeordnet wurden",
-                "ru": "Некоторые зависимые работы\nРасширенная документация кодекса\nNode.js 24 для тестирования и выпуска трубопровода\nИнтервал пересылки необгоняемых значений изменился с 1,5 секунды до 2,5 секунды\nИзмененные записываемые смешанные числовые/струнные значения для числовых чисел в выбираемые значения, чтобы показать доступные конфигурации (**breaking change**, если уже используется для вентиляторов дистанционного управления)\nМеханизм перезаписи позволяет теперь ручные изменения в кнопках вентилятора, которые были переопределены внутренним сохраненным значением ранее",
-                "pt": "Algum trabalho de dependência\nDocumentação do código alargada\nAdicionado Node.js 24. para testar e liberar pipeline\nIntervalo de retensão de valores não ultrapassados mudou de 1,5 segundos para 2,5 segundos\nVariação dos valores numéricos/de texto mistos para enums em valores selecionáveis, para mostrar configurações disponíveis (** mudança de quebra** se já usado para ventiladores de controle remoto)\nO mecanismo de reescrita permite agora alterações manuais dentro dos botões da ventoinha, que foram substituídas pelo valor interno armazenado antes",
-                "nl": "Enige afhankelijkheid werk\nCodedocumentatie uitgebreid\nToegevoegd Node.js 24. om te testen en vrij te geven pijpleiding\nHerhalingsinterval van niet ingehaalde waarden veranderd van 1,5 seconden naar 2,5 seconden\nVeranderde schrijfbare gemengde numeriek/tekenreekswaarden voor enums in selecteerbare waarden, om beschikbare configuraties weer te geven (** breaking change** indien al gebruikt voor ventilatoren met afstandsbediening)\nHerschrijven mechanisme laat nu handmatige wijzigingen toe binnen de knoppen van de ventilator, die werden overschreven door de interne opgeslagen waarde voor",
-                "fr": "Travail de dépendance\nDocuments de code étendus\nAjout de Node.js 24. pour tester et libérer le pipeline\nL'intervalle de répétition des valeurs non dépassées est passé de 1,5 à 2,5 secondes\nChangement de valeurs numériques/chaînes mixtes pour les enums en valeurs sélectionnables, pour afficher les configurations disponibles (**modifier** si déjà utilisé pour les ventilateurs de télécommande)\nLe mécanisme de réécriture permet maintenant des modifications manuelles dans les boutons du ventilateur, qui ont été dépassés par la valeur stockée interne avant",
-                "it": "Alcuni lavori di dipendenza\nDocumentazione del codice estesa\nAggiunto Node.js 24. per testare e rilasciare pipeline\nIntervallo di attesa dei valori non superati da 1,5 secondi a 2,5 secondi\nCambiati valori numerici/string misti per gli enum in valori selezionabili, per mostrare le configurazioni disponibili (**breaking change** se già utilizzato per i fan di controllo remoto)\nIl meccanismo di riscrittura consente ora modifiche manuali all'interno dei pulsanti del ventilatore, che sono stati sovrascritti dal valore memorizzato interno prima",
-                "es": "Algunos trabajos de dependencia\nDocumentación ampliada\nAñadido Node.js 24. para probar y soltar el oleoducto\nReenviar intervalo de valores no superados cambió de 1,5 segundos a 2,5 segundos\nModificados valores numéricos/estring mixtos para enums en valores seleccionables, para mostrar configuraciones disponibles (**cambio innovador** si ya se utilizan para los aficionados de control remoto)\nEl mecanismo de reescritura permite ahora cambios manuales dentro de los botones del ventilador, que fueron anulados por el valor almacenado interno antes",
-                "pl": "Pewne prace związane z uzależnieniem\nRozszerzona dokumentacja kodowa\nDodano Node.js 24. do testowania i uwalniania rurociągu\nPrzedział zwrotny wartości nieprzekroczonych zmienił się z 1,5 sekundy na 2,5 sekundy\nZmieniono zapisywalne mieszane wartości numeryczne / stringowe dla enumów na wybrane wartości, aby pokazać dostępne konfiguracje (* *zmiana łamania* *, jeśli jest już używana do zdalnego sterowania wentylatorami) \nMechanizm przepisywania umożliwia teraz ręczne zmiany w przyciskach wentylatora, które zostały przekroczone przez wewnętrzną wartość zapisaną przed",
-                "uk": "Деякі роботи залежностей\nРозширена документація\nДодано Node.js 24. для випробування та виходу трубопроводу\nЗакінчення інтервалу не надходжених значень змінено з 1,5 секунд до 2,5 секунд\nЗмінені значення зважених числових/string для обманів у вибрані значення, для відображення доступних конфігурацій (*** Зміна розриву***, якщо вже використовується для вентиляторів дистанційного керування)\nМеханізм перезапису дозволяє тепер ручні зміни в кнопках вентилятора, які перенесли внутрішню величину до",
-                "zh-cn": "一些依赖性工作\n扩展代码文档\n增加节点24,用于试验和释放管道\n重排未超过值的间隔从1,5秒改为2,5秒\n将 enum 可写入的混合数字/字符串值修改为可选择的值,以显示可用的配置(** 打破的更改** 如果已经用于远程控制扇)\n重写机制现在允许在风扇的按钮内进行手动修改,在风扇之前被内部存储值所覆盖"
-            },
-            "0.0.6": {
-                "en": "Vulnerable dependency updated",
-                "de": "Schwache Abhängigkeit aktualisiert",
-                "ru": "Обновлена уязвимая зависимость",
-                "pt": "Dependência Vulnerável atualizada",
-                "nl": "Kwetsbare afhankelijkheid bijgewerkt",
-                "fr": "Dépendance vulnérable mise à jour",
-                "it": "Dipendenza attiva aggiornata",
-                "es": "Actualización de la dependencia vulnerable",
-                "pl": "Uaktualniona podatna zależność",
-                "uk": "Vulnerable залежність оновлено",
-                "zh-cn": "更新脆弱依赖性"
-            },
-            "0.0.5": {
-                "en": "Added automatic write retry mechanism for writing values within the fan, as writing with UDP is not very reliable in connection with poor network conditions\nAdapter checker issues fixed",
-                "de": "Automatischer Schreibwiedergabemechanismus für Schreibwerte innerhalb des Lüfters hinzugefügt, da das Schreiben mit UDP nicht sehr zuverlässig in Verbindung mit schlechten Netzbedingungen ist\nAdapter Checker Probleme behoben",
-                "ru": "Добавлен автоматический механизм записи для записи значений внутри вентилятора, так как запись с UDP не очень надежна в связи с плохими сетевыми условиями\nПроблемы с проверкой адаптера",
-                "pt": "Adicionado mecanismo automático de retenda de escrita para escrever valores dentro do ventilador, como escrever com UDP não é muito confiável em conexão com condições de rede pobres\nProblemas do verificador do adaptador corrigido",
-                "nl": "Toegevoegd automatisch schrijf retry mechanisme voor het schrijven van waarden binnen de ventilator, omdat schrijven met UDP is niet erg betrouwbaar in verband met slechte netwerkomstandigheden\nAdapter controleer problemen opgelost",
-                "fr": "Ajout d'un mécanisme de ré-essai automatique d'écriture pour l'écriture des valeurs au sein du ventilateur, car écrire avec UDP n'est pas très fiable en relation avec les mauvaises conditions du réseau\nProblèmes de vérification de l'adaptateur corrigés",
-                "it": "Aggiunto meccanismo automatico di retry di scrittura per la scrittura di valori all'interno del ventilatore, come la scrittura con UDP non è molto affidabile in connessione con le condizioni di rete povere\nAdattatore checker problemi fissi",
-                "es": "Mecanismo de reingreso automático de escritura para escribir valores dentro del ventilador, ya que la escritura con UDP no es muy confiable en relación con las malas condiciones de red\nProblemas de control del adaptador fijo",
-                "pl": "Dodano automatyczny mechanizm ponownego zapisu do zapisu wartości wewnątrz wentylatora, ponieważ pisanie z UDP nie jest bardzo wiarygodne w związku ze słabymi warunkami sieciowymi\nNaprawiono kwestie sprawdzania adaptera",
-                "uk": "Додано автоматичний механізм запису птиця для написання значень у вентиляторі, як написання з UDP не дуже надійний у зв'язку з несприятливими умовами мережі\nРевізити перевірки адаптера",
-                "zh-cn": "在风扇内添加写入值的自动写入重试机制, 因为与 UDP 的写入在网络条件差的情况下不太可靠 \n固定的适配检查器问题"
-            },
-            "0.0.4": {
-                "en": "Updated ESLint to 9.x.x\nFixed copyright issue from adapter checker\nReplaced deletion of all objects with deletion of missing devices from config only\nAvoided illegal characters from user input for fan id within code\nChanged state subscription to all states below the devices folder\nAdded restart logic of UDP server in case of an error\nAdded adapter terminiation if multiple udp server errors occured\nReplaced cyclic checking of the send quene with a timeout approach instead of interval\nMissing intermediate objects created\nRoles updated according to the read/write definitions\nPolling interval limited in JSON config and code\nioBroker unit in object tree for RTC date & time removed",
-                "de": "Aktualisierte ESLint auf 9.x.x\nBehobene Urheberrechtsausgabe vom Adapter Checker\nErsetztes Löschen aller Objekte mit Löschen fehlender Geräte von config nur\nVermeiden Sie illegale Zeichen von Benutzereingabe für Fan-ID innerhalb des Codes\nZustandsabonnement aller Zustände unterhalb des Geräteordners geändert\nNeustartlogik des UDP-Servers bei einem Fehler hinzugefügt\nHinzugefügt Adapter-Terminierung, wenn mehrere udp Server-Fehler auftreten\nErsetzte zyklische Überprüfung der Sendequene mit einem Timeout-Ansatz statt Intervall\nFehlende Zwischenobjekte erstellt\nRoles aktualisiert nach den Definitionen für Schreib-/Lesetexte\nPolling-Intervall begrenzt in JSON config und Code\nioBroker Einheit in Objektbaum für RTC Datum & Zeit entfernt",
-                "ru": "Обновленный ESLint до 9.x.x\nИсправленный вопрос авторского права от адаптера\nЗамененное удаление всех объектов с удалением отсутствующих устройств из конфигурации только\nИзбегайте незаконных символов от пользовательского ввода для фан-ид в коде\nИзменение государственной подписки на все состояния ниже папки устройств\nДобавлена логика перезапуска сервера UDP в случае ошибки\nДобавлена терминизация адаптера, если произошли несколько ошибок udp-сервера\nЗамененная циклическая проверка присылочного кена с подходом тайм-аута вместо интервала\nПропущенные промежуточные объекты, созданные\nРоли, обновленные в соответствии с определениями считывания/записи\nИнтервал опроса ограничен в настройке и коде JSON\nioBroker unit in object tree for RTC date & time removed",
-                "pt": "ESLint atualizado para 9.x.x\nCorrigido problema de direitos autorais do verificador do adaptador\nEliminação substituída de todos os objetos com exclusão de dispositivos ausentes apenas de configuração\nPersonagens ilegais evitados de entrada de usuário para identificação de fãs dentro do código\nAssinatura de estado alterada para todos os estados abaixo da pasta de dispositivos\nAdicionada lógica de reinício do servidor UDP em caso de um erro\nAdicionado terminiation do adaptador se vários erros do servidor udp ocorrem\nVerificação cíclica substituída da quene de envio com uma aproximação de tempo limite em vez de intervalo\nObjetos intermediários perdidos criados\nFunções atualizadas de acordo com as definições de leitura/escrita\nIntervalo de Polling limitado em JSON config e código\nioBroker unidade em árvore de objeto para RTC data & tempo removido",
-                "nl": "Bijgewerkt ESLint naar 9.x.x\nVast copyright probleem van adaptercontrole\nVervangen verwijdering van alle objecten door verwijdering van ontbrekende apparaten van alleen config\nOngeldige tekens vermeden van gebruikersinvoer voor fan-id binnen code\nAangepaste statusabonnement naar alle staten onder de apparaatmap\nToegevoegd herstart logica van UDP-server in geval van een fout\nToegevoegde adapterterminatie als zich meerdere udp-serverfouten hebben voorgedaan\nVervangde cyclische controle van de send quene door een timeout benadering in plaats van interval\nOntbrekende tussenliggende objecten aangemaakt\nTaken bijgewerkt volgens de lees-/schrijfdefinities\nPolling interval beperkt in JSON configuratie en code\nioBroker-eenheid in objectboom voor RTC-datum en -tijd verwijderd",
-                "fr": "Mise à jour de ESLint à 9.x.x\nCorrection de la question des droits d'auteur de l'adaptateur checker\nSuppression remplacée de tous les objets avec suppression des périphériques manquants de config seulement\nÉvité les caractères illégaux de l'entrée utilisateur pour l'identifiant du ventilateur dans le code\nAbonnement d'état modifié à tous les états sous le dossier des périphériques\nAjout de la logique de redémarrage du serveur UDP en cas d'erreur\nAjout de la terminaison d'adaptateur si plusieurs erreurs de serveur udp se produisent\nRemplacer la vérification cyclique de la quene d'envoi par une approche de timeout au lieu de l'intervalle\nObjets intermédiaires manquants créés\nRôles mis à jour selon les définitions de lecture/écriture\nIntervalle de sondage limité dans la configuration et le code JSON\nioBroker unité dans l'arborescence de l'objet pour la date et l'heure RTC enlevée",
-                "it": "Aggiornato da ESLint a 9.x.x\nRisolto problema di copyright da adattatore checker\nCancellazione sostituita di tutti gli oggetti con cancellazione di dispositivi mancanti dalla configurazione solo\nEvitati caratteri illegali dall'ingresso dell'utente per fan id all'interno del codice\nAbbonamento stato modificato a tutti gli stati sotto la cartella dei dispositivi\nAggiunta la logica di riavvio del server UDP in caso di un errore\nTerminizzazione dell'adattatore aggiunta se si verificano più errori del server udp\nControllo ciclico sostituito della quene di invio con un approccio timeout invece di intervallo\nOggetti intermedi mancanti creati\nRoles aggiornato secondo le definizioni di lettura/scrittura\nIntervallo d'inquinamento limitato nella configurazione e nel codice JSON\nunità ioBroker in albero di oggetto per RTC data e ora rimosso",
-                "es": "Actualizado ESLint a 9.x.x\nEdición fija de derechos de autor desde el control de adaptador\nSustitución de la eliminación de todos los objetos con la eliminación de dispositivos perdidos de config solamente\nEvitar caracteres ilegales desde la entrada del usuario para fan id dentro del código\nCambio de suscripción estatal a todos los estados debajo de la carpeta de dispositivos\nAñadido la lógica de reinicio del servidor UDP en caso de error\nSe agregó la terminiación del adaptador si se produjeron múltiples errores del servidor udp\nComprobación cíclica sustituida de la quena envía con un enfoque de timeout en lugar de intervalo\nDesapareciendo objetos intermedios creados\nFunciones actualizadas según las definiciones de lectura/escritura\nIntervalo de votación limitado en JSON config y código\nioBroker unidad en árbol de objeto para la fecha RTC \" tiempo eliminado",
-                "pl": "Aktualizacja ESLint do 9.x.x\nStała kwestia praw autorskich z kontrolera adaptera\nZastąpione usunięcie wszystkich obiektów z usunięciem brakujących urządzeń tylko z konfigu\nUnikanie nielegalnych znaków z wejścia użytkownika dla id wentylatora w ramach kodu\nZmieniona subskrypcja państwa do wszystkich stanów poniżej folderu urządzeń\nDodano logikę restartu serwera UDP w przypadku błędu\nDodano zamknięcie adaptera jeśli błędy wielu serwerów udp\nZastąpione cykliczne sprawdzanie quene wysyłania z podejścia timeout zamiast interwału\nBrakujące obiekty pośrednie utworzone\nRole zaktualizowane zgodnie z definicjami odczytu / zapisu\nPrzedział ankietowy ograniczony w konfiguracji JSON i kodzie\nioBroker unit in object tree for RTC date & time usunięty",
-                "uk": "Оновлено ESLint до 9.x.x\nВиправлено проблему авторського права з адаптера\nЗаміна видалення всіх об'єктів з видаленням відсутніх пристроїв з налаштування тільки\nУникайте неправомірних символів із введенням користувача для входу вентилятора в код\nЗмінена підписка стану до всіх штатів нижче папки пристроїв\nДодана логіка перезавантаження UDP сервера у разі помилки\nДодано термінініацію адаптера, якщо виникають помилки сервера udp\nЗаміна циклічних перевірок відправки квена з підходом часу замість інтервалу\nЗміщення проміжних об'єктів, створених\nРолі оновлено відповідно до визначення читаного/запису\nПолілінг інтервал обмежений в налаштуваннях JSON і коді\nioBroker unit в об'єктному дереві для дати RTC і часу видалено",
-                "zh-cn": "更新到9.x.x\n适配器检查器的固定版权问题\n替换为只删除配置中缺失的设备\n避免用户输入非法字符用于代码内的扇形 ID\n更改设备文件夹下方所有状态的状态订阅\n在出现错误时添加 UDP 服务器的重启逻辑\n如果出现多个 udp 服务器错误, 则添加适配器终止\n以超时方式而不是间隔方式取代对发送队列的循环检查\n缺少中间对象\n根据读/写定义更新的角色\n在 JSON 配置和代码中限制投票间隔\n对象树中的 ioBroker 单元,用于删除 RTC 日期和时间"
-            },
-            "0.0.3": {
-                "en": "- Added states for objects with high byte 0x03 with reading and writing\n- Recreate device objects on adapter restart\n- Simplified methods for writing fan data based on subscribed states\n- Added a first unit test for the parsing of numbers.\n\n<!--\n    Placeholder for the next version (at the beginning of the line):\n    ### **WORK IN PROGRESS**\n-->",
-                "de": "- Hinzugefügt Zustände für Objekte mit hohem Byte 0x03 mit Lesen und Schreiben\n- Geräteobjekte auf Adapter neu starten\n- Vereinfachte Methoden zum Schreiben von Fandaten basierend auf abonnierten Zuständen\n- Es wurde ein erster Einzeltest für die Parsierung von Zahlen hinzugefügt.\n\n<!--\nPlatzhalter für die nächste Version (am Anfang der Linie):\n**WORK IN PROGRESS**\n-->",
-                "ru": "- Добавленные состояния для объектов с высоким байтом 0x03 с чтением и написанием\n- Восстановление объектов устройства при перезагрузке адаптера\n- Упрощенные методы для написания фан-данных на основе подписанных государств\n- Добавлено первое единичное испытание для выравнивания чисел.\n\n<!--\nМестоположение для следующей версии (в начале линии):\n** В ПРОГРЕССЕ**\n-->",
-                "pt": "- estados adicionados para objetos com alto byte 0x03 com leitura e escrita\n- Recriar objetos de dispositivo no reinício do adaptador\n- Métodos simplificados para escrever dados de fãs com base em estados subscritos\n- Adicionado um primeiro teste de unidade para a análise de números.\n\n<!--\nPlaceholder para a próxima versão (no início da linha):\n# # # TRABALHO EM PROGRESSO #\n-->",
-                "nl": "- Toegevoegd toestanden voor objecten met hoge byte 0x03 met lezen en schrijven\n- Apparaatobjecten op adapter herstarten\n- Vereenvoudigde methoden voor het schrijven van fangegevens op basis van de ingeschreven staten\n- Een eerste test toegevoegd voor het verwerken van getallen.\n\n<!--\nPlaatshouder voor de volgende versie (aan het begin van de regel):\nWORK IN PROGRESS\n-->",
-                "fr": "- Ajout d'états pour les objets avec haut octet 0x03 avec lecture et écriture\n- Recréer les objets du périphérique lors du redémarrage de l'adaptateur\n- Méthodes simplifiées pour l'écriture des données des ventilateurs basées sur les états souscrits\n- Ajout d'un premier test unitaire pour l'analyse des nombres.\n\n<!--\nPlaceholder pour la prochaine version (au début de la ligne):\n### **WORK IN PROGRESS**\n-->",
-                "it": "- Aggiunti stati per oggetti con byte 0x03 alto con lettura e scrittura\n- Riattivare gli oggetti del dispositivo sul riavvio dell'adattatore\n- Metodi semplificati per la scrittura dei dati dei fan in base agli stati iscritti\n- Aggiunto un primo test unitario per la parsing dei numeri.\n\n<!--\nSegnaposto per la prossima versione (all'inizio della linea):\n######WORK IN PROGRESS #\n-->",
-                "es": "- Estados añadidos para objetos con alto byte 0x03 con lectura y escritura\n- Recrear objetos de dispositivo en el reinicio del adaptador\n- Métodos simplificados para escribir datos de fans basados en estados suscritos\n- Se agregó una primera prueba de unidad para el perfeccionamiento de números.\n\n<!--\nTitular para la próxima versión (al principio de la línea):\n#### **WORK IN PROGRESS**\n-->",
-                "pl": "- Dodano stany dla obiektów o wysokim bajcie 0x03 z czytaniem i pisaniem\n- Regeneracja obiektów urządzenia przy ponownym uruchomieniu adaptera\n- Uproszczone metody zapisu danych fanów na podstawie subskrybowanych stanów\n- Dodano pierwszy test jednostkowy na parsowanie liczb.\n\n<!--\nUchwyt do następnej wersji (na początku wiersza):\n** * WORK IN PROGRESS **\n-->",
-                "uk": "- Додано стани для об'єктів з високим байтом 0x03 з читанням та письмовим записом\n- Відтворити об'єкти пристроїв на перезавантаженні адаптера\n- Спрощені методи написання даних вентилятора на основі підписаних штатів\n- Додано тест першого блоку для парсингу чисел.\n\n<!--\nМісцевласника для наступної версії (на початку лінії):\n###**\n-->",
-                "zh-cn": "- 对有读写功能的高字节0x03的对象添加状态\n- 在适配器重新启动时重建设备对象\n- 简化根据订阅状态编写风扇数据的方法\n- 增加了第一个数字解析单元测试.\n\n<!--\n下一个版本(行首)的占位符 :\n** 工作进展**\n-->"
-            },
-            "0.0.2": {
-                "en": "initial release",
-                "de": "erstausstrahlung",
-                "ru": "первоначальный выпуск",
-                "pt": "lançamento inicial",
-                "nl": "eerste release",
-                "fr": "libération initiale",
-                "it": "rilascio iniziale",
-                "es": "liberación inicial",
-                "pl": "początkowe zwolnienie",
-                "uk": "початковий реліз",
-                "zh-cn": "初步释放"
-            }
-        },
-        "titleLang": {
-            "en": "Oxxify Fan Control",
-            "de": "Oxxify-Lüftersteuerung",
-            "ru": "Управление вентилятором Oxxify",
-            "pt": "Controle de ventilador Oxxify",
-            "nl": "Oxxify-ventilatorbediening",
-            "fr": "Contrôle du ventilateur Oxxify",
-            "it": "Controllo della ventola Oxxify",
-            "es": "Control del ventilador Oxxify",
-            "pl": "Sterowanie wentylatorem Oxxify",
-            "uk": "Контроль вентиляторів Oxxify",
-            "zh-cn": "Oxxify 风扇控制"
-        },
-        "desc": {
-            "en": "Integrate your Oxxify Fans into your Smart Home.",
-            "de": "Integrieren Sie Ihre Oxxify-Lüfter in Ihr Smart Home.",
-            "ru": "Интегрируйте вентиляторы Oxxify в свой умный дом.",
-            "pt": "Integre seus fãs Oxxify em sua casa inteligente.",
-            "nl": "Integreer je Oxxify Fans in je Smart Home.",
-            "fr": "Intégrez vos ventilateurs Oxxify dans votre maison intelligente.",
-            "it": "Integra i tuoi fan Oxxify nella tua casa intelligente.",
-            "es": "Integra tus Fans Oxxify en tu Hogar Inteligente.",
-            "pl": "Zintegruj swoich fanów Oxxify ze swoim inteligentnym domem.",
-            "uk": "Інтегруйте вентилятори Oxxify у свій розумний дім.",
-            "zh-cn": "将您的 Oxxify 风扇集成到您的智能家居中。"
-        },
-        "authors": ["N-b-dy <daten4me@gmx.de>"],
-        "keywords": ["oxxify", "fan", "ventilation"],
-        "licenseInformation": {
-            "type": "free",
-            "license": "GPL-3.0-or-later"
-        },
-        "platform": "Javascript/Node.js",
-        "icon": "oxxify-fan-control.png",
-        "enabled": true,
-        "extIcon": "https://raw.githubusercontent.com/N-b-dy/ioBroker.oxxify-fan-control/main/admin/oxxify-fan-control.png",
-        "readme": "https://github.com/N-b-dy/ioBroker.oxxify-fan-control/blob/main/README.md",
-        "loglevel": "info",
-        "tier": 3,
-        "mode": "daemon",
-        "type": "climate-control",
-        "compact": true,
-        "connectionType": "local",
-        "dataSource": "poll",
-        "adminUI": {
-            "config": "json"
-        },
-        "dependencies": [
-            {
-                "js-controller": ">=6.0.11"
-            }
-        ],
-        "globalDependencies": [
-            {
-                "admin": ">=7.6.17"
-            }
-        ]
+  "common": {
+    "name": "oxxify-fan-control",
+    "version": "0.0.8",
+    "news": {
+      "0.0.8": {
+        "en": "Some dependency work\nIssues from adapter checker fixed",
+        "de": "Einige Abhängigkeitsarbeit\nProbleme von Adapter-Checker behoben",
+        "ru": "Некоторые зависимые работы\nПроблемы с Adapter Checker фиксированные",
+        "pt": "Algum trabalho de dependência\nProblemas do verificador adaptador corrigido",
+        "nl": "Enige afhankelijkheid werk\nProblemen met de adaptercontrole zijn opgelost",
+        "fr": "Travail de dépendance\nProblèmes de l'adaptateur checker corrigé",
+        "it": "Alcuni lavori di dipendenza\nEmissioni da adattatore fisso",
+        "es": "Algunos trabajos de dependencia\nProblemas del control de adaptador fijo",
+        "pl": "Pewne prace związane z uzależnieniem\nProblemy z sprawdzaczem adaptera naprawione",
+        "uk": "Деякі роботи залежностей\nВиди з перехідника фіксовані",
+        "zh-cn": "一些依赖性工作\n适配器检查器的问题已固定"
+      },
+      "0.0.7": {
+        "en": "Some dependency work\nCode documentation extended\nAdded Node.js 24. to test and release pipeline\nResending interval of not overtaken values changed from 1,5 seconds to 2,5 seconds\nChanged writable mixed numerical/string values for enums into selectable values, to show available configurations (**breaking change** if already used to remote control fans)\nRewrite mechanism allows now manual changes within the buttons of the fan, which were overridden by the internal stored value before",
+        "de": "Einige Abhängigkeitsarbeit\nCodedokumentation erweitert\nNode.js 24. hinzugefügt, um Pipeline zu testen und freizugeben\nÄnderungsintervall von nicht überholten Werten von 1,5 Sekunden auf 2,5 Sekunden\nGeänderte schreibbare gemischte numerische/string-Werte für enums in wählbare Werte, um verfügbare Konfigurationen anzuzeigen (** brechende Änderung**, wenn bereits für Fernbedienungsfans verwendet)\nRewrite-Mechanismus ermöglicht nun manuelle Änderungen innerhalb der Tasten des Lüfters, die durch den internen gespeicherten Wert vor übergeordnet wurden",
+        "ru": "Некоторые зависимые работы\nРасширенная документация кодекса\nNode.js 24 для тестирования и выпуска трубопровода\nИнтервал пересылки необгоняемых значений изменился с 1,5 секунды до 2,5 секунды\nИзмененные записываемые смешанные числовые/струнные значения для числовых чисел в выбираемые значения, чтобы показать доступные конфигурации (**breaking change**, если уже используется для вентиляторов дистанционного управления)\nМеханизм перезаписи позволяет теперь ручные изменения в кнопках вентилятора, которые были переопределены внутренним сохраненным значением ранее",
+        "pt": "Algum trabalho de dependência\nDocumentação do código alargada\nAdicionado Node.js 24. para testar e liberar pipeline\nIntervalo de retensão de valores não ultrapassados mudou de 1,5 segundos para 2,5 segundos\nVariação dos valores numéricos/de texto mistos para enums em valores selecionáveis, para mostrar configurações disponíveis (** mudança de quebra** se já usado para ventiladores de controle remoto)\nO mecanismo de reescrita permite agora alterações manuais dentro dos botões da ventoinha, que foram substituídas pelo valor interno armazenado antes",
+        "nl": "Enige afhankelijkheid werk\nCodedocumentatie uitgebreid\nToegevoegd Node.js 24. om te testen en vrij te geven pijpleiding\nHerhalingsinterval van niet ingehaalde waarden veranderd van 1,5 seconden naar 2,5 seconden\nVeranderde schrijfbare gemengde numeriek/tekenreekswaarden voor enums in selecteerbare waarden, om beschikbare configuraties weer te geven (** breaking change** indien al gebruikt voor ventilatoren met afstandsbediening)\nHerschrijven mechanisme laat nu handmatige wijzigingen toe binnen de knoppen van de ventilator, die werden overschreven door de interne opgeslagen waarde voor",
+        "fr": "Travail de dépendance\nDocuments de code étendus\nAjout de Node.js 24. pour tester et libérer le pipeline\nL'intervalle de répétition des valeurs non dépassées est passé de 1,5 à 2,5 secondes\nChangement de valeurs numériques/chaînes mixtes pour les enums en valeurs sélectionnables, pour afficher les configurations disponibles (**modifier** si déjà utilisé pour les ventilateurs de télécommande)\nLe mécanisme de réécriture permet maintenant des modifications manuelles dans les boutons du ventilateur, qui ont été dépassés par la valeur stockée interne avant",
+        "it": "Alcuni lavori di dipendenza\nDocumentazione del codice estesa\nAggiunto Node.js 24. per testare e rilasciare pipeline\nIntervallo di attesa dei valori non superati da 1,5 secondi a 2,5 secondi\nCambiati valori numerici/string misti per gli enum in valori selezionabili, per mostrare le configurazioni disponibili (**breaking change** se già utilizzato per i fan di controllo remoto)\nIl meccanismo di riscrittura consente ora modifiche manuali all'interno dei pulsanti del ventilatore, che sono stati sovrascritti dal valore memorizzato interno prima",
+        "es": "Algunos trabajos de dependencia\nDocumentación ampliada\nAñadido Node.js 24. para probar y soltar el oleoducto\nReenviar intervalo de valores no superados cambió de 1,5 segundos a 2,5 segundos\nModificados valores numéricos/estring mixtos para enums en valores seleccionables, para mostrar configuraciones disponibles (**cambio innovador** si ya se utilizan para los aficionados de control remoto)\nEl mecanismo de reescritura permite ahora cambios manuales dentro de los botones del ventilador, que fueron anulados por el valor almacenado interno antes",
+        "pl": "Pewne prace związane z uzależnieniem\nRozszerzona dokumentacja kodowa\nDodano Node.js 24. do testowania i uwalniania rurociągu\nPrzedział zwrotny wartości nieprzekroczonych zmienił się z 1,5 sekundy na 2,5 sekundy\nZmieniono zapisywalne mieszane wartości numeryczne / stringowe dla enumów na wybrane wartości, aby pokazać dostępne konfiguracje (* *zmiana łamania* *, jeśli jest już używana do zdalnego sterowania wentylatorami) \nMechanizm przepisywania umożliwia teraz ręczne zmiany w przyciskach wentylatora, które zostały przekroczone przez wewnętrzną wartość zapisaną przed",
+        "uk": "Деякі роботи залежностей\nРозширена документація\nДодано Node.js 24. для випробування та виходу трубопроводу\nЗакінчення інтервалу не надходжених значень змінено з 1,5 секунд до 2,5 секунд\nЗмінені значення зважених числових/string для обманів у вибрані значення, для відображення доступних конфігурацій (*** Зміна розриву***, якщо вже використовується для вентиляторів дистанційного керування)\nМеханізм перезапису дозволяє тепер ручні зміни в кнопках вентилятора, які перенесли внутрішню величину до",
+        "zh-cn": "一些依赖性工作\n扩展代码文档\n增加节点24,用于试验和释放管道\n重排未超过值的间隔从1,5秒改为2,5秒\n将 enum 可写入的混合数字/字符串值修改为可选择的值,以显示可用的配置(** 打破的更改** 如果已经用于远程控制扇)\n重写机制现在允许在风扇的按钮内进行手动修改,在风扇之前被内部存储值所覆盖"
+      },
+      "0.0.6": {
+        "en": "Vulnerable dependency updated",
+        "de": "Schwache Abhängigkeit aktualisiert",
+        "ru": "Обновлена уязвимая зависимость",
+        "pt": "Dependência Vulnerável atualizada",
+        "nl": "Kwetsbare afhankelijkheid bijgewerkt",
+        "fr": "Dépendance vulnérable mise à jour",
+        "it": "Dipendenza attiva aggiornata",
+        "es": "Actualización de la dependencia vulnerable",
+        "pl": "Uaktualniona podatna zależność",
+        "uk": "Vulnerable залежність оновлено",
+        "zh-cn": "更新脆弱依赖性"
+      },
+      "0.0.5": {
+        "en": "Added automatic write retry mechanism for writing values within the fan, as writing with UDP is not very reliable in connection with poor network conditions\nAdapter checker issues fixed",
+        "de": "Automatischer Schreibwiedergabemechanismus für Schreibwerte innerhalb des Lüfters hinzugefügt, da das Schreiben mit UDP nicht sehr zuverlässig in Verbindung mit schlechten Netzbedingungen ist\nAdapter Checker Probleme behoben",
+        "ru": "Добавлен автоматический механизм записи для записи значений внутри вентилятора, так как запись с UDP не очень надежна в связи с плохими сетевыми условиями\nПроблемы с проверкой адаптера",
+        "pt": "Adicionado mecanismo automático de retenda de escrita para escrever valores dentro do ventilador, como escrever com UDP não é muito confiável em conexão com condições de rede pobres\nProblemas do verificador do adaptador corrigido",
+        "nl": "Toegevoegd automatisch schrijf retry mechanisme voor het schrijven van waarden binnen de ventilator, omdat schrijven met UDP is niet erg betrouwbaar in verband met slechte netwerkomstandigheden\nAdapter controleer problemen opgelost",
+        "fr": "Ajout d'un mécanisme de ré-essai automatique d'écriture pour l'écriture des valeurs au sein du ventilateur, car écrire avec UDP n'est pas très fiable en relation avec les mauvaises conditions du réseau\nProblèmes de vérification de l'adaptateur corrigés",
+        "it": "Aggiunto meccanismo automatico di retry di scrittura per la scrittura di valori all'interno del ventilatore, come la scrittura con UDP non è molto affidabile in connessione con le condizioni di rete povere\nAdattatore checker problemi fissi",
+        "es": "Mecanismo de reingreso automático de escritura para escribir valores dentro del ventilador, ya que la escritura con UDP no es muy confiable en relación con las malas condiciones de red\nProblemas de control del adaptador fijo",
+        "pl": "Dodano automatyczny mechanizm ponownego zapisu do zapisu wartości wewnątrz wentylatora, ponieważ pisanie z UDP nie jest bardzo wiarygodne w związku ze słabymi warunkami sieciowymi\nNaprawiono kwestie sprawdzania adaptera",
+        "uk": "Додано автоматичний механізм запису птиця для написання значень у вентиляторі, як написання з UDP не дуже надійний у зв'язку з несприятливими умовами мережі\nРевізити перевірки адаптера",
+        "zh-cn": "在风扇内添加写入值的自动写入重试机制, 因为与 UDP 的写入在网络条件差的情况下不太可靠 \n固定的适配检查器问题"
+      },
+      "0.0.4": {
+        "en": "Updated ESLint to 9.x.x\nFixed copyright issue from adapter checker\nReplaced deletion of all objects with deletion of missing devices from config only\nAvoided illegal characters from user input for fan id within code\nChanged state subscription to all states below the devices folder\nAdded restart logic of UDP server in case of an error\nAdded adapter terminiation if multiple udp server errors occured\nReplaced cyclic checking of the send quene with a timeout approach instead of interval\nMissing intermediate objects created\nRoles updated according to the read/write definitions\nPolling interval limited in JSON config and code\nioBroker unit in object tree for RTC date & time removed",
+        "de": "Aktualisierte ESLint auf 9.x.x\nBehobene Urheberrechtsausgabe vom Adapter Checker\nErsetztes Löschen aller Objekte mit Löschen fehlender Geräte von config nur\nVermeiden Sie illegale Zeichen von Benutzereingabe für Fan-ID innerhalb des Codes\nZustandsabonnement aller Zustände unterhalb des Geräteordners geändert\nNeustartlogik des UDP-Servers bei einem Fehler hinzugefügt\nHinzugefügt Adapter-Terminierung, wenn mehrere udp Server-Fehler auftreten\nErsetzte zyklische Überprüfung der Sendequene mit einem Timeout-Ansatz statt Intervall\nFehlende Zwischenobjekte erstellt\nRoles aktualisiert nach den Definitionen für Schreib-/Lesetexte\nPolling-Intervall begrenzt in JSON config und Code\nioBroker Einheit in Objektbaum für RTC Datum & Zeit entfernt",
+        "ru": "Обновленный ESLint до 9.x.x\nИсправленный вопрос авторского права от адаптера\nЗамененное удаление всех объектов с удалением отсутствующих устройств из конфигурации только\nИзбегайте незаконных символов от пользовательского ввода для фан-ид в коде\nИзменение государственной подписки на все состояния ниже папки устройств\nДобавлена логика перезапуска сервера UDP в случае ошибки\nДобавлена терминизация адаптера, если произошли несколько ошибок udp-сервера\nЗамененная циклическая проверка присылочного кена с подходом тайм-аута вместо интервала\nПропущенные промежуточные объекты, созданные\nРоли, обновленные в соответствии с определениями считывания/записи\nИнтервал опроса ограничен в настройке и коде JSON\nioBroker unit in object tree for RTC date & time removed",
+        "pt": "ESLint atualizado para 9.x.x\nCorrigido problema de direitos autorais do verificador do adaptador\nEliminação substituída de todos os objetos com exclusão de dispositivos ausentes apenas de configuração\nPersonagens ilegais evitados de entrada de usuário para identificação de fãs dentro do código\nAssinatura de estado alterada para todos os estados abaixo da pasta de dispositivos\nAdicionada lógica de reinício do servidor UDP em caso de um erro\nAdicionado terminiation do adaptador se vários erros do servidor udp ocorrem\nVerificação cíclica substituída da quene de envio com uma aproximação de tempo limite em vez de intervalo\nObjetos intermediários perdidos criados\nFunções atualizadas de acordo com as definições de leitura/escrita\nIntervalo de Polling limitado em JSON config e código\nioBroker unidade em árvore de objeto para RTC data & tempo removido",
+        "nl": "Bijgewerkt ESLint naar 9.x.x\nVast copyright probleem van adaptercontrole\nVervangen verwijdering van alle objecten door verwijdering van ontbrekende apparaten van alleen config\nOngeldige tekens vermeden van gebruikersinvoer voor fan-id binnen code\nAangepaste statusabonnement naar alle staten onder de apparaatmap\nToegevoegd herstart logica van UDP-server in geval van een fout\nToegevoegde adapterterminatie als zich meerdere udp-serverfouten hebben voorgedaan\nVervangde cyclische controle van de send quene door een timeout benadering in plaats van interval\nOntbrekende tussenliggende objecten aangemaakt\nTaken bijgewerkt volgens de lees-/schrijfdefinities\nPolling interval beperkt in JSON configuratie en code\nioBroker-eenheid in objectboom voor RTC-datum en -tijd verwijderd",
+        "fr": "Mise à jour de ESLint à 9.x.x\nCorrection de la question des droits d'auteur de l'adaptateur checker\nSuppression remplacée de tous les objets avec suppression des périphériques manquants de config seulement\nÉvité les caractères illégaux de l'entrée utilisateur pour l'identifiant du ventilateur dans le code\nAbonnement d'état modifié à tous les états sous le dossier des périphériques\nAjout de la logique de redémarrage du serveur UDP en cas d'erreur\nAjout de la terminaison d'adaptateur si plusieurs erreurs de serveur udp se produisent\nRemplacer la vérification cyclique de la quene d'envoi par une approche de timeout au lieu de l'intervalle\nObjets intermédiaires manquants créés\nRôles mis à jour selon les définitions de lecture/écriture\nIntervalle de sondage limité dans la configuration et le code JSON\nioBroker unité dans l'arborescence de l'objet pour la date et l'heure RTC enlevée",
+        "it": "Aggiornato da ESLint a 9.x.x\nRisolto problema di copyright da adattatore checker\nCancellazione sostituita di tutti gli oggetti con cancellazione di dispositivi mancanti dalla configurazione solo\nEvitati caratteri illegali dall'ingresso dell'utente per fan id all'interno del codice\nAbbonamento stato modificato a tutti gli stati sotto la cartella dei dispositivi\nAggiunta la logica di riavvio del server UDP in caso di un errore\nTerminizzazione dell'adattatore aggiunta se si verificano più errori del server udp\nControllo ciclico sostituito della quene di invio con un approccio timeout invece di intervallo\nOggetti intermedi mancanti creati\nRoles aggiornato secondo le definizioni di lettura/scrittura\nIntervallo d'inquinamento limitato nella configurazione e nel codice JSON\nunità ioBroker in albero di oggetto per RTC data e ora rimosso",
+        "es": "Actualizado ESLint a 9.x.x\nEdición fija de derechos de autor desde el control de adaptador\nSustitución de la eliminación de todos los objetos con la eliminación de dispositivos perdidos de config solamente\nEvitar caracteres ilegales desde la entrada del usuario para fan id dentro del código\nCambio de suscripción estatal a todos los estados debajo de la carpeta de dispositivos\nAñadido la lógica de reinicio del servidor UDP en caso de error\nSe agregó la terminiación del adaptador si se produjeron múltiples errores del servidor udp\nComprobación cíclica sustituida de la quena envía con un enfoque de timeout en lugar de intervalo\nDesapareciendo objetos intermedios creados\nFunciones actualizadas según las definiciones de lectura/escritura\nIntervalo de votación limitado en JSON config y código\nioBroker unidad en árbol de objeto para la fecha RTC \" tiempo eliminado",
+        "pl": "Aktualizacja ESLint do 9.x.x\nStała kwestia praw autorskich z kontrolera adaptera\nZastąpione usunięcie wszystkich obiektów z usunięciem brakujących urządzeń tylko z konfigu\nUnikanie nielegalnych znaków z wejścia użytkownika dla id wentylatora w ramach kodu\nZmieniona subskrypcja państwa do wszystkich stanów poniżej folderu urządzeń\nDodano logikę restartu serwera UDP w przypadku błędu\nDodano zamknięcie adaptera jeśli błędy wielu serwerów udp\nZastąpione cykliczne sprawdzanie quene wysyłania z podejścia timeout zamiast interwału\nBrakujące obiekty pośrednie utworzone\nRole zaktualizowane zgodnie z definicjami odczytu / zapisu\nPrzedział ankietowy ograniczony w konfiguracji JSON i kodzie\nioBroker unit in object tree for RTC date & time usunięty",
+        "uk": "Оновлено ESLint до 9.x.x\nВиправлено проблему авторського права з адаптера\nЗаміна видалення всіх об'єктів з видаленням відсутніх пристроїв з налаштування тільки\nУникайте неправомірних символів із введенням користувача для входу вентилятора в код\nЗмінена підписка стану до всіх штатів нижче папки пристроїв\nДодана логіка перезавантаження UDP сервера у разі помилки\nДодано термінініацію адаптера, якщо виникають помилки сервера udp\nЗаміна циклічних перевірок відправки квена з підходом часу замість інтервалу\nЗміщення проміжних об'єктів, створених\nРолі оновлено відповідно до визначення читаного/запису\nПолілінг інтервал обмежений в налаштуваннях JSON і коді\nioBroker unit в об'єктному дереві для дати RTC і часу видалено",
+        "zh-cn": "更新到9.x.x\n适配器检查器的固定版权问题\n替换为只删除配置中缺失的设备\n避免用户输入非法字符用于代码内的扇形 ID\n更改设备文件夹下方所有状态的状态订阅\n在出现错误时添加 UDP 服务器的重启逻辑\n如果出现多个 udp 服务器错误, 则添加适配器终止\n以超时方式而不是间隔方式取代对发送队列的循环检查\n缺少中间对象\n根据读/写定义更新的角色\n在 JSON 配置和代码中限制投票间隔\n对象树中的 ioBroker 单元,用于删除 RTC 日期和时间"
+      },
+      "0.0.3": {
+        "en": "- Added states for objects with high byte 0x03 with reading and writing\n- Recreate device objects on adapter restart\n- Simplified methods for writing fan data based on subscribed states\n- Added a first unit test for the parsing of numbers.\n\n<!--\n    Placeholder for the next version (at the beginning of the line):\n    ### **WORK IN PROGRESS**\n-->",
+        "de": "- Hinzugefügt Zustände für Objekte mit hohem Byte 0x03 mit Lesen und Schreiben\n- Geräteobjekte auf Adapter neu starten\n- Vereinfachte Methoden zum Schreiben von Fandaten basierend auf abonnierten Zuständen\n- Es wurde ein erster Einzeltest für die Parsierung von Zahlen hinzugefügt.\n\n<!--\nPlatzhalter für die nächste Version (am Anfang der Linie):\n**WORK IN PROGRESS**\n-->",
+        "ru": "- Добавленные состояния для объектов с высоким байтом 0x03 с чтением и написанием\n- Восстановление объектов устройства при перезагрузке адаптера\n- Упрощенные методы для написания фан-данных на основе подписанных государств\n- Добавлено первое единичное испытание для выравнивания чисел.\n\n<!--\nМестоположение для следующей версии (в начале линии):\n** В ПРОГРЕССЕ**\n-->",
+        "pt": "- estados adicionados para objetos com alto byte 0x03 com leitura e escrita\n- Recriar objetos de dispositivo no reinício do adaptador\n- Métodos simplificados para escrever dados de fãs com base em estados subscritos\n- Adicionado um primeiro teste de unidade para a análise de números.\n\n<!--\nPlaceholder para a próxima versão (no início da linha):\n# # # TRABALHO EM PROGRESSO #\n-->",
+        "nl": "- Toegevoegd toestanden voor objecten met hoge byte 0x03 met lezen en schrijven\n- Apparaatobjecten op adapter herstarten\n- Vereenvoudigde methoden voor het schrijven van fangegevens op basis van de ingeschreven staten\n- Een eerste test toegevoegd voor het verwerken van getallen.\n\n<!--\nPlaatshouder voor de volgende versie (aan het begin van de regel):\nWORK IN PROGRESS\n-->",
+        "fr": "- Ajout d'états pour les objets avec haut octet 0x03 avec lecture et écriture\n- Recréer les objets du périphérique lors du redémarrage de l'adaptateur\n- Méthodes simplifiées pour l'écriture des données des ventilateurs basées sur les états souscrits\n- Ajout d'un premier test unitaire pour l'analyse des nombres.\n\n<!--\nPlaceholder pour la prochaine version (au début de la ligne):\n### **WORK IN PROGRESS**\n-->",
+        "it": "- Aggiunti stati per oggetti con byte 0x03 alto con lettura e scrittura\n- Riattivare gli oggetti del dispositivo sul riavvio dell'adattatore\n- Metodi semplificati per la scrittura dei dati dei fan in base agli stati iscritti\n- Aggiunto un primo test unitario per la parsing dei numeri.\n\n<!--\nSegnaposto per la prossima versione (all'inizio della linea):\n######WORK IN PROGRESS #\n-->",
+        "es": "- Estados añadidos para objetos con alto byte 0x03 con lectura y escritura\n- Recrear objetos de dispositivo en el reinicio del adaptador\n- Métodos simplificados para escribir datos de fans basados en estados suscritos\n- Se agregó una primera prueba de unidad para el perfeccionamiento de números.\n\n<!--\nTitular para la próxima versión (al principio de la línea):\n#### **WORK IN PROGRESS**\n-->",
+        "pl": "- Dodano stany dla obiektów o wysokim bajcie 0x03 z czytaniem i pisaniem\n- Regeneracja obiektów urządzenia przy ponownym uruchomieniu adaptera\n- Uproszczone metody zapisu danych fanów na podstawie subskrybowanych stanów\n- Dodano pierwszy test jednostkowy na parsowanie liczb.\n\n<!--\nUchwyt do następnej wersji (na początku wiersza):\n** * WORK IN PROGRESS **\n-->",
+        "uk": "- Додано стани для об'єктів з високим байтом 0x03 з читанням та письмовим записом\n- Відтворити об'єкти пристроїв на перезавантаженні адаптера\n- Спрощені методи написання даних вентилятора на основі підписаних штатів\n- Додано тест першого блоку для парсингу чисел.\n\n<!--\nМісцевласника для наступної версії (на початку лінії):\n###**\n-->",
+        "zh-cn": "- 对有读写功能的高字节0x03的对象添加状态\n- 在适配器重新启动时重建设备对象\n- 简化根据订阅状态编写风扇数据的方法\n- 增加了第一个数字解析单元测试.\n\n<!--\n下一个版本(行首)的占位符 :\n** 工作进展**\n-->"
+      },
+      "0.0.2": {
+        "en": "initial release",
+        "de": "erstausstrahlung",
+        "ru": "первоначальный выпуск",
+        "pt": "lançamento inicial",
+        "nl": "eerste release",
+        "fr": "libération initiale",
+        "it": "rilascio iniziale",
+        "es": "liberación inicial",
+        "pl": "początkowe zwolnienie",
+        "uk": "початковий реліз",
+        "zh-cn": "初步释放"
+      }
     },
-    "native": {
-        "pollingInterval": 5,
-        "ntpServer": "0.de.pool.ntp.org",
-        "fans": [
-            {
-                "name": "fan1",
-                "id": "1234567890123456",
-                "ipaddr": "192.168.1.1",
-                "password": ""
-            }
-        ]
+    "titleLang": {
+      "en": "Oxxify Fan Control",
+      "de": "Oxxify-Lüftersteuerung",
+      "ru": "Управление вентилятором Oxxify",
+      "pt": "Controle de ventilador Oxxify",
+      "nl": "Oxxify-ventilatorbediening",
+      "fr": "Contrôle du ventilateur Oxxify",
+      "it": "Controllo della ventola Oxxify",
+      "es": "Control del ventilador Oxxify",
+      "pl": "Sterowanie wentylatorem Oxxify",
+      "uk": "Контроль вентиляторів Oxxify",
+      "zh-cn": "Oxxify 风扇控制"
     },
-    "protectedNative": [],
-    "encryptedNative": [],
-    "objects": [],
-    "instanceObjects": [
-        {
-            "_id": "info",
-            "type": "channel",
-            "common": {
-                "name": "Information"
-            },
-            "native": {}
-        },
-        {
-            "_id": "info.connection",
-            "type": "state",
-            "common": {
-                "role": "indicator.connected",
-                "name": "Device or service connected",
-                "type": "boolean",
-                "read": true,
-                "write": false,
-                "def": false
-            },
-            "native": {}
-        }
+    "desc": {
+      "en": "Integrate your Oxxify Fans into your Smart Home.",
+      "de": "Integrieren Sie Ihre Oxxify-Lüfter in Ihr Smart Home.",
+      "ru": "Интегрируйте вентиляторы Oxxify в свой умный дом.",
+      "pt": "Integre seus fãs Oxxify em sua casa inteligente.",
+      "nl": "Integreer je Oxxify Fans in je Smart Home.",
+      "fr": "Intégrez vos ventilateurs Oxxify dans votre maison intelligente.",
+      "it": "Integra i tuoi fan Oxxify nella tua casa intelligente.",
+      "es": "Integra tus Fans Oxxify en tu Hogar Inteligente.",
+      "pl": "Zintegruj swoich fanów Oxxify ze swoim inteligentnym domem.",
+      "uk": "Інтегруйте вентилятори Oxxify у свій розумний дім.",
+      "zh-cn": "将您的 Oxxify 风扇集成到您的智能家居中。"
+    },
+    "authors": [
+      "N-b-dy <daten4me@gmx.de>"
+    ],
+    "keywords": [
+      "oxxify",
+      "fan",
+      "ventilation"
+    ],
+    "licenseInformation": {
+      "type": "free",
+      "license": "GPL-3.0-or-later"
+    },
+    "platform": "Javascript/Node.js",
+    "icon": "oxxify-fan-control.png",
+    "enabled": true,
+    "extIcon": "https://raw.githubusercontent.com/N-b-dy/ioBroker.oxxify-fan-control/main/admin/oxxify-fan-control.png",
+    "readme": "https://github.com/N-b-dy/ioBroker.oxxify-fan-control/blob/main/README.md",
+    "loglevel": "info",
+    "tier": 3,
+    "mode": "daemon",
+    "type": "climate-control",
+    "compact": true,
+    "connectionType": "local",
+    "dataSource": "poll",
+    "adminUI": {
+      "config": "json"
+    },
+    "dependencies": [
+      {
+        "js-controller": ">=6.0.11"
+      }
+    ],
+    "globalDependencies": [
+      {
+        "admin": ">=7.6.17"
+      }
     ]
+  },
+  "native": {
+    "pollingInterval": 5,
+    "ntpServer": "0.de.pool.ntp.org",
+    "fans": [
+      {
+        "name": "fan1",
+        "id": "1234567890123456",
+        "ipaddr": "192.168.1.1",
+        "password": ""
+      }
+    ]
+  },
+  "protectedNative": [],
+  "encryptedNative": [],
+  "objects": [],
+  "instanceObjects": [
+    {
+      "_id": "info",
+      "type": "channel",
+      "common": {
+        "name": "Information"
+      },
+      "native": {}
+    },
+    {
+      "_id": "info.connection",
+      "type": "state",
+      "common": {
+        "role": "indicator.connected",
+        "name": "Device or service connected",
+        "type": "boolean",
+        "read": true,
+        "write": false,
+        "def": false
+      },
+      "native": {}
+    }
+  ]
 }

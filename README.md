@@ -65,8 +65,7 @@ This channel contains system data about the hardware and firmware as well as run
 -->
 
 ## Changelog
-
-### **WORK IN PROGRESS**
+### 0.0.8 (2025-10-16)
 
 - Some dependency work
 - Issues from adapter checker fixed
