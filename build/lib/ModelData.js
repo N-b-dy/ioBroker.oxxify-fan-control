@@ -57,10 +57,12 @@ class ParsedData {
    */
   constructor() {
     this.strFanId = "";
+    this.bFrameIsResponse = false;
     this.status = 6 /* Undefined */;
     this.receivedData = [];
   }
   strFanId;
+  bFrameIsResponse;
   status;
   receivedData;
 }

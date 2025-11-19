@@ -430,15 +430,12 @@ class OxxifyProtocol {
   }
   ParseResponseData(dataBytes) {
     var _a;
+    dataBytes = this.PreprocessData(dataBytes);
     const status = this.CheckProtocol(dataBytes);
     const result = new import_ModelData.ParsedData();
     this.nCurrentReadHighByte = 0;
     if (dataBytes == void 0) {
       result.status = import_ModelData.ParsingStatus.Undefined;
-      return result;
-    }
-    if (status != import_ModelData.ParsingStatus.Ok) {
-      result.status = status;
       return result;
     }
     this.nReadIndex = 4;
@@ -450,6 +447,11 @@ class OxxifyProtocol {
     if (dataBytes.at(this.nReadIndex) == 6 /* Response */) {
       bIsDataToRead = true;
     }
+    result.bFrameIsResponse = bIsDataToRead;
+    if (status != import_ModelData.ParsingStatus.Ok) {
+      result.status = status;
+      return result;
+    }
     this.nReadIndex++;
     if (bIsDataToRead) {
       while (this.nReadIndex < dataBytes.length - 2) {
@@ -460,6 +462,18 @@ class OxxifyProtocol {
     }
     result.status = import_ModelData.ParsingStatus.Undefined;
     return result;
+  }
+  PreprocessData(dataBytes) {
+    const marker = Buffer.from([253, 253]);
+    const first = dataBytes.indexOf(marker);
+    if (first === -1) {
+      return dataBytes;
+    }
+    const second = dataBytes.indexOf(marker, first + 2);
+    if (second === -1) {
+      return dataBytes;
+    }
+    return dataBytes.subarray(0, second);
   }
   ParseData(data, receivedData) {
     var _a, _b, _c, _d, _e;
