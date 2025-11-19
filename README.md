@@ -65,6 +65,12 @@ This channel contains system data about the hardware and firmware as well as run
 -->
 
 ## Changelog
+
+### **WORK IN PROGRESS**
+
+- Some dependency work
+- Avoid warning messages, if the received protocol does not contain values to update the ioBroker states
+
 ### 0.0.8 (2025-10-16)
 
 - Some dependency work

@@ -39,11 +39,13 @@ export class ParsedData {
      */
     constructor() {
         this.strFanId = "";
+        this.bFrameIsResponse = false;
         this.status = ParsingStatus.Undefined;
         this.receivedData = [];
     }
 
     strFanId: string;
+    bFrameIsResponse: boolean;
     status: ParsingStatus;
     receivedData: IoBrokerDataPoint[];
 }

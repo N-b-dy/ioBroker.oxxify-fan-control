@@ -254,9 +254,12 @@ class OxxifyFanControl extends utils.Adapter {
             const data = this.oxxify.ParseResponseData(msg);
 
             if (data.status !== ParsingStatus.Ok) {
-                this.log.warn(
-                    `Received frame from IP ${info.address} could not be parsed. Parsing status ${data.status} - data ${msg.toString("hex")}`,
-                );
+                // Only log a warning, if this message contains a response frame, which leads in state updates
+                if (data.bFrameIsResponse) {
+                    this.log.warn(
+                        `Received frame from IP ${info.address} could not be parsed. Parsing status ${data.status} - data ${msg.toString("hex")}`,
+                    );
+                }
             } else {
                 if (data.receivedData.length > 0) {
                     data.receivedData.forEach(async (dataPoint: IoBrokerDataPoint) => {

@@ -517,6 +517,8 @@ export class OxxifyProtocol {
     }
 
     public ParseResponseData(dataBytes: Buffer): ParsedData {
+        dataBytes = this.PreprocessData(dataBytes);
+
         const status = this.CheckProtocol(dataBytes);
         const result = new ParsedData();
 
@@ -524,11 +526,6 @@ export class OxxifyProtocol {
 
         if (dataBytes == undefined) {
             result.status = ParsingStatus.Undefined;
-            return result;
-        }
-
-        if (status != ParsingStatus.Ok) {
-            result.status = status;
             return result;
         }
 
@@ -552,6 +549,14 @@ export class OxxifyProtocol {
             bIsDataToRead = true;
         }
 
+        result.bFrameIsResponse = bIsDataToRead;
+
+        // Wait for the function byte for returning, in case the frame has already any issue (e.g. checksum error)
+        if (status != ParsingStatus.Ok) {
+            result.status = status;
+            return result;
+        }
+
         // Start after the function byte - this is not expected to be changed within one telegram
         this.nReadIndex++;
 
@@ -566,6 +571,25 @@ export class OxxifyProtocol {
 
         result.status = ParsingStatus.Undefined;
         return result;
+    }
+
+    private PreprocessData(dataBytes: Buffer): Buffer {
+        const marker = Buffer.from([0xfd, 0xfd]);
+
+        // First hit
+        const first = dataBytes.indexOf(marker);
+        if (first === -1) {
+            return dataBytes;
+        }
+
+        // Second hit
+        const second = dataBytes.indexOf(marker, first + 2);
+        if (second === -1) {
+            return dataBytes;
+        }
+
+        // Fill bytes with zero to modify the buffer in-place
+        return dataBytes.subarray(0, second);
     }
 
     private ParseData(data: Buffer, receivedData: IoBrokerDataPoint[]): number {
