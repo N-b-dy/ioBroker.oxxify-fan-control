@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "oxxify-fan-control",
-    "version": "0.0.8",
+    "version": "0.0.9",
     "news": {
+      "0.0.9": {
+        "en": "Some dependency work\nAvoid warning messages, if the received protocol does not contain values to update the ioBroker states (Issue #91)",
+        "de": "Einige Abhängigkeitsarbeit\nVermeiden Sie Warnmeldungen, wenn das empfangene Protokoll keine Werte enthält, um die ioBroker-Zustände zu aktualisieren (Issue #91)",
+        "ru": "Некоторые зависимые работы\nИзбегайте предупреждающих сообщений, если принятый протокол не содержит значений для обновления состояний ioBroker (выпуск #91)",
+        "pt": "Algum trabalho de dependência\nEvite mensagens de aviso, se o protocolo recebido não contém valores para atualizar os estados do ioBroker (Issue #91)",
+        "nl": "Enige afhankelijkheid werk\nWaarschuwingsberichten vermijden, als het ontvangen protocol geen waarden bevat om de ioBroker toestanden bij te werken (Issue #91)",
+        "fr": "Travail de dépendance\nÉvitez les messages d'avertissement, si le protocole reçu ne contient pas de valeurs pour mettre à jour les états ioBroker (Issue #91)",
+        "it": "Alcuni lavori di dipendenza\nEvitare messaggi di avviso, se il protocollo ricevuto non contiene valori per aggiornare gli stati ioBroker (Issue #91)",
+        "es": "Algunos trabajos de dependencia\nEvite los mensajes de advertencia, si el protocolo recibido no contiene valores para actualizar los estados ioBroker (Isue #91)",
+        "pl": "Pewne prace związane z uzależnieniem\nUnikaj komunikatów ostrzegawczych, jeśli otrzymany protokół nie zawiera wartości do aktualizacji stanów jOBroker (wydanie # 91)",
+        "uk": "Деякі роботи залежностей\nУникайте попередження повідомлень, якщо отриманий протокол не містить значень для оновлення станів ioBroker (Issue #91)",
+        "zh-cn": "一些依赖性工作\n避免警告消息, 如果收到的协议没有包含更新 ioBroker 状态的值( 问题 #91)"
+      },
       "0.0.8": {
         "en": "Some dependency work\nIssues from adapter checker fixed",
         "de": "Einige Abhängigkeitsarbeit\nProbleme von Adapter-Checker behoben",
@@ -80,19 +93,6 @@
         "pl": "- Dodano stany dla obiektów o wysokim bajcie 0x03 z czytaniem i pisaniem\n- Regeneracja obiektów urządzenia przy ponownym uruchomieniu adaptera\n- Uproszczone metody zapisu danych fanów na podstawie subskrybowanych stanów\n- Dodano pierwszy test jednostkowy na parsowanie liczb.\n\n<!--\nUchwyt do następnej wersji (na początku wiersza):\n** * WORK IN PROGRESS **\n-->",
         "uk": "- Додано стани для об'єктів з високим байтом 0x03 з читанням та письмовим записом\n- Відтворити об'єкти пристроїв на перезавантаженні адаптера\n- Спрощені методи написання даних вентилятора на основі підписаних штатів\n- Додано тест першого блоку для парсингу чисел.\n\n<!--\nМісцевласника для наступної версії (на початку лінії):\n###**\n-->",
         "zh-cn": "- 对有读写功能的高字节0x03的对象添加状态\n- 在适配器重新启动时重建设备对象\n- 简化根据订阅状态编写风扇数据的方法\n- 增加了第一个数字解析单元测试.\n\n<!--\n下一个版本(行首)的占位符 :\n** 工作进展**\n-->"
-      },
-      "0.0.2": {
-        "en": "initial release",
-        "de": "erstausstrahlung",
-        "ru": "первоначальный выпуск",
-        "pt": "lançamento inicial",
-        "nl": "eerste release",
-        "fr": "libération initiale",
-        "it": "rilascio iniziale",
-        "es": "liberación inicial",
-        "pl": "początkowe zwolnienie",
-        "uk": "початковий реліз",
-        "zh-cn": "初步释放"
       }
     },
     "titleLang": {
