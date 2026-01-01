@@ -123,7 +123,7 @@ This channel contains system data about the hardware and firmware as well as run
 
 ## License
 
-Copyright (c) 2025 N-b-dy <daten4me@gmx.de>
+Copyright (c) 2025-2026 N-b-dy <daten4me@gmx.de>
 
                     GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
