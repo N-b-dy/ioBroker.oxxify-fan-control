@@ -67,6 +67,12 @@ This channel contains system data about the hardware and firmware as well as run
 -->
 
 ## Changelog
+
+### **WORK IN PROGRESS**
+- Auto PRs merged
+- Copyright year updated
+
+
 ### 0.0.9 (2025-12-01)
 
 - Some dependency work
