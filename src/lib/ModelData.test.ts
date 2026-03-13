@@ -102,8 +102,8 @@ describe("ModelData => WriteDataModel", () => {
 
 describe("ModelData => FanData", () => {
     it("should create FanData with all parameters", () => {
-        const parseFunc = (b: Buffer) => b.readUInt8(0);
-        const states = { "0": "off", "1": "on" };
+        const parseFunc = (b: Buffer): number => b.readUInt8(0);
+        const states = { 0: "off", 1: "on" };
 
         const fanData = new FanData(
             1,
@@ -135,7 +135,7 @@ describe("ModelData => FanData", () => {
     });
 
     it("should create FanData with minimal parameters", () => {
-        const parseFunc = (b: Buffer) => b.toString();
+        const parseFunc = (b: Buffer): string => b.toString();
 
         const fanData = new FanData(4, "version", true, false, "info", "string", "Version", parseFunc);
 

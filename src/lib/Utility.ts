@@ -6,6 +6,7 @@ export class Utility {
 
     /**
      * Parses a fan ID from a state identifier string.
+     *
      * @param strId The state identifier string.
      * @returns The 16-character hex fan ID if found, otherwise undefined.
      */
@@ -22,11 +23,14 @@ export class Utility {
 
     /**
      * Removes invalid characters from a user input string by replacing them with underscores.
+     *
      * @param strUserInput The user input string.
      * @returns The sanitized string.
      */
     public static RemoveInvalidCharacters(strUserInput: string): string {
-        if (strUserInput == null) return "_";
+        if (strUserInput == null) {
+            return "_";
+        }
         return strUserInput.replace(Utility.FORBIDDEN_CHARS, "_");
     }
 }
