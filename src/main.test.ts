@@ -22,8 +22,6 @@ const mockAdapterCore = {
 // by creating an instance and testing public methods
 
 describe("OxxifyFanControl => Utility Methods", () => {
-    let adapter: OxxifyFanControl;
-
     beforeEach(() => {
         // Create a minimal adapter instance for testing
         // This is tricky because the constructor does a lot, so we'll test static-like methods

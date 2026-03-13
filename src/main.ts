@@ -26,7 +26,7 @@ import * as Oxxify from "./lib/OxxifyProtocol";
 /**
  * The main class for this adapter.
  */
-class OxxifyFanControl extends utils.Adapter {
+export class OxxifyFanControl extends utils.Adapter {
     public constructor(options: Partial<utils.AdapterOptions> = {}) {
         super({
             ...options,
@@ -488,7 +488,7 @@ class OxxifyFanControl extends utils.Adapter {
      * @param strId The identifier from ioBroker for the state, that has changed.
      * @returns The fan id if found or undefined.
      */
-    private ParseFanId(strId: string): string | undefined {
+    protected ParseFanId(strId: string): string | undefined {
         const strFanIdRegex = "[0-9A-Fa-f]{16}";
         const match = strId.match(strFanIdRegex);
 
@@ -679,7 +679,7 @@ class OxxifyFanControl extends utils.Adapter {
      * @param strUserInput The string to be checked for invalid characters.
      * @returns The input string with all invalid characters replaced.
      */
-    private RemoveInvalidCharacters(strUserInput: string): string {
+    protected RemoveInvalidCharacters(strUserInput: string): string {
         return (strUserInput || "").replace(this.FORBIDDEN_CHARS, "_");
     }
 
