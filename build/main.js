@@ -38,6 +38,7 @@ var import_queue_fifo = __toESM(require("queue-fifo"));
 var import_DataHelpers = require("./lib/DataHelpers");
 var import_ModelData = require("./lib/ModelData");
 var Oxxify = __toESM(require("./lib/OxxifyProtocol"));
+var import_Utility = require("./lib/Utility");
 class OxxifyFanControl extends utils.Adapter {
   constructor(options = {}) {
     super({
@@ -92,7 +93,7 @@ class OxxifyFanControl extends utils.Adapter {
     });
     await Promise.all(
       this.config.fans.map(async (element) => {
-        const strCheckedId = this.RemoveInvalidCharacters(element.id);
+        const strCheckedId = import_Utility.Utility.RemoveInvalidCharacters(element.id);
         this.log.debug(`Fan configured: "${element.name}": ${strCheckedId} - ${element.ipaddr}`);
         await this.extendObject(`devices.${strCheckedId}`, {
           type: "device",
@@ -296,7 +297,7 @@ class OxxifyFanControl extends utils.Adapter {
     if (state) {
       this.log.silly(`state ${strStateIdentifier} changed: ${state.val} (ack = ${state.ack})`);
       if (state.ack == false) {
-        const strFanId = this.ParseFanId(strStateIdentifier);
+        const strFanId = import_Utility.Utility.ParseFanId(strStateIdentifier);
         if (strFanId) {
           this.ProcessStateChange(strFanId, strStateIdentifier, state.val);
         }
@@ -371,7 +372,7 @@ class OxxifyFanControl extends utils.Adapter {
    */
   ReadAllFanData(bIncludeConstData) {
     this.config.fans.forEach((element) => {
-      const strCheckedId = this.RemoveInvalidCharacters(element.id);
+      const strCheckedId = import_Utility.Utility.RemoveInvalidCharacters(element.id);
       this.oxxify.StartNewFrame(strCheckedId, element.password);
       this.oxxify.ReadFanState();
       this.oxxify.ReadFanSpeedMode();
@@ -411,21 +412,6 @@ class OxxifyFanControl extends utils.Adapter {
       const packet = this.oxxify.ProtocolPacket;
       this.SendData(new import_ModelData.DataToSend(packet, element.ipaddr));
     });
-  }
-  /**
-   * Parses the fan id from the ioBroker identifer. This fan id has 16 hexadecimal
-   * characters and is added from the end user by the fan configuration.
-   *
-   * @param strId The identifier from ioBroker for the state, that has changed.
-   * @returns The fan id if found or undefined.
-   */
-  ParseFanId(strId) {
-    const strFanIdRegex = "[0-9A-Fa-f]{16}";
-    const match = strId.match(strFanIdRegex);
-    if (match) {
-      return match.toString();
-    }
-    return void 0;
   }
   /**
    * Fetchs the configured fan data based on the provided identifier.
@@ -560,16 +546,6 @@ class OxxifyFanControl extends utils.Adapter {
     }).catch((reason) => {
       this.log.error(reason);
     });
-  }
-  /**
-   * Replaces the invalid characters from the provided input variable. If any is found, it is
-   * replaced with underscore character "_".
-   *
-   * @param strUserInput The string to be checked for invalid characters.
-   * @returns The input string with all invalid characters replaced.
-   */
-  RemoveInvalidCharacters(strUserInput) {
-    return (strUserInput || "").replace(this.FORBIDDEN_CHARS, "_");
   }
   /**
    * Adds the provided data to the send quene and starts the timeout for sending it.
