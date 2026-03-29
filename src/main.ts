@@ -7,8 +7,8 @@
 import * as utils from "@iobroker/adapter-core";
 
 // Load your modules here, e.g.:
-// import * as fs from "fs";
-import * as udp from "dgram";
+// import * as fs from "node:fs";
+import * as udp from "node:dgram";
 import * as NTP from "ntp-time";
 import Queue from "queue-fifo";
 import { DataHelpers } from "./lib/DataHelpers";
