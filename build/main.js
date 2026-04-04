@@ -32,7 +32,7 @@ __export(main_exports, {
 });
 module.exports = __toCommonJS(main_exports);
 var utils = __toESM(require("@iobroker/adapter-core"));
-var udp = __toESM(require("dgram"));
+var udp = __toESM(require("node:dgram"));
 var NTP = __toESM(require("ntp-time"));
 var import_queue_fifo = __toESM(require("queue-fifo"));
 var import_DataHelpers = require("./lib/DataHelpers");
