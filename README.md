@@ -67,8 +67,7 @@ This channel contains system data about the hardware and firmware as well as run
 -->
 
 ## Changelog
-
-### **WORK IN PROGRESS**
+### 0.0.11 (2026-04-06)
 
 - TypeScript updated to 6.0
 - Some dependency work
