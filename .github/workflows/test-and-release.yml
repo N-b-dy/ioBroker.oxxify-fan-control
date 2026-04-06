@@ -29,9 +29,9 @@ jobs:
         steps:
             - uses: ioBroker/testing-action-check@v1
               with:
-                  node-version: '22.x'
+                  node-version: "22.x"
                   # Uncomment the following line if your adapter cannot be installed using 'npm ci'
-                  install-command: "npm install"
+                  install-command: "npm ci"
                   type-checking: true
                   lint: true
 
@@ -53,7 +53,7 @@ jobs:
                   os: ${{ matrix.os }}
                   extra-tests: npm run test:ts
                   # Uncomment the following line if your adapter cannot be installed using 'npm ci'
-                  install-command: "npm install"
+                  install-command: "npm ci"
                   build: true
 
     # Deploys the final package to NPM
@@ -76,9 +76,9 @@ jobs:
         steps:
             - uses: ioBroker/testing-action-deploy@v1
               with:
-                  node-version: '22.x'
+                  node-version: "22.x"
                   # Uncomment the following line if your adapter cannot be installed using 'npm ci'
-                  install-command: "npm install"
+                  install-command: "npm ci"
                   build: true
                   github-token: ${{ secrets.GITHUB_TOKEN }}
 #                  # When using Sentry for error reporting, Sentry can be informed about new releases
