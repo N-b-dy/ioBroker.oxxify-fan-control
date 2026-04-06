@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "oxxify-fan-control",
-    "version": "0.0.11",
+    "version": "0.0.12",
     "news": {
+      "0.0.12": {
+        "en": "Deploy workflow changed from \"npm install\" to \"npm ci\"",
+        "de": "Workflow von \"npm install\" auf \"npm ci\" einstellen",
+        "ru": "Рабочий процесс развертывания изменился с «npm install» на «npm ci»",
+        "pt": "Implantar o fluxo de trabalho alterado de \"npm install\" para \"npm ci\"",
+        "nl": "Werkstroom omzetten van \"npm install\" naar \"npm ci\"",
+        "fr": "Déployer le flux de travail est passé de \"npm install\" à \"npm ci\"",
+        "it": "Flusso di lavoro variabile da \"npm install\" a \"npm ci\"",
+        "es": "Desplorar flujo de trabajo cambió de \"npm install\" a \"npm ci\"",
+        "pl": "Uruchomić przepływ pracy zmieniony z \"npm install\" na \"npm ci\"",
+        "uk": "Розгортання робочого процесу змінено з \"npm install\" до \"npm ci\"",
+        "zh-cn": "部署工作流程从\"npm安装\"改为\"npm ci\""
+      },
       "0.0.11": {
         "en": "TypeScript updated to 6.0\nSome dependency work",
         "de": "TypeScript aktualisiert auf 6.0\nEinige Abhängigkeitsarbeit",
@@ -80,19 +93,6 @@
         "pl": "Uaktualniona podatna zależność",
         "uk": "Vulnerable залежність оновлено",
         "zh-cn": "更新脆弱依赖性"
-      },
-      "0.0.5": {
-        "en": "Added automatic write retry mechanism for writing values within the fan, as writing with UDP is not very reliable in connection with poor network conditions\nAdapter checker issues fixed",
-        "de": "Automatischer Schreibwiedergabemechanismus für Schreibwerte innerhalb des Lüfters hinzugefügt, da das Schreiben mit UDP nicht sehr zuverlässig in Verbindung mit schlechten Netzbedingungen ist\nAdapter Checker Probleme behoben",
-        "ru": "Добавлен автоматический механизм записи для записи значений внутри вентилятора, так как запись с UDP не очень надежна в связи с плохими сетевыми условиями\nПроблемы с проверкой адаптера",
-        "pt": "Adicionado mecanismo automático de retenda de escrita para escrever valores dentro do ventilador, como escrever com UDP não é muito confiável em conexão com condições de rede pobres\nProblemas do verificador do adaptador corrigido",
-        "nl": "Toegevoegd automatisch schrijf retry mechanisme voor het schrijven van waarden binnen de ventilator, omdat schrijven met UDP is niet erg betrouwbaar in verband met slechte netwerkomstandigheden\nAdapter controleer problemen opgelost",
-        "fr": "Ajout d'un mécanisme de ré-essai automatique d'écriture pour l'écriture des valeurs au sein du ventilateur, car écrire avec UDP n'est pas très fiable en relation avec les mauvaises conditions du réseau\nProblèmes de vérification de l'adaptateur corrigés",
-        "it": "Aggiunto meccanismo automatico di retry di scrittura per la scrittura di valori all'interno del ventilatore, come la scrittura con UDP non è molto affidabile in connessione con le condizioni di rete povere\nAdattatore checker problemi fissi",
-        "es": "Mecanismo de reingreso automático de escritura para escribir valores dentro del ventilador, ya que la escritura con UDP no es muy confiable en relación con las malas condiciones de red\nProblemas de control del adaptador fijo",
-        "pl": "Dodano automatyczny mechanizm ponownego zapisu do zapisu wartości wewnątrz wentylatora, ponieważ pisanie z UDP nie jest bardzo wiarygodne w związku ze słabymi warunkami sieciowymi\nNaprawiono kwestie sprawdzania adaptera",
-        "uk": "Додано автоматичний механізм запису птиця для написання значень у вентиляторі, як написання з UDP не дуже надійний у зв'язку з несприятливими умовами мережі\nРевізити перевірки адаптера",
-        "zh-cn": "在风扇内添加写入值的自动写入重试机制, 因为与 UDP 的写入在网络条件差的情况下不太可靠 \n固定的适配检查器问题"
       }
     },
     "titleLang": {
