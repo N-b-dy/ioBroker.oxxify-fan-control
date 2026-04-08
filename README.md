@@ -67,6 +67,12 @@ This channel contains system data about the hardware and firmware as well as run
 -->
 
 ## Changelog
+
+### **WORK IN PROGRESS**
+
+- Auto PRs merged
+- Fixing other deployment issues...
+
 ### 0.0.12 (2026-04-06)
 
 - Deploy workflow changed from "npm install" to "npm ci"
