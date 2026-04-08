@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "oxxify-fan-control",
-    "version": "0.0.12",
+    "version": "0.0.13",
     "news": {
+      "0.0.13": {
+        "en": "Auto PRs merged\nFixing other deployment issues...",
+        "de": "Auto PRs zusammengeführt\nAndere Bereitstellungsprobleme beheben...",
+        "ru": "Авто PR объединились\nРешение других проблем развертывания...",
+        "pt": "Auto PRs mesclados\nCorrigindo outros problemas de implantação...",
+        "nl": "Samengevoegde automatische PR's\nAndere problemen oplossen...",
+        "fr": "Auto PRs fusionné\nCorrection d'autres problèmes de déploiement...",
+        "it": "Auto PR fuse\nFissare altri problemi di distribuzione...",
+        "es": "Auto PRs fusionados\nArreglar otros problemas de despliegue...",
+        "pl": "Automatyczne PRs połączone\nNaprawiam inne problemy z rozmieszczeniem...",
+        "uk": "Авто PR злив\nВиправлення інших питань розгортання...",
+        "zh-cn": "自动 PR 合并\n解决其他部署问题..."
+      },
       "0.0.12": {
         "en": "Deploy workflow changed from \"npm install\" to \"npm ci\"",
         "de": "Workflow von \"npm install\" auf \"npm ci\" einstellen",
@@ -80,19 +93,6 @@
         "pl": "Pewne prace związane z uzależnieniem\nRozszerzona dokumentacja kodowa\nDodano Node.js 24. do testowania i uwalniania rurociągu\nPrzedział zwrotny wartości nieprzekroczonych zmienił się z 1,5 sekundy na 2,5 sekundy\nZmieniono zapisywalne mieszane wartości numeryczne / stringowe dla enumów na wybrane wartości, aby pokazać dostępne konfiguracje (* *zmiana łamania* *, jeśli jest już używana do zdalnego sterowania wentylatorami) \nMechanizm przepisywania umożliwia teraz ręczne zmiany w przyciskach wentylatora, które zostały przekroczone przez wewnętrzną wartość zapisaną przed",
         "uk": "Деякі роботи залежностей\nРозширена документація\nДодано Node.js 24. для випробування та виходу трубопроводу\nЗакінчення інтервалу не надходжених значень змінено з 1,5 секунд до 2,5 секунд\nЗмінені значення зважених числових/string для обманів у вибрані значення, для відображення доступних конфігурацій (*** Зміна розриву***, якщо вже використовується для вентиляторів дистанційного керування)\nМеханізм перезапису дозволяє тепер ручні зміни в кнопках вентилятора, які перенесли внутрішню величину до",
         "zh-cn": "一些依赖性工作\n扩展代码文档\n增加节点24,用于试验和释放管道\n重排未超过值的间隔从1,5秒改为2,5秒\n将 enum 可写入的混合数字/字符串值修改为可选择的值,以显示可用的配置(** 打破的更改** 如果已经用于远程控制扇)\n重写机制现在允许在风扇的按钮内进行手动修改,在风扇之前被内部存储值所覆盖"
-      },
-      "0.0.6": {
-        "en": "Vulnerable dependency updated",
-        "de": "Schwache Abhängigkeit aktualisiert",
-        "ru": "Обновлена уязвимая зависимость",
-        "pt": "Dependência Vulnerável atualizada",
-        "nl": "Kwetsbare afhankelijkheid bijgewerkt",
-        "fr": "Dépendance vulnérable mise à jour",
-        "it": "Dipendenza attiva aggiornata",
-        "es": "Actualización de la dependencia vulnerable",
-        "pl": "Uaktualniona podatna zależność",
-        "uk": "Vulnerable залежність оновлено",
-        "zh-cn": "更新脆弱依赖性"
       }
     },
     "titleLang": {
