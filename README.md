@@ -67,6 +67,11 @@ This channel contains system data about the hardware and firmware as well as run
 -->
 
 ## Changelog
+
+### **WORK IN PROGRESS**
+
+- Warning [W5039] fixed
+
 ### 0.0.13 (2026-04-08)
 
 - Auto PRs merged
