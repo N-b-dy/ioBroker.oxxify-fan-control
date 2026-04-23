@@ -16,32 +16,6 @@
         "uk": "Авто PR злив\nВиправлення інших питань розгортання...",
         "zh-cn": "自动 PR 合并\n解决其他部署问题..."
       },
-      "0.0.12": {
-        "en": "Deploy workflow changed from \"npm install\" to \"npm ci\"",
-        "de": "Workflow von \"npm install\" auf \"npm ci\" einstellen",
-        "ru": "Рабочий процесс развертывания изменился с «npm install» на «npm ci»",
-        "pt": "Implantar o fluxo de trabalho alterado de \"npm install\" para \"npm ci\"",
-        "nl": "Werkstroom omzetten van \"npm install\" naar \"npm ci\"",
-        "fr": "Déployer le flux de travail est passé de \"npm install\" à \"npm ci\"",
-        "it": "Flusso di lavoro variabile da \"npm install\" a \"npm ci\"",
-        "es": "Desplorar flujo de trabajo cambió de \"npm install\" a \"npm ci\"",
-        "pl": "Uruchomić przepływ pracy zmieniony z \"npm install\" na \"npm ci\"",
-        "uk": "Розгортання робочого процесу змінено з \"npm install\" до \"npm ci\"",
-        "zh-cn": "部署工作流程从\"npm安装\"改为\"npm ci\""
-      },
-      "0.0.11": {
-        "en": "TypeScript updated to 6.0\nSome dependency work",
-        "de": "TypeScript aktualisiert auf 6.0\nEinige Abhängigkeitsarbeit",
-        "ru": "TypeScript обновлен до 6.0\nНекоторые зависимые работы",
-        "pt": "TypeScript atualizado para 6.0\nAlgum trabalho de dependência",
-        "nl": "TypeScript bijgewerkt naar 6.0\nEnige afhankelijkheid werk",
-        "fr": "TypeScript mis à jour à 6.0\nTravail de dépendance",
-        "it": "TypeScript aggiornato a 6.0\nAlcuni lavori di dipendenza",
-        "es": "TipoScript actualizado a 6.0\nAlgunos trabajos de dependencia",
-        "pl": "TypeScript zaktualizowany do 6.0\nPewne prace związane z uzależnieniem",
-        "uk": "TypeScript оновлено до 6.0\nДеякі роботи залежностей",
-        "zh-cn": "类型脚本更新为 6. 0\n一些依赖性工作"
-      },
       "0.0.10": {
         "en": "Auto PRs merged\nSome dependency work\nTests extended\nCopyright year updated",
         "de": "Auto PRs zusammengeführt\nEinige Abhängigkeitsarbeit\nPrüfung verlängert\nCopyright-Jahr aktualisiert",
