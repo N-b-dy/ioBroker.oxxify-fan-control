@@ -147,6 +147,8 @@ This channel contains system data about the hardware and firmware as well as run
 
 - (N-b-dy) initial release
 
+[Older changelogs can be found there](CHANGELOG_OLD.md)
+
 ## License
 
 Copyright (c) 2025-2026 N-b-dy <daten4me@gmx.de>
