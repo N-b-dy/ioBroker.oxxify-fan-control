@@ -69,6 +69,7 @@ This channel contains system data about the hardware and firmware as well as run
 ## Changelog
 
 ### **WORK IN PROGRESS**
+- (copilot) Adapter requires node.js >= 22 now
 
 - Warning [W5039] fixed
 
