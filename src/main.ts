@@ -28,6 +28,9 @@ import { Utility } from "./lib/Utility";
  * The main class for this adapter.
  */
 export class OxxifyFanControl extends utils.Adapter {
+    /**
+     *
+     */
     public constructor(options: Partial<utils.AdapterOptions> = {}) {
         super({
             ...options,
@@ -355,6 +358,7 @@ export class OxxifyFanControl extends utils.Adapter {
 
     /**
      * Handle a state change coming from ioBroker and dispatch it to the appropriate protocol write call.
+     *
      * @param strFanId The fan id parsed from the state identifier
      * @param strStateIdentifier Full state identifier that changed
      * @param value The new state value
