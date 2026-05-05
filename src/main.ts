@@ -1,6 +1,8 @@
 /*
- * Created with @iobroker/create-adapter v2.6.5
- */
+     *
+     * Created with @iobroker/create-adapter v2.6.5
+     *
+     * /
 
 // The adapter-core module gives you access to the core ioBroker functions
 // you need to create an adapter
@@ -25,16 +27,21 @@ import * as Oxxify from "./lib/OxxifyProtocol";
 import { Utility } from "./lib/Utility";
 
 /**
- * The main class for this adapter.
- */
+     *
+     * The main class for this adapter.
+     *
+     * /
 export class OxxifyFanControl extends utils.Adapter {
     /**
      *
-     */
+     * */
     /**
+     *
      * Adapter constructor.
+     *
      * @param options Partial adapter options passed by ioBroker runtime
-     */
+     *
+     * /
     public constructor(options: Partial<utils.AdapterOptions> = {}) {
         super({
             ...options,
@@ -49,8 +56,10 @@ export class OxxifyFanControl extends utils.Adapter {
     }
 
     /**
+     *
      * Is called when databases are connected and adapter received configuration.
-     */
+     *
+     * /
     private async onReady(): Promise<void> {
         // Reset the connection indicator during startup
         await this.setState("info.connection", false, true);
@@ -316,10 +325,12 @@ export class OxxifyFanControl extends utils.Adapter {
     }
 
     /**
+     *
      * Is called when adapter shuts down.
      *
-     * @param callback The callback, which has to be called under any circumstances!
-     */
+     * * @param callback The callback, which has to be called under any circumstances!
+     *
+     * /
     private onUnload(callback: () => void): void {
         try {
             // Here you must clear all timeouts or intervals that may still be active
@@ -336,12 +347,16 @@ export class OxxifyFanControl extends utils.Adapter {
     }
 
     /**
+     *
      * Is called if a subscribed state changes. Here the subscribed states are dispatched for the
+     *
      * dedicated actions regarding the fans.
      *
-     * @param strStateIdentifier The state which has changed.
+     * * @param strStateIdentifier The state which has changed.
+     *
      * @param state The new value including meta data from ioBroker.
-     */
+     *
+     * /
     private onStateChange(strStateIdentifier: string, state: ioBroker.State | null | undefined): void {
         if (state) {
             // The state was changed
@@ -361,12 +376,16 @@ export class OxxifyFanControl extends utils.Adapter {
     }
 
     /**
+     *
      * Handle a state change coming from ioBroker and dispatch it to the appropriate protocol write call.
      *
-     * @param strFanId The fan id parsed from the state identifier
+     * * @param strFanId The fan id parsed from the state identifier
+     *
      * @param strStateIdentifier Full state identifier that changed
+     *
      * @param value The new state value
-     */
+     *
+     * /
     private ProcessStateChange(strFanId: string, strStateIdentifier: string, value: ioBroker.StateValue): void {
         const fanData = this.GetFanDataFromConfig(strFanId);
 
@@ -446,10 +465,12 @@ export class OxxifyFanControl extends utils.Adapter {
     }
 
     /**
+     *
      * Method to build up the protocol frame to read all data from the fans according to the protocol.
      *
-     * @param bIncludeConstData True contains the const data like the firmware and the version, false excludes them.
-     */
+     * * @param bIncludeConstData True contains the const data like the firmware and the version, false excludes them.
+     *
+     * /
     private ReadAllFanData(bIncludeConstData: boolean): void {
         this.config.fans.forEach(element => {
             const strCheckedId = Utility.RemoveInvalidCharacters(element.id);
@@ -497,11 +518,14 @@ export class OxxifyFanControl extends utils.Adapter {
     }
 
     /**
+     *
      * Fetchs the configured fan data based on the provided identifier.
      *
-     * @param strFanId The fan identifier, for which the configuration data is requested.
+     * * @param strFanId The fan identifier, for which the configuration data is requested.
+     *
      * @returns The fan config data if found, otherwise undefined.
-     */
+     *
+     * /
     private GetFanDataFromConfig(strFanId: string): FanRemoteEndpoint | undefined {
         const data = this.config.fans.find(f => f.id == strFanId);
 
@@ -513,11 +537,14 @@ export class OxxifyFanControl extends utils.Adapter {
     }
 
     /**
+     *
      * Generic function to create a protocol frame to write a numeric value to the fan.
      *
-     * @param data The data to write with necessary fan data as well.
+     * * @param data The data to write with necessary fan data as well.
+     *
      * @param writeNumberMethod The function from the OxxifyProtocol class, which adds the data to write.
-     */
+     *
+     * /
     private WriteNumberFanData(
         data: WriteDataModel,
         writeNumberMethod: (nValue: number) => Oxxify.ParameterType,
@@ -539,11 +566,14 @@ export class OxxifyFanControl extends utils.Adapter {
     }
 
     /**
+     *
      * Generic function to create a protocol frame to write a string value to the fan.
      *
-     * @param data The data to write with necessary fan data as well.
+     * * @param data The data to write with necessary fan data as well.
+     *
      * @param writeStringMethod The function from the OxxifyProtocol class, which adds the data to write.
-     */
+     *
+     * /
     private WriteStringFanData(
         data: WriteDataModel,
         writeStringMethod: (strValue: string) => Oxxify.ParameterType,
@@ -559,11 +589,14 @@ export class OxxifyFanControl extends utils.Adapter {
     }
 
     /**
+     *
      * Generic function to create a protocol frame to write a bool value to the fan.
      *
-     * @param data The data to write with necessary fan data as well.
+     * * @param data The data to write with necessary fan data as well.
+     *
      * @param writeBoolMethod The function from the OxxifyProtocol class, which adds the data to write.
-     */
+     *
+     * /
     private WriteBoolFanData(data: WriteDataModel, writeBoolMethod: (bValue: boolean) => Oxxify.ParameterType): void {
         if (typeof data.value !== "boolean") {
             this.log.warn(`The value is not from type boolean.`);
@@ -581,11 +614,14 @@ export class OxxifyFanControl extends utils.Adapter {
     }
 
     /**
+     *
      * Generic function to create a protocol frame to trigger a funtion at the fan. like reseting stuff.
      *
-     * @param data The data which contains the necessary fan data.
+     * * @param data The data which contains the necessary fan data.
+     *
      * @param writeVoidMethod The function from the OxxifyProtocol class, triggers the function.
-     */
+     *
+     * /
     private WriteVoidFanData(data: WriteDataModel, writeVoidMethod: () => void): void {
         this.oxxify.StartNewFrame(data.strFanId, data.fanData.strPassword);
         writeVoidMethod();
@@ -596,13 +632,18 @@ export class OxxifyFanControl extends utils.Adapter {
     }
 
     /**
+     *
      * Sets the requested value to an internal multi-dimensional dictionary to cross-check within the polling timer,
+     *
      * if the requested value is already set. UDP is not that reliable as TCP, so this is a kind of safety mechanism
+     *
      * to ensure the requested value is wirtten sucessfully.
      *
-     * @param data The data which contains the necessary fan data.
+     * * @param data The data which contains the necessary fan data.
+     *
      * @param eParameterType The parameter type, which is related to the fan data.
-     */
+     *
+     * /
     private SetInternalTargetValue(data: WriteDataModel, eParameterType: Oxxify.ParameterType): void {
         if (this.targetValuesDictionary.has(data.strFanId) == false) {
             this.targetValuesDictionary.set(data.strFanId, new Map<Oxxify.ParameterType, IoBrokerRewriteDataPoint>());
@@ -629,11 +670,14 @@ export class OxxifyFanControl extends utils.Adapter {
     }
 
     /**
+     *
      * Fetchs the current time from the configured NTP server and writes the date and time to the provided fan.
      *
-     * @param strFanId The fan id, for which the time sync is processed.
+     * * @param strFanId The fan id, for which the time sync is processed.
+     *
      * @param fanData The related fan data to create the protocol frame.
-     */
+     *
+     * /
     private SyncRtcClock(strFanId: string, fanData: FanRemoteEndpoint): void {
         this.ntpClient
             .syncTime()
@@ -670,10 +714,12 @@ export class OxxifyFanControl extends utils.Adapter {
     }
 
     /**
+     *
      * Adds the provided data to the send quene and starts the timeout for sending it.
      *
-     * @param data The data which is added to the send quene.
-     */
+     * * @param data The data which is added to the send quene.
+     *
+     * /
     private SendData(data: DataToSend): void {
         this.sendQuene.enqueue(data);
 
@@ -685,9 +731,12 @@ export class OxxifyFanControl extends utils.Adapter {
     }
 
     /**
+     *
      * Checks if any data is available within the send quene and sends it. If there is any data left, the
+     *
      * method retriggers itself within a timeout, if there is some data left in the quene.
-     */
+     *
+     * /
     private ProcessSendQuene(): void {
         if (this.sendQuene.isEmpty() == false) {
             const sendData = this.sendQuene.dequeue();
@@ -723,9 +772,12 @@ export class OxxifyFanControl extends utils.Adapter {
     }
 
     /**
+     *
      * Verify and, if necessary, retry pending target values that were sent to fans but not yet acknowledged.
+     *
      * Iterates the internal target-values dictionary and retriggers writes up to the configured retry limit.
-     */
+     *
+     * /
     private verifyTargetValues(): void {
         this.targetValuesDictionary.forEach(
             (targetFanData: Map<Oxxify.ParameterType, IoBrokerRewriteDataPoint>, strFanId: string) => {
