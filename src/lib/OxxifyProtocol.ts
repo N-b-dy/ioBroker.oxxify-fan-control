@@ -153,7 +153,9 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Add a request to write the fan on/off state.
+     * @param bEnabled true to turn the fan on, false to turn it off
+     * @returns The ParameterType for FanState
      */
     public WriteFanState(bEnabled: boolean): ParameterType {
         this.AddFunctionCode(FunctionType.WriteRead);
@@ -170,7 +172,7 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Request the current fan speed mode value from the device.
      */
     public ReadFanSpeedMode(): void {
         this.AddFunctionCode(FunctionType.Read);
@@ -178,7 +180,9 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Add a request to write the fan speed mode.
+     * @param strValue String representation of the fan speed mode
+     * @returns The ParameterType for FanSpeedMode
      */
     public WriteFanSpeedMode(strValue: string): ParameterType {
         this.AddFunctionCode(FunctionType.WriteRead);
@@ -190,7 +194,7 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Request the current boost state from the device.
      */
     public ReadBoostState(): void {
         this.AddFunctionCode(FunctionType.Read);
@@ -198,7 +202,7 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Request both timer mode and its countdown from the device.
      */
     public ReadTimerModeValues(): void {
         this.AddFunctionCode(FunctionType.Read);
@@ -207,7 +211,9 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Add a request to set the timer mode.
+     * @param strValue Timer mode string (e.g., "off", "nightMode", "partyMode")
+     * @returns The ParameterType for TimerMode
      */
     public WriteTimerMode(strValue: string): ParameterType {
         this.AddFunctionCode(FunctionType.WriteRead);
@@ -218,7 +224,7 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Request the current humidity sensor enabled/disabled state.
      */
     public ReadHumiditySensorState(): void {
         this.AddFunctionCode(FunctionType.Read);
@@ -226,7 +232,9 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Add a request to enable/disable the humidity sensor on the fan.
+     * @param bEnabled true to enable, false to disable
+     * @returns The ParameterType for StateHumiditySensor
      */
     public WriteHumiditySensorState(bEnabled: boolean): ParameterType {
         this.AddFunctionCode(FunctionType.WriteRead);
@@ -243,7 +251,7 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Request the current relay sensor state.
      */
     public ReadRelaisSensorState(): void {
         this.AddFunctionCode(FunctionType.Read);
@@ -251,7 +259,9 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Add a request to enable/disable the relay sensor.
+     * @param bEnabled true to enable, false to disable
+     * @returns The ParameterType for StateRelaisSensor
      */
     public WriteRelaisSensorState(bEnabled: boolean): ParameterType {
         this.AddFunctionCode(FunctionType.WriteRead);
@@ -268,7 +278,7 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Request the current analog voltage sensor enabled/disabled state.
      */
     public ReadAnalogVoltageSensorState(): void {
         this.AddFunctionCode(FunctionType.Read);
@@ -276,7 +286,9 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Add a request to enable/disable the analog voltage sensor.
+     * @param bEnabled true to enable, false to disable
+     * @returns The ParameterType for StateAnalogVoltageSensor
      */
     public WriteAnalogVoltageSensorState(bEnabled: boolean): ParameterType {
         this.AddFunctionCode(FunctionType.WriteRead);
@@ -293,7 +305,7 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Request the configured target humidity setpoint from the fan.
      */
     public ReadTargetHumidityValue(): void {
         this.AddFunctionCode(FunctionType.Read);
@@ -301,7 +313,9 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Add a request to set the target humidity value.
+     * @param nValue Numeric humidity setpoint
+     * @returns The ParameterType for TargetHumidityValue
      */
     public WriteTargetHumidityValue(nValue: number): ParameterType {
         this.AddFunctionCode(FunctionType.WriteRead);
@@ -313,7 +327,7 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Request the current RTC battery voltage from the fan.
      */
     public ReadRtcBattery(): void {
         this.AddFunctionCode(FunctionType.Read);
@@ -321,7 +335,7 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Request the current humidity sensor reading from the fan.
      */
     public ReadCurrentHumidity(): void {
         this.AddFunctionCode(FunctionType.Read);
@@ -329,7 +343,7 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Request the current analog voltage reading from the fan.
      */
     public ReadCurrentAnalogVoltage(): void {
         this.AddFunctionCode(FunctionType.Read);
@@ -337,7 +351,7 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Request the current relay sensor reading from the fan.
      */
     public ReadCurrentRelaisState(): void {
         this.AddFunctionCode(FunctionType.Read);
@@ -345,7 +359,7 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Request the current manual fan speed setting.
      */
     public ReadManualFanSpeed(): void {
         this.AddFunctionCode(FunctionType.Read);
@@ -353,7 +367,9 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Add a request to set the manual fan speed.
+     * @param nValue Numeric speed value
+     * @returns The ParameterType for ManualFanSpeed
      */
     public WriteManualFanSpeed(nValue: number): ParameterType {
         this.AddFunctionCode(FunctionType.WriteRead);
@@ -365,7 +381,7 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Request fan #1 speed (RPM).
      */
     public ReadFan1Speed(): void {
         this.AddFunctionCode(FunctionType.Read);
@@ -373,7 +389,7 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Request fan #2 speed (RPM).
      */
     public ReadFan2Speed(): void {
         this.AddFunctionCode(FunctionType.Read);
@@ -381,7 +397,7 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Request the filter exchange countdown timer value.
      */
     public ReadFilterExchangeCountdown(): void {
         this.AddFunctionCode(FunctionType.Read);
@@ -389,7 +405,7 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Add a request to reset the filter exchange countdown on the device.
      */
     public WriteResetFilterExchangeCountdown(): void {
         this.AddFunctionCode(FunctionType.WriteRead);
@@ -400,7 +416,7 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Request the boost follow-up time value (in minutes).
      */
     public ReadBoostModeFollowUpTime(): void {
         this.AddFunctionCode(FunctionType.Read);
@@ -408,7 +424,9 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Add a request to set the boost follow-up time.
+     * @param nValue Number of minutes for boost follow-up
+     * @returns The ParameterType for BoostModeFollowUpTime
      */
     public WriteBoostModeFollowUpTime(nValue: number): ParameterType {
         this.AddFunctionCode(FunctionType.WriteRead);
@@ -420,7 +438,7 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Request the current RTC date/time from the fan.
      */
     public ReadRtcDateTime(): void {
         this.AddFunctionCode(FunctionType.Read);
@@ -429,7 +447,9 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Add a request to write the RTC date/time to the fan.
+     * @param dateTime Date object to be written to the device
+     * @returns True if the constructed frame was valid, otherwise false
      */
     public WriteRtcDateTime(dateTime: Date): boolean {
         // It does not immediately respond with the right data
@@ -453,7 +473,7 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Request the current time-controlled mode setting from the fan.
      */
     public ReadTimeControlledMode(): void {
         this.AddFunctionCode(FunctionType.Read);
@@ -461,7 +481,9 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Add a request to enable/disable time-controlled mode.
+     * @param bEnabled true to enable, false to disable
+     * @returns The ParameterType for TimeControlledMode
      */
     public WriteTimeControlledMode(bEnabled: boolean): ParameterType {
         this.AddFunctionCode(FunctionType.WriteRead);
@@ -478,7 +500,7 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Request the accumulated operating time from the fan.
      */
     public ReadOperatingTime(): void {
         this.AddFunctionCode(FunctionType.Read);
@@ -486,7 +508,7 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Request the current alarm/warning state from the device.
      */
     public ReadAlarmState(): void {
         this.AddFunctionCode(FunctionType.Read);
@@ -494,7 +516,7 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Add a request to reset alarms on the fan.
      */
     public WriteResetAlarmState(): void {
         this.AddFunctionCode(FunctionType.WriteRead);
@@ -505,7 +527,7 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Request whether the cloud server functionality is enabled.
      */
     public ReadCloudServerEnabled(): void {
         this.AddFunctionCode(FunctionType.Read);
@@ -513,7 +535,7 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Request the firmware version and build date from the fan.
      */
     public ReadFirmware(): void {
         this.AddFunctionCode(FunctionType.Read);
@@ -521,7 +543,7 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Request whether a filter exchange is necessary.
      */
     public ReadFilterExchangeNecessary(): void {
         this.AddFunctionCode(FunctionType.Read);
@@ -529,7 +551,7 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Request the WiFi related configuration and status values from the fan.
      */
     public ReadWifiData(): void {
         this.AddFunctionCode(FunctionType.Read);
@@ -546,7 +568,7 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Request the current operating mode of the fan (ventilation/heatRecovery/supplyAir).
      */
     public ReadOperatingMode(): void {
         this.AddFunctionCode(FunctionType.Read);
@@ -554,7 +576,9 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Add a request to set the fan's operating mode.
+     * @param strValue Operating mode string (e.g., "ventilation", "heatRecovery", "supplyAir")
+     * @returns The ParameterType for FanOperatingMode
      */
     public WriteOperatingMode(strValue: string): ParameterType {
         this.AddFunctionCode(FunctionType.WriteRead);
@@ -566,7 +590,7 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Request the configured target analog voltage setpoint.
      */
     public ReadTargetAnalogVoltageValue(): void {
         this.AddFunctionCode(FunctionType.Read);
@@ -574,7 +598,9 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Add a request to set the target analog voltage value.
+     * @param nValue Numeric target voltage value
+     * @returns The ParameterType for TargetAnalogVoltageValue
      */
     public WriteTargetAnalogVoltageValue(nValue: number): ParameterType {
         this.AddFunctionCode(FunctionType.WriteRead);
@@ -586,7 +612,7 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Request the fan hardware/type identifier.
      */
     public ReadFanType(): void {
         this.AddFunctionCode(FunctionType.Read);
@@ -594,7 +620,7 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Request the night mode timer setpoint value.
      */
     public ReadNightModeTimerSetPoint(): void {
         this.AddFunctionCode(FunctionType.Read);
@@ -602,7 +628,9 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Add a request to set the night mode timer setpoint.
+     * @param strTimeValue Time string in format "HH:MM"
+     * @returns The ParameterType for NightModeTimerSetpoint
      */
     public WriteNightModeTimerSetPoint(strTimeValue: string): ParameterType {
         const [nHours, nMinutes] = strTimeValue.split(":").map(Number);
@@ -618,7 +646,7 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Request the party mode timer setpoint value.
      */
     public ReadPartyModeTimerSetPoint(): void {
         this.AddFunctionCode(FunctionType.Read);
@@ -626,7 +654,9 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Add a request to set the party mode timer setpoint.
+     * @param strTimeValue Time string in format "HH:MM"
+     * @returns The ParameterType for PartyModeTimerSetPoint
      */
     public WritePartyModeTimerSetPoint(strTimeValue: string): ParameterType {
         const [nHours, nMinutes] = strTimeValue.split(":").map(Number);
@@ -642,7 +672,7 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Request the humidity sensor over-setpoint configuration value.
      */
     public ReadHumiditySensorOverSetPoint(): void {
         this.AddFunctionCode(FunctionType.Read);
@@ -650,7 +680,7 @@ export class OxxifyProtocol {
     }
 
     /**
-     *
+     * Request the analog voltage sensor over-setpoint configuration value.
      */
     public ReadAnalogVoltageSensorOverSetPoint(): void {
         this.AddFunctionCode(FunctionType.Read);
@@ -660,14 +690,17 @@ export class OxxifyProtocol {
     //////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
-     *
+     * The currently constructed protocol packet buffer (only the written portion).
+     * @returns Buffer containing the frame ready to be sent
      */
     public get ProtocolPacket(): Buffer {
         return Buffer.from(this.internalBuffer.subarray(0, this.nWriteIndex));
     }
 
     /**
-     *
+     * Parse a complete response frame from the fan and return structured parsed data.
+     * @param dataBytes Raw buffer bytes received from the fan
+     * @returns ParsedData containing fan id, status and extracted datapoints
      */
     public ParseResponseData(dataBytes: Buffer): ParsedData {
         dataBytes = this.PreprocessData(dataBytes);
