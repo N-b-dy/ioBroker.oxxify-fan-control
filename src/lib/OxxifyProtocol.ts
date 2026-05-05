@@ -144,6 +144,9 @@ export class OxxifyProtocol {
 
     //////////////////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * Adds a request to read the current fan on/off state.
+     */
     public ReadFanState(): void {
         this.AddFunctionCode(FunctionType.Read);
         this.AddParameter(ParameterType.FanState);
@@ -573,6 +576,12 @@ export class OxxifyProtocol {
         return result;
     }
 
+    /**
+     * Preprocess raw incoming buffer to trim any preceding data before the second frame marker.
+     * The protocol uses 0xFD 0xFD markers; this returns the buffer starting at the second marker.
+     * @param dataBytes Raw buffer received from the socket
+     * @returns Trimmed buffer starting at the second marker or the original buffer if markers not found
+     */
     private PreprocessData(dataBytes: Buffer): Buffer {
         const marker = Buffer.from([0xfd, 0xfd]);
 
@@ -592,6 +601,12 @@ export class OxxifyProtocol {
         return dataBytes.subarray(0, second);
     }
 
+    /**
+     * Parse a single parameter block from a response frame and append any parsed datapoint to receivedData.
+     * @param data Buffer at the current read position (starts with parameter metadata)
+     * @param receivedData Array to push parsed IoBrokerDataPoint instances into
+     * @returns Number of bytes consumed for this parameter (to advance the read index)
+     */
     private ParseData(data: Buffer, receivedData: IoBrokerDataPoint[]): number {
         let nIndex = 0;
         let nCurrentReadParameterSize = 1;
@@ -671,6 +686,11 @@ export class OxxifyProtocol {
 
     //#endregion
 
+    /**
+     * Validate basic protocol structure of a received buffer (header, version, id size and checksum).
+     * @param dataBuffer The received buffer to validate
+     * @returns ParsingStatus.Ok when valid or the specific error status otherwise
+     */
     private CheckProtocol(dataBuffer: Buffer): ParsingStatus {
         if (dataBuffer.at(0) != 0xfd && dataBuffer.at(1) != 0xfd) {
             return ParsingStatus.WrongHeader;
@@ -694,6 +714,12 @@ export class OxxifyProtocol {
         return ParsingStatus.Ok;
     }
 
+    /**
+     * Add or switch the current function code in the outgoing frame.
+     * The protocol expects a function code byte before parameters; when changing function type a separator (0xFC)
+     * is written to the buffer. Duplicate insertion is avoided when the same function is already set.
+     * @param eNextFunction Next function type to set
+     */
     private AddFunctionCode(eNextFunction: FunctionType): void {
         if (this.bIsFirstFunction) {
             this.bIsFirstFunction = false;
@@ -776,6 +802,11 @@ export class OxxifyProtocol {
         return true;
     }
 
+    /**
+     * Calculate a 16-bit checksum by summing all bytes.
+     * @param bytes Array of bytes to include in the checksum
+     * @returns 16-bit checksum value
+     */
     private CalculateChecksum(bytes: Uint8Array): number {
         let checksum = 0;
 
@@ -786,11 +817,21 @@ export class OxxifyProtocol {
         return checksum & 0xffff;
     }
 
+    /**
+     * Parse firmware version and date bytes into a readable string.
+     * @param bytes Buffer containing firmware/version bytes
+     * @returns Formatted string like "v<major>.<minor> - <day>.<month>.<year>"
+     */
     private ParseFirmware(bytes: Buffer): ioBroker.StateValue {
         const nYear = (bytes.at(4) ?? 0) + ((bytes.at(5) ?? 0) << 8);
         return `v${bytes.at(0)}.${bytes.at(1)} - ${bytes.at(2)}.${bytes.at(3)}.${nYear}`;
     }
 
+    /**
+     * Parse a boolean value from a single byte.
+     * @param byte Buffer containing the boolean byte (0 = false, 1 = true)
+     * @returns boolean or null if unknown
+     */
     private ParseBool(byte: Buffer): ioBroker.StateValue {
         switch (byte.at(0) ?? 255) {
             case 0:
@@ -804,14 +845,29 @@ export class OxxifyProtocol {
         return null;
     }
 
+    /**
+     * Parse a single byte buffer into an ioBroker state value (number).
+     * @param byte Buffer containing a single byte
+     * @returns The numeric value of the byte or null when not available
+     */
     private ParseByteNumber(byte: Buffer): ioBroker.StateValue {
         return byte.at(0) ?? null;
     }
 
+    /**
+     * Parse a two-byte buffer (word) into an ioBroker state value (number).
+     * @param bytes Buffer containing two bytes (little-endian)
+     * @returns The numeric value represented by the two bytes
+     */
     private ParseWordNumber(bytes: Buffer): ioBroker.StateValue {
         return (bytes.at(0) ?? 0) | ((bytes.at(1) ?? 0) << 8);
     }
 
+    /**
+     * Parse a timer mode byte into a string representation.
+     * @param byte Buffer containing the timer mode byte
+     * @returns One of: "off", "nightMode", "partyMode" or null when unknown
+     */
     private ParseTimerMode(byte: Buffer): ioBroker.StateValue {
         switch (byte.at(0) ?? 255) {
             case 0:
@@ -824,6 +880,11 @@ export class OxxifyProtocol {
         return null;
     }
 
+    /**
+     * Convert a timer mode string to its numeric enum value.
+     * @param strEnum The timer mode string ("off", "nightMode", "partyMode")
+     * @returns Numeric representation of the timer mode
+     */
     private ParseTimerModeEnum(strEnum: string): number {
         switch (strEnum) {
             case "off":
@@ -836,6 +897,11 @@ export class OxxifyProtocol {
         return 0;
     }
 
+    /**
+     * Parse the fan speed mode byte into a string representation.
+     * @param byte Buffer containing the fan speed mode byte
+     * @returns A string like "ventilationLevel1".."ventilationLevel3" or "ventilationLevelManual"
+     */
     private ParseFanSpeedMode(byte: Buffer): ioBroker.StateValue {
         switch (byte.at(0) ?? 255) {
             case 1:
@@ -850,6 +916,11 @@ export class OxxifyProtocol {
         return null;
     }
 
+    /**
+     * Convert a fan speed mode string into its numeric enum value.
+     * @param strEnum One of the fan speed strings.
+     * @returns Numeric value used by the protocol for the given speed mode
+     */
     private ParseFanSpeedModeEnum(strEnum: string): number {
         switch (strEnum) {
             case "ventilationLevel1":
@@ -864,6 +935,11 @@ export class OxxifyProtocol {
         return 1;
     }
 
+    /**
+     * Convert a small time buffer [sec, min, hour] into a HH:MM:SS string.
+     * @param bytes Buffer with at least 3 bytes representing seconds, minutes and hours
+     * @returns Time formatted as "HH:MM:SS"
+     */
     private ParseTimeSmallToLarge(bytes: Buffer): ioBroker.StateValue {
         return `${bytes.at(2)?.toString().padStart(2, "0")}:${bytes
             .at(1)
@@ -871,6 +947,12 @@ export class OxxifyProtocol {
             .padStart(2, "0")}:${bytes.at(0)?.toString().padStart(2, "0")}`;
     }
 
+    /**
+     * Parse RTC date bytes into a human readable string.
+     * Expected format in buffer: [day, weekday, month, year]
+     * @param bytes Buffer with date bytes
+     * @returns Formatted date string like "DD.MM.YY (weekday)"
+     */
     private ParseRtcDate(bytes: Buffer): ioBroker.StateValue {
         return `${bytes.at(0)?.toString().padStart(2, "0")}.${bytes.at(2)?.toString().padStart(2, "0")}.${bytes
             .at(3)
@@ -878,6 +960,11 @@ export class OxxifyProtocol {
             .padStart(2, "0")} (${bytes.at(1)} day of the week)`;
     }
 
+    /**
+     * Parse operating time bytes into a formatted string.
+     * @param bytes Buffer where bytes represent [seconds, minutes, hours_low, hours_high]
+     * @returns Formatted string like "HH:MM:SS" where hours may be >255
+     */
     private ParseOperatingTime(bytes: Buffer): ioBroker.StateValue {
         return `${(bytes.at(2) ?? 0) | ((bytes.at(3) ?? 0) << 8)}:${bytes
             .at(1)
@@ -885,6 +972,11 @@ export class OxxifyProtocol {
             .padStart(2, "0")}:${bytes.at(0)?.toString().padStart(2, "0")}`;
     }
 
+    /**
+     * Parse alarm/warning state from a byte and return a human readable string.
+     * @param byte Buffer containing the alarm state byte
+     * @returns String describing the alarm state or null if unknown
+     */
     private ParseAlarmWarningState(byte: Buffer): ioBroker.StateValue {
         switch (byte.at(0) ?? 255) {
             case 0:
@@ -897,6 +989,11 @@ export class OxxifyProtocol {
         return null;
     }
 
+    /**
+     * Parse the WiFi operating mode byte into a human readable string.
+     * @param byte Buffer containing the wifi mode byte
+     * @returns "1 - Client" or "2 - Access Point" or null when unknown
+     */
     private ParseWifiMode(byte: Buffer): ioBroker.StateValue {
         switch (byte.at(0) ?? 255) {
             case 1:
@@ -907,10 +1004,20 @@ export class OxxifyProtocol {
         return null;
     }
 
+    /**
+     * Parse a text buffer into a string.
+     * @param bytes Buffer containing text data
+     * @returns Decoded string
+     */
     private ParseText(bytes: Buffer): ioBroker.StateValue {
         return bytes.toString();
     }
 
+    /**
+     * Parse WiFi encryption mode byte into a human readable description.
+     * @param byte Buffer containing the encryption mode byte
+     * @returns Description string or null when unknown
+     */
     private ParseWifiEncryptionMode(byte: Buffer): ioBroker.StateValue {
         switch (byte.at(0) ?? 255) {
             case 48:
@@ -925,6 +1032,11 @@ export class OxxifyProtocol {
         return null;
     }
 
+    /**
+     * Parse WiFi IP mode byte into a human readable string.
+     * @param byte Buffer containing the IP mode byte
+     * @returns "0 - Static IP" or "1 - DHCP" or null when unknown
+     */
     private ParseWifiIpMode(byte: Buffer): ioBroker.StateValue {
         switch (byte.at(0) ?? 255) {
             case 0:
@@ -935,10 +1047,20 @@ export class OxxifyProtocol {
         return null;
     }
 
+    /**
+     * Parse 4 bytes into an IPv4 dotted string.
+     * @param bytes Buffer with 4 bytes for IPv4
+     * @returns IPv4 address string
+     */
     private ParseIpV4Value(bytes: Buffer): ioBroker.StateValue {
         return `${bytes.at(0)}.${bytes.at(1)}.${bytes.at(2)}.${bytes.at(3)}`;
     }
 
+    /**
+     * Parse the operating mode byte into a descriptive string.
+     * @param byte Buffer containing the operating mode byte
+     * @returns "ventilation", "heatRecovery", "supplyAir" or null when unknown
+     */
     private ParseOperatingMode(byte: Buffer): ioBroker.StateValue {
         switch (byte.at(0) ?? 255) {
             case 0:
@@ -951,6 +1073,11 @@ export class OxxifyProtocol {
         return null;
     }
 
+    /**
+     * Convert an operating mode string into its numeric protocol value.
+     * @param strEnum One of the operating mode strings
+     * @returns Numeric value used by the protocol
+     */
     private ParseOperatingModeEnum(strEnum: string): number {
         switch (strEnum) {
             case "ventilation":
@@ -963,6 +1090,11 @@ export class OxxifyProtocol {
         return 0;
     }
 
+    /**
+     * Parse the system type byte(s) to a readable description.
+     * @param bytes Buffer containing system type bytes
+     * @returns Human readable description or null if unknown
+     */
     private ParseSystemType(bytes: Buffer): ioBroker.StateValue {
         switch (bytes.at(0) ?? 255) {
             case 0x0e:
@@ -971,14 +1103,29 @@ export class OxxifyProtocol {
         return null;
     }
 
+    /**
+     * Parse hour/minute timer bytes into a HH:MM string.
+     * @param bytes Buffer where bytes[1] = hours and bytes[0] = minutes
+     * @returns Formatted string "HH:MM"
+     */
     private ParseHourMinuteTimer(bytes: Buffer): ioBroker.StateValue {
         return `${bytes.at(1)?.toString().padStart(2, "0")}:${bytes.at(0)?.toString().padStart(2, "0")}`;
     }
 
+    /**
+     * Parser that intentionally returns no value (used for parameters without readable data).
+     * @param _ Ignored buffer
+     * @returns Always null
+     */
     private ParseNothing(_: Buffer): ioBroker.StateValue {
         return null;
     }
 
+    /**
+     * Populate the internal state dictionary with metadata describing each parameter supported by the protocol.
+     * Each entry maps a ParameterType to a FanData instance describing size, identifier, read/write flags, role,
+     * type, localized names and a parser function.
+     */
     private FillstateDictionary(): void {
         this.stateDictionary.set(
             ParameterType.FanState,

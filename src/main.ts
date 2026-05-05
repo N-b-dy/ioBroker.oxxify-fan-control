@@ -353,6 +353,12 @@ export class OxxifyFanControl extends utils.Adapter {
         }
     }
 
+    /**
+     * Handle a state change coming from ioBroker and dispatch it to the appropriate protocol write call.
+     * @param strFanId The fan id parsed from the state identifier
+     * @param strStateIdentifier Full state identifier that changed
+     * @param value The new state value
+     */
     private ProcessStateChange(strFanId: string, strStateIdentifier: string, value: ioBroker.StateValue): void {
         const fanData = this.GetFanDataFromConfig(strFanId);
 
@@ -708,6 +714,10 @@ export class OxxifyFanControl extends utils.Adapter {
         }
     }
 
+    /**
+     * Verify and, if necessary, retry pending target values that were sent to fans but not yet acknowledged.
+     * Iterates the internal target-values dictionary and retriggers writes up to the configured retry limit.
+     */
     private verifyTargetValues(): void {
         this.targetValuesDictionary.forEach(
             (targetFanData: Map<Oxxify.ParameterType, IoBrokerRewriteDataPoint>, strFanId: string) => {
