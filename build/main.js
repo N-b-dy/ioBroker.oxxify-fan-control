@@ -40,6 +40,11 @@ var import_ModelData = require("./lib/ModelData");
 var Oxxify = __toESM(require("./lib/OxxifyProtocol"));
 var import_Utility = require("./lib/Utility");
 class OxxifyFanControl extends utils.Adapter {
+  /**
+   * Adapter constructor.
+   *
+   * @param options Partial adapter options passed by ioBroker runtime
+   */
   constructor(options = {}) {
     super({
       ...options,
@@ -306,6 +311,13 @@ class OxxifyFanControl extends utils.Adapter {
       this.log.info(`state ${strStateIdentifier} deleted`);
     }
   }
+  /**
+   * Handle a state change coming from ioBroker and dispatch it to the appropriate protocol write call.
+   *
+   * @param strFanId The fan id parsed from the state identifier
+   * @param strStateIdentifier Full state identifier that changed
+   * @param value The new state value
+   */
   ProcessStateChange(strFanId, strStateIdentifier, value) {
     const fanData = this.GetFanDataFromConfig(strFanId);
     if (fanData) {
@@ -592,6 +604,10 @@ class OxxifyFanControl extends utils.Adapter {
       }
     }
   }
+  /**
+   * Verify and, if necessary, retry pending target values that were sent to fans but not yet acknowledged.
+   * Iterates the internal target-values dictionary and retriggers writes up to the configured retry limit.
+   */
   verifyTargetValues() {
     this.targetValuesDictionary.forEach(
       (targetFanData, strFanId) => {

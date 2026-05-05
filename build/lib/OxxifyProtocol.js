@@ -135,10 +135,19 @@ class OxxifyProtocol {
     this.nWriteIndex++;
   }
   //////////////////////////////////////////////////////////////////////////////////////////////
+  /**
+   * Adds a request to read the current fan on/off state.
+   */
   ReadFanState() {
     this.AddFunctionCode(1 /* Read */);
     this.AddParameter(1 /* FanState */);
   }
+  /**
+   * Add a request to write the fan on/off state.
+   *
+   * @param bEnabled true to turn the fan on, false to turn it off
+   * @returns The ParameterType for FanState
+   */
   WriteFanState(bEnabled) {
     this.AddFunctionCode(3 /* WriteRead */);
     const data = Buffer.alloc(1);
@@ -150,10 +159,19 @@ class OxxifyProtocol {
     this.AddParameter(1 /* FanState */, data);
     return 1 /* FanState */;
   }
+  /**
+   * Request the current fan speed mode value from the device.
+   */
   ReadFanSpeedMode() {
     this.AddFunctionCode(1 /* Read */);
     this.AddParameter(2 /* FanSpeedMode */);
   }
+  /**
+   * Add a request to write the fan speed mode.
+   *
+   * @param strValue String representation of the fan speed mode
+   * @returns The ParameterType for FanSpeedMode
+   */
   WriteFanSpeedMode(strValue) {
     this.AddFunctionCode(3 /* WriteRead */);
     const data = Buffer.alloc(1);
@@ -162,15 +180,27 @@ class OxxifyProtocol {
     this.AddParameter(2 /* FanSpeedMode */, data);
     return 2 /* FanSpeedMode */;
   }
+  /**
+   * Request the current boost state from the device.
+   */
   ReadBoostState() {
     this.AddFunctionCode(1 /* Read */);
     this.AddParameter(6 /* BoostState */);
   }
+  /**
+   * Request both timer mode and its countdown from the device.
+   */
   ReadTimerModeValues() {
     this.AddFunctionCode(1 /* Read */);
     this.AddParameter(7 /* TimerMode */);
     this.AddParameter(11 /* TimerCountdown */);
   }
+  /**
+   * Add a request to set the timer mode.
+   *
+   * @param strValue Timer mode string (e.g., "off", "nightMode", "partyMode")
+   * @returns The ParameterType for TimerMode
+   */
   WriteTimerMode(strValue) {
     this.AddFunctionCode(3 /* WriteRead */);
     const data = Buffer.alloc(1);
@@ -178,10 +208,19 @@ class OxxifyProtocol {
     this.AddParameter(7 /* TimerMode */, data);
     return 7 /* TimerMode */;
   }
+  /**
+   * Request the current humidity sensor enabled/disabled state.
+   */
   ReadHumiditySensorState() {
     this.AddFunctionCode(1 /* Read */);
     this.AddParameter(15 /* StateHumiditySensor */);
   }
+  /**
+   * Add a request to enable/disable the humidity sensor on the fan.
+   *
+   * @param bEnabled true to enable, false to disable
+   * @returns The ParameterType for StateHumiditySensor
+   */
   WriteHumiditySensorState(bEnabled) {
     this.AddFunctionCode(3 /* WriteRead */);
     const data = Buffer.alloc(1);
@@ -193,10 +232,19 @@ class OxxifyProtocol {
     this.AddParameter(15 /* StateHumiditySensor */, data);
     return 15 /* StateHumiditySensor */;
   }
+  /**
+   * Request the current relay sensor state.
+   */
   ReadRelaisSensorState() {
     this.AddFunctionCode(1 /* Read */);
     this.AddParameter(20 /* StateRelaisSensor */);
   }
+  /**
+   * Add a request to enable/disable the relay sensor.
+   *
+   * @param bEnabled true to enable, false to disable
+   * @returns The ParameterType for StateRelaisSensor
+   */
   WriteRelaisSensorState(bEnabled) {
     this.AddFunctionCode(3 /* WriteRead */);
     const data = Buffer.alloc(1);
@@ -208,10 +256,19 @@ class OxxifyProtocol {
     this.AddParameter(20 /* StateRelaisSensor */, data);
     return 20 /* StateRelaisSensor */;
   }
+  /**
+   * Request the current analog voltage sensor enabled/disabled state.
+   */
   ReadAnalogVoltageSensorState() {
     this.AddFunctionCode(1 /* Read */);
     this.AddParameter(22 /* StateAnalogVoltageSensor */);
   }
+  /**
+   * Add a request to enable/disable the analog voltage sensor.
+   *
+   * @param bEnabled true to enable, false to disable
+   * @returns The ParameterType for StateAnalogVoltageSensor
+   */
   WriteAnalogVoltageSensorState(bEnabled) {
     this.AddFunctionCode(3 /* WriteRead */);
     const data = Buffer.alloc(1);
@@ -223,10 +280,19 @@ class OxxifyProtocol {
     this.AddParameter(22 /* StateAnalogVoltageSensor */, data);
     return 22 /* StateAnalogVoltageSensor */;
   }
+  /**
+   * Request the configured target humidity setpoint from the fan.
+   */
   ReadTargetHumidityValue() {
     this.AddFunctionCode(1 /* Read */);
     this.AddParameter(25 /* TargetHumidityValue */);
   }
+  /**
+   * Add a request to set the target humidity value.
+   *
+   * @param nValue Numeric humidity setpoint
+   * @returns The ParameterType for TargetHumidityValue
+   */
   WriteTargetHumidityValue(nValue) {
     this.AddFunctionCode(3 /* WriteRead */);
     const data = Buffer.alloc(1);
@@ -234,26 +300,47 @@ class OxxifyProtocol {
     this.AddParameter(25 /* TargetHumidityValue */, data);
     return 25 /* TargetHumidityValue */;
   }
+  /**
+   * Request the current RTC battery voltage from the fan.
+   */
   ReadRtcBattery() {
     this.AddFunctionCode(1 /* Read */);
     this.AddParameter(36 /* RtcBatteryVoltage */);
   }
+  /**
+   * Request the current humidity sensor reading from the fan.
+   */
   ReadCurrentHumidity() {
     this.AddFunctionCode(1 /* Read */);
     this.AddParameter(37 /* CurrentHumidityValue */);
   }
+  /**
+   * Request the current analog voltage reading from the fan.
+   */
   ReadCurrentAnalogVoltage() {
     this.AddFunctionCode(1 /* Read */);
     this.AddParameter(45 /* CurrentAnalogVoltageValue */);
   }
+  /**
+   * Request the current relay sensor reading from the fan.
+   */
   ReadCurrentRelaisState() {
     this.AddFunctionCode(1 /* Read */);
     this.AddParameter(50 /* CurrentRelaisValue */);
   }
+  /**
+   * Request the current manual fan speed setting.
+   */
   ReadManualFanSpeed() {
     this.AddFunctionCode(1 /* Read */);
     this.AddParameter(68 /* ManualFanSpeed */);
   }
+  /**
+   * Add a request to set the manual fan speed.
+   *
+   * @param nValue Numeric speed value
+   * @returns The ParameterType for ManualFanSpeed
+   */
   WriteManualFanSpeed(nValue) {
     this.AddFunctionCode(3 /* WriteRead */);
     const data = Buffer.alloc(1);
@@ -261,28 +348,49 @@ class OxxifyProtocol {
     this.AddParameter(68 /* ManualFanSpeed */, data);
     return 68 /* ManualFanSpeed */;
   }
+  /**
+   * Request fan #1 speed (RPM).
+   */
   ReadFan1Speed() {
     this.AddFunctionCode(1 /* Read */);
     this.AddParameter(74 /* FanSpeedFan1Rpm */);
   }
+  /**
+   * Request fan #2 speed (RPM).
+   */
   ReadFan2Speed() {
     this.AddFunctionCode(1 /* Read */);
     this.AddParameter(75 /* FanSpeedFan2Rpm */);
   }
+  /**
+   * Request the filter exchange countdown timer value.
+   */
   ReadFilterExchangeCountdown() {
     this.AddFunctionCode(1 /* Read */);
     this.AddParameter(100 /* FilterExchangeCountdown */);
   }
+  /**
+   * Add a request to reset the filter exchange countdown on the device.
+   */
   WriteResetFilterExchangeCountdown() {
     this.AddFunctionCode(3 /* WriteRead */);
     const resetByte = Buffer.alloc(1);
     resetByte[0] = 255;
     this.AddParameter(101 /* ResetFilterExchangeCountdown */, resetByte);
   }
+  /**
+   * Request the boost follow-up time value (in minutes).
+   */
   ReadBoostModeFollowUpTime() {
     this.AddFunctionCode(1 /* Read */);
     this.AddParameter(102 /* BoostModeFollowUpTime */);
   }
+  /**
+   * Add a request to set the boost follow-up time.
+   *
+   * @param nValue Number of minutes for boost follow-up
+   * @returns The ParameterType for BoostModeFollowUpTime
+   */
   WriteBoostModeFollowUpTime(nValue) {
     this.AddFunctionCode(3 /* WriteRead */);
     const data = Buffer.alloc(1);
@@ -290,11 +398,20 @@ class OxxifyProtocol {
     this.AddParameter(102 /* BoostModeFollowUpTime */, data);
     return 102 /* BoostModeFollowUpTime */;
   }
+  /**
+   * Request the current RTC date/time from the fan.
+   */
   ReadRtcDateTime() {
     this.AddFunctionCode(1 /* Read */);
     this.AddParameter(111 /* RtcTime */);
     this.AddParameter(112 /* RtcDate */);
   }
+  /**
+   * Add a request to write the RTC date/time to the fan.
+   *
+   * @param dateTime Date object to be written to the device
+   * @returns True if the constructed frame was valid, otherwise false
+   */
   WriteRtcDateTime(dateTime) {
     this.AddFunctionCode(3 /* WriteRead */);
     const rtcTime = Buffer.alloc(3);
@@ -310,10 +427,19 @@ class OxxifyProtocol {
     this.AddParameter(112 /* RtcDate */, rtcDate);
     return true;
   }
+  /**
+   * Request the current time-controlled mode setting from the fan.
+   */
   ReadTimeControlledMode() {
     this.AddFunctionCode(1 /* Read */);
     this.AddParameter(114 /* TimeControlledMode */);
   }
+  /**
+   * Add a request to enable/disable time-controlled mode.
+   *
+   * @param bEnabled true to enable, false to disable
+   * @returns The ParameterType for TimeControlledMode
+   */
   WriteTimeControlledMode(bEnabled) {
     this.AddFunctionCode(3 /* WriteRead */);
     const data = Buffer.alloc(1);
@@ -325,32 +451,53 @@ class OxxifyProtocol {
     this.AddParameter(114 /* TimeControlledMode */, data);
     return 114 /* TimeControlledMode */;
   }
+  /**
+   * Request the accumulated operating time from the fan.
+   */
   ReadOperatingTime() {
     this.AddFunctionCode(1 /* Read */);
     this.AddParameter(126 /* OperatingTime */);
   }
+  /**
+   * Request the current alarm/warning state from the device.
+   */
   ReadAlarmState() {
     this.AddFunctionCode(1 /* Read */);
     this.AddParameter(131 /* AlarmState */);
   }
+  /**
+   * Add a request to reset alarms on the fan.
+   */
   WriteResetAlarmState() {
     this.AddFunctionCode(3 /* WriteRead */);
     const resetAlarmByte = Buffer.alloc(1);
     resetAlarmByte[0] = 255;
     this.AddParameter(128 /* ResetAlarms */, resetAlarmByte);
   }
+  /**
+   * Request whether the cloud server functionality is enabled.
+   */
   ReadCloudServerEnabled() {
     this.AddFunctionCode(1 /* Read */);
     this.AddParameter(133 /* CloudServerEnabled */);
   }
+  /**
+   * Request the firmware version and build date from the fan.
+   */
   ReadFirmware() {
     this.AddFunctionCode(1 /* Read */);
     this.AddParameter(134 /* FirmwareVersionAndDate */);
   }
+  /**
+   * Request whether a filter exchange is necessary.
+   */
   ReadFilterExchangeNecessary() {
     this.AddFunctionCode(1 /* Read */);
     this.AddParameter(136 /* FilterExchangeNecessary */);
   }
+  /**
+   * Request the WiFi related configuration and status values from the fan.
+   */
   ReadWifiData() {
     this.AddFunctionCode(1 /* Read */);
     this.AddParameter(148 /* WifiOperatingMode */);
@@ -364,10 +511,19 @@ class OxxifyProtocol {
     this.AddParameter(158 /* WifiGateway */);
     this.AddParameter(163 /* CurrentWifiIp */);
   }
+  /**
+   * Request the current operating mode of the fan (ventilation/heatRecovery/supplyAir).
+   */
   ReadOperatingMode() {
     this.AddFunctionCode(1 /* Read */);
     this.AddParameter(183 /* FanOperatingMode */);
   }
+  /**
+   * Add a request to set the fan's operating mode.
+   *
+   * @param strValue Operating mode string (e.g., "ventilation", "heatRecovery", "supplyAir")
+   * @returns The ParameterType for FanOperatingMode
+   */
   WriteOperatingMode(strValue) {
     this.AddFunctionCode(3 /* WriteRead */);
     const data = Buffer.alloc(1);
@@ -375,10 +531,19 @@ class OxxifyProtocol {
     this.AddParameter(183 /* FanOperatingMode */, data);
     return 183 /* FanOperatingMode */;
   }
+  /**
+   * Request the configured target analog voltage setpoint.
+   */
   ReadTargetAnalogVoltageValue() {
     this.AddFunctionCode(1 /* Read */);
     this.AddParameter(184 /* TargetAnalogVoltageValue */);
   }
+  /**
+   * Add a request to set the target analog voltage value.
+   *
+   * @param nValue Numeric target voltage value
+   * @returns The ParameterType for TargetAnalogVoltageValue
+   */
   WriteTargetAnalogVoltageValue(nValue) {
     this.AddFunctionCode(3 /* WriteRead */);
     const data = Buffer.alloc(1);
@@ -386,14 +551,26 @@ class OxxifyProtocol {
     this.AddParameter(184 /* TargetAnalogVoltageValue */, data);
     return 184 /* TargetAnalogVoltageValue */;
   }
+  /**
+   * Request the fan hardware/type identifier.
+   */
   ReadFanType() {
     this.AddFunctionCode(1 /* Read */);
     this.AddParameter(185 /* FanType */);
   }
+  /**
+   * Request the night mode timer setpoint value.
+   */
   ReadNightModeTimerSetPoint() {
     this.AddFunctionCode(1 /* Read */);
     this.AddParameter(770 /* NightModeTimerSetpoint */);
   }
+  /**
+   * Add a request to set the night mode timer setpoint.
+   *
+   * @param strTimeValue Time string in format "HH:MM"
+   * @returns The ParameterType for NightModeTimerSetpoint
+   */
   WriteNightModeTimerSetPoint(strTimeValue) {
     const [nHours, nMinutes] = strTimeValue.split(":").map(Number);
     const data = Buffer.alloc(2);
@@ -403,10 +580,19 @@ class OxxifyProtocol {
     this.AddParameter(770 /* NightModeTimerSetpoint */, data);
     return 770 /* NightModeTimerSetpoint */;
   }
+  /**
+   * Request the party mode timer setpoint value.
+   */
   ReadPartyModeTimerSetPoint() {
     this.AddFunctionCode(1 /* Read */);
     this.AddParameter(771 /* PartyModeTimerSetPoint */);
   }
+  /**
+   * Add a request to set the party mode timer setpoint.
+   *
+   * @param strTimeValue Time string in format "HH:MM"
+   * @returns The ParameterType for PartyModeTimerSetPoint
+   */
   WritePartyModeTimerSetPoint(strTimeValue) {
     const [nHours, nMinutes] = strTimeValue.split(":").map(Number);
     const data = Buffer.alloc(2);
@@ -416,18 +602,35 @@ class OxxifyProtocol {
     this.AddParameter(771 /* PartyModeTimerSetPoint */, data);
     return 771 /* PartyModeTimerSetPoint */;
   }
+  /**
+   * Request the humidity sensor over-setpoint configuration value.
+   */
   ReadHumiditySensorOverSetPoint() {
     this.AddFunctionCode(1 /* Read */);
     this.AddParameter(772 /* HumiditySensorOverSetPoint */);
   }
+  /**
+   * Request the analog voltage sensor over-setpoint configuration value.
+   */
   ReadAnalogVoltageSensorOverSetPoint() {
     this.AddFunctionCode(1 /* Read */);
     this.AddParameter(773 /* AnalogVoltageSensorOverSetPoint */);
   }
   //////////////////////////////////////////////////////////////////////////////////////////////
+  /**
+   * The currently constructed protocol packet buffer (only the written portion).
+   *
+   * @returns Buffer containing the frame ready to be sent
+   */
   get ProtocolPacket() {
     return Buffer.from(this.internalBuffer.subarray(0, this.nWriteIndex));
   }
+  /**
+   * Parse a complete response frame from the fan and return structured parsed data.
+   *
+   * @param dataBytes Raw buffer bytes received from the fan
+   * @returns ParsedData containing fan id, status and extracted datapoints
+   */
   ParseResponseData(dataBytes) {
     var _a;
     dataBytes = this.PreprocessData(dataBytes);
@@ -463,6 +666,13 @@ class OxxifyProtocol {
     result.status = import_ModelData.ParsingStatus.Undefined;
     return result;
   }
+  /**
+   * Preprocess raw incoming buffer to trim any preceding data before the second frame marker.
+   * The protocol uses 0xFD 0xFD markers; this returns the buffer starting at the second marker.
+   *
+   * @param dataBytes Raw buffer received from the socket
+   * @returns Trimmed buffer starting at the second marker or the original buffer if markers not found
+   */
   PreprocessData(dataBytes) {
     const marker = Buffer.from([253, 253]);
     const first = dataBytes.indexOf(marker);
@@ -475,6 +685,13 @@ class OxxifyProtocol {
     }
     return dataBytes.subarray(0, second);
   }
+  /**
+   * Parse a single parameter block from a response frame and append any parsed datapoint to receivedData.
+   *
+   * @param data Buffer at the current read position (starts with parameter metadata)
+   * @param receivedData Array to push parsed IoBrokerDataPoint instances into
+   * @returns Number of bytes consumed for this parameter (to advance the read index)
+   */
   ParseData(data, receivedData) {
     var _a, _b, _c, _d, _e;
     let nIndex = 0;
@@ -533,6 +750,12 @@ class OxxifyProtocol {
   // Dictionary with all available parametetrs and the index word as key (High and low byte)
   stateDictionary = /* @__PURE__ */ new Map();
   //#endregion
+  /**
+   * Validate basic protocol structure of a received buffer (header, version, id size and checksum).
+   *
+   * @param dataBuffer The received buffer to validate
+   * @returns ParsingStatus.Ok when valid or the specific error status otherwise
+   */
   CheckProtocol(dataBuffer) {
     if (dataBuffer.at(0) != 253 && dataBuffer.at(1) != 253) {
       return import_ModelData.ParsingStatus.WrongHeader;
@@ -550,6 +773,13 @@ class OxxifyProtocol {
     }
     return import_ModelData.ParsingStatus.Ok;
   }
+  /**
+   * Add or switch the current function code in the outgoing frame.
+   * The protocol expects a function code byte before parameters; when changing function type a separator (0xFC)
+   * is written to the buffer. Duplicate insertion is avoided when the same function is already set.
+   *
+   * @param eNextFunction Next function type to set
+   */
   AddFunctionCode(eNextFunction) {
     if (this.bIsFirstFunction) {
       this.bIsFirstFunction = false;
@@ -609,6 +839,12 @@ class OxxifyProtocol {
     }
     return true;
   }
+  /**
+   * Calculate a 16-bit checksum by summing all bytes.
+   *
+   * @param bytes Array of bytes to include in the checksum
+   * @returns 16-bit checksum value
+   */
   CalculateChecksum(bytes) {
     let checksum = 0;
     for (let i = 0; i < bytes.length; i++) {
@@ -616,11 +852,23 @@ class OxxifyProtocol {
     }
     return checksum & 65535;
   }
+  /**
+   * Parse firmware version and date bytes into a readable string.
+   *
+   * @param bytes Buffer containing firmware/version bytes
+   * @returns Formatted string like "v<major>.<minor> - <day>.<month>.<year>"
+   */
   ParseFirmware(bytes) {
     var _a, _b;
     const nYear = ((_a = bytes.at(4)) != null ? _a : 0) + (((_b = bytes.at(5)) != null ? _b : 0) << 8);
     return `v${bytes.at(0)}.${bytes.at(1)} - ${bytes.at(2)}.${bytes.at(3)}.${nYear}`;
   }
+  /**
+   * Parse a boolean value from a single byte.
+   *
+   * @param byte Buffer containing the boolean byte (0 = false, 1 = true)
+   * @returns boolean or null if unknown
+   */
   ParseBool(byte) {
     var _a;
     switch ((_a = byte.at(0)) != null ? _a : 255) {
@@ -633,14 +881,32 @@ class OxxifyProtocol {
     }
     return null;
   }
+  /**
+   * Parse a single byte buffer into an ioBroker state value (number).
+   *
+   * @param byte Buffer containing a single byte
+   * @returns The numeric value of the byte or null when not available
+   */
   ParseByteNumber(byte) {
     var _a;
     return (_a = byte.at(0)) != null ? _a : null;
   }
+  /**
+   * Parse a two-byte buffer (word) into an ioBroker state value (number).
+   *
+   * @param bytes Buffer containing two bytes (little-endian)
+   * @returns The numeric value represented by the two bytes
+   */
   ParseWordNumber(bytes) {
     var _a, _b;
     return ((_a = bytes.at(0)) != null ? _a : 0) | ((_b = bytes.at(1)) != null ? _b : 0) << 8;
   }
+  /**
+   * Parse a timer mode byte into a string representation.
+   *
+   * @param byte Buffer containing the timer mode byte
+   * @returns One of: "off", "nightMode", "partyMode" or null when unknown
+   */
   ParseTimerMode(byte) {
     var _a;
     switch ((_a = byte.at(0)) != null ? _a : 255) {
@@ -653,6 +919,12 @@ class OxxifyProtocol {
     }
     return null;
   }
+  /**
+   * Convert a timer mode string to its numeric enum value.
+   *
+   * @param strEnum The timer mode string ("off", "nightMode", "partyMode")
+   * @returns Numeric representation of the timer mode
+   */
   ParseTimerModeEnum(strEnum) {
     switch (strEnum) {
       case "off":
@@ -664,6 +936,12 @@ class OxxifyProtocol {
     }
     return 0;
   }
+  /**
+   * Parse the fan speed mode byte into a string representation.
+   *
+   * @param byte Buffer containing the fan speed mode byte
+   * @returns A string like "ventilationLevel1".."ventilationLevel3" or "ventilationLevelManual"
+   */
   ParseFanSpeedMode(byte) {
     var _a;
     switch ((_a = byte.at(0)) != null ? _a : 255) {
@@ -678,6 +956,12 @@ class OxxifyProtocol {
     }
     return null;
   }
+  /**
+   * Convert a fan speed mode string into its numeric enum value.
+   *
+   * @param strEnum One of the fan speed strings.
+   * @returns Numeric value used by the protocol for the given speed mode
+   */
   ParseFanSpeedModeEnum(strEnum) {
     switch (strEnum) {
       case "ventilationLevel1":
@@ -691,18 +975,43 @@ class OxxifyProtocol {
     }
     return 1;
   }
+  /**
+   * Convert a small time buffer [sec, min, hour] into a HH:MM:SS string.
+   *
+   * @param bytes Buffer with at least 3 bytes representing seconds, minutes and hours
+   * @returns Time formatted as "HH:MM:SS"
+   */
   ParseTimeSmallToLarge(bytes) {
     var _a, _b, _c;
     return `${(_a = bytes.at(2)) == null ? void 0 : _a.toString().padStart(2, "0")}:${(_b = bytes.at(1)) == null ? void 0 : _b.toString().padStart(2, "0")}:${(_c = bytes.at(0)) == null ? void 0 : _c.toString().padStart(2, "0")}`;
   }
+  /**
+   * Parse RTC date bytes into a human readable string.
+   * Expected format in buffer: [day, weekday, month, year]
+   *
+   * @param bytes Buffer with date bytes
+   * @returns Formatted date string like "DD.MM.YY (weekday)"
+   */
   ParseRtcDate(bytes) {
     var _a, _b, _c;
     return `${(_a = bytes.at(0)) == null ? void 0 : _a.toString().padStart(2, "0")}.${(_b = bytes.at(2)) == null ? void 0 : _b.toString().padStart(2, "0")}.${(_c = bytes.at(3)) == null ? void 0 : _c.toString().padStart(2, "0")} (${bytes.at(1)} day of the week)`;
   }
+  /**
+   * Parse operating time bytes into a formatted string.
+   *
+   * @param bytes Buffer where bytes represent [seconds, minutes, hours_low, hours_high]
+   * @returns Formatted string like "HH:MM:SS" where hours may be >255
+   */
   ParseOperatingTime(bytes) {
     var _a, _b, _c, _d;
     return `${((_a = bytes.at(2)) != null ? _a : 0) | ((_b = bytes.at(3)) != null ? _b : 0) << 8}:${(_c = bytes.at(1)) == null ? void 0 : _c.toString().padStart(2, "0")}:${(_d = bytes.at(0)) == null ? void 0 : _d.toString().padStart(2, "0")}`;
   }
+  /**
+   * Parse alarm/warning state from a byte and return a human readable string.
+   *
+   * @param byte Buffer containing the alarm state byte
+   * @returns String describing the alarm state or null if unknown
+   */
   ParseAlarmWarningState(byte) {
     var _a;
     switch ((_a = byte.at(0)) != null ? _a : 255) {
@@ -715,6 +1024,12 @@ class OxxifyProtocol {
     }
     return null;
   }
+  /**
+   * Parse the WiFi operating mode byte into a human readable string.
+   *
+   * @param byte Buffer containing the wifi mode byte
+   * @returns "1 - Client" or "2 - Access Point" or null when unknown
+   */
   ParseWifiMode(byte) {
     var _a;
     switch ((_a = byte.at(0)) != null ? _a : 255) {
@@ -725,9 +1040,21 @@ class OxxifyProtocol {
     }
     return null;
   }
+  /**
+   * Parse a text buffer into a string.
+   *
+   * @param bytes Buffer containing text data
+   * @returns Decoded string
+   */
   ParseText(bytes) {
     return bytes.toString();
   }
+  /**
+   * Parse WiFi encryption mode byte into a human readable description.
+   *
+   * @param byte Buffer containing the encryption mode byte
+   * @returns Description string or null when unknown
+   */
   ParseWifiEncryptionMode(byte) {
     var _a;
     switch ((_a = byte.at(0)) != null ? _a : 255) {
@@ -742,6 +1069,12 @@ class OxxifyProtocol {
     }
     return null;
   }
+  /**
+   * Parse WiFi IP mode byte into a human readable string.
+   *
+   * @param byte Buffer containing the IP mode byte
+   * @returns "0 - Static IP" or "1 - DHCP" or null when unknown
+   */
   ParseWifiIpMode(byte) {
     var _a;
     switch ((_a = byte.at(0)) != null ? _a : 255) {
@@ -752,9 +1085,21 @@ class OxxifyProtocol {
     }
     return null;
   }
+  /**
+   * Parse 4 bytes into an IPv4 dotted string.
+   *
+   * @param bytes Buffer with 4 bytes for IPv4
+   * @returns IPv4 address string
+   */
   ParseIpV4Value(bytes) {
     return `${bytes.at(0)}.${bytes.at(1)}.${bytes.at(2)}.${bytes.at(3)}`;
   }
+  /**
+   * Parse the operating mode byte into a descriptive string.
+   *
+   * @param byte Buffer containing the operating mode byte
+   * @returns "ventilation", "heatRecovery", "supplyAir" or null when unknown
+   */
   ParseOperatingMode(byte) {
     var _a;
     switch ((_a = byte.at(0)) != null ? _a : 255) {
@@ -767,6 +1112,12 @@ class OxxifyProtocol {
     }
     return null;
   }
+  /**
+   * Convert an operating mode string into its numeric protocol value.
+   *
+   * @param strEnum One of the operating mode strings
+   * @returns Numeric value used by the protocol
+   */
   ParseOperatingModeEnum(strEnum) {
     switch (strEnum) {
       case "ventilation":
@@ -778,6 +1129,12 @@ class OxxifyProtocol {
     }
     return 0;
   }
+  /**
+   * Parse the system type byte(s) to a readable description.
+   *
+   * @param bytes Buffer containing system type bytes
+   * @returns Human readable description or null if unknown
+   */
   ParseSystemType(bytes) {
     var _a;
     switch ((_a = bytes.at(0)) != null ? _a : 255) {
@@ -786,13 +1143,30 @@ class OxxifyProtocol {
     }
     return null;
   }
+  /**
+   * Parse hour/minute timer bytes into a HH:MM string.
+   *
+   * @param bytes Buffer where bytes[1] = hours and bytes[0] = minutes
+   * @returns Formatted string "HH:MM"
+   */
   ParseHourMinuteTimer(bytes) {
     var _a, _b;
     return `${(_a = bytes.at(1)) == null ? void 0 : _a.toString().padStart(2, "0")}:${(_b = bytes.at(0)) == null ? void 0 : _b.toString().padStart(2, "0")}`;
   }
+  /**
+   * Parser that intentionally returns no value (used for parameters without readable data).
+   *
+   * @param _ Ignored buffer
+   * @returns Always null
+   */
   ParseNothing(_) {
     return null;
   }
+  /**
+   * Populate the internal state dictionary with metadata describing each parameter supported by the protocol.
+   * Each entry maps a ParameterType to a FanData instance describing size, identifier, read/write flags, role,
+   * type, localized names and a parser function.
+   */
   FillstateDictionary() {
     this.stateDictionary.set(
       1 /* FanState */,

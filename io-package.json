@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "oxxify-fan-control",
-    "version": "0.0.13",
+    "version": "0.0.14",
     "news": {
+      "0.0.14": {
+        "en": "Added missing JSDoc comments\nAdapter requires node.js >= 22 now\nWarning [W5039] fixed",
+        "de": "Hinzugefügt fehlende JSDoc Kommentare\nAdapter benötigt node.js >= 22 jetzt\nWarnung [W5039] fest",
+        "ru": "Отсутствующие комментарии JSDoc\nАдаптер требует node.js >= 22 сейчас\nПредупреждение [W5039] исправлено",
+        "pt": "Adicionados os comentários em falta do JSDoc\nAdaptador requer nod.js >= 22 agora\nAviso [W5039] fixado",
+        "nl": "Toegevoegd ontbrekende JSDoc opmerkingen\nVoor de adapter zijn node.js < 22 nu nodig\nWaarschuwing [W5039] vast",
+        "fr": "Ajouté les commentaires manquants de JSDoc\nAdaptateur nécessite node.js >= 22 maintenant\nAvertissement [W5039] fixé",
+        "it": "Aggiunto mancante JSDoc commenti\nAdattatore richiede node.js >= 22 ora\nAvviso [W5039] fisso",
+        "es": "Comentarios adicionales faltantes de JSDoc\nAdaptador requiere node.js ю= 22 ahora\nAdvertencia [W5039] fija",
+        "pl": "Dodano brakujące komentarze JSDoc\nAdapter wymaga node.js > = 22\nOstrzeżenie [W5039] stałe",
+        "uk": "Додано відсутні коментарі JSDoc\nАдаптер вимагає node.js >= 22 тепер\nПопередження [W5039] фіксована",
+        "zh-cn": "缺少的 JSDoc 注释\n适配器需要节点.js 现在22\n警告 [W5039] 固定"
+      },
       "0.0.13": {
         "en": "Auto PRs merged\nFixing other deployment issues...",
         "de": "Auto PRs zusammengeführt\nAndere Bereitstellungsprobleme beheben...",
