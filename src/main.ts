@@ -29,10 +29,8 @@ import { Utility } from "./lib/Utility";
  */
 export class OxxifyFanControl extends utils.Adapter {
     /**
-     *
-     */
-    /**
      * Adapter constructor.
+     *
      * @param options Partial adapter options passed by ioBroker runtime
      */
     public constructor(options: Partial<utils.AdapterOptions> = {}) {

@@ -154,6 +154,7 @@ export class OxxifyProtocol {
 
     /**
      * Add a request to write the fan on/off state.
+     *
      * @param bEnabled true to turn the fan on, false to turn it off
      * @returns The ParameterType for FanState
      */
@@ -181,6 +182,7 @@ export class OxxifyProtocol {
 
     /**
      * Add a request to write the fan speed mode.
+     *
      * @param strValue String representation of the fan speed mode
      * @returns The ParameterType for FanSpeedMode
      */
@@ -212,6 +214,7 @@ export class OxxifyProtocol {
 
     /**
      * Add a request to set the timer mode.
+     *
      * @param strValue Timer mode string (e.g., "off", "nightMode", "partyMode")
      * @returns The ParameterType for TimerMode
      */
@@ -233,6 +236,7 @@ export class OxxifyProtocol {
 
     /**
      * Add a request to enable/disable the humidity sensor on the fan.
+     *
      * @param bEnabled true to enable, false to disable
      * @returns The ParameterType for StateHumiditySensor
      */
@@ -260,6 +264,7 @@ export class OxxifyProtocol {
 
     /**
      * Add a request to enable/disable the relay sensor.
+     *
      * @param bEnabled true to enable, false to disable
      * @returns The ParameterType for StateRelaisSensor
      */
@@ -287,6 +292,7 @@ export class OxxifyProtocol {
 
     /**
      * Add a request to enable/disable the analog voltage sensor.
+     *
      * @param bEnabled true to enable, false to disable
      * @returns The ParameterType for StateAnalogVoltageSensor
      */
@@ -314,6 +320,7 @@ export class OxxifyProtocol {
 
     /**
      * Add a request to set the target humidity value.
+     *
      * @param nValue Numeric humidity setpoint
      * @returns The ParameterType for TargetHumidityValue
      */
@@ -368,6 +375,7 @@ export class OxxifyProtocol {
 
     /**
      * Add a request to set the manual fan speed.
+     *
      * @param nValue Numeric speed value
      * @returns The ParameterType for ManualFanSpeed
      */
@@ -425,6 +433,7 @@ export class OxxifyProtocol {
 
     /**
      * Add a request to set the boost follow-up time.
+     *
      * @param nValue Number of minutes for boost follow-up
      * @returns The ParameterType for BoostModeFollowUpTime
      */
@@ -448,6 +457,7 @@ export class OxxifyProtocol {
 
     /**
      * Add a request to write the RTC date/time to the fan.
+     *
      * @param dateTime Date object to be written to the device
      * @returns True if the constructed frame was valid, otherwise false
      */
@@ -482,6 +492,7 @@ export class OxxifyProtocol {
 
     /**
      * Add a request to enable/disable time-controlled mode.
+     *
      * @param bEnabled true to enable, false to disable
      * @returns The ParameterType for TimeControlledMode
      */
@@ -577,6 +588,7 @@ export class OxxifyProtocol {
 
     /**
      * Add a request to set the fan's operating mode.
+     *
      * @param strValue Operating mode string (e.g., "ventilation", "heatRecovery", "supplyAir")
      * @returns The ParameterType for FanOperatingMode
      */
@@ -599,6 +611,7 @@ export class OxxifyProtocol {
 
     /**
      * Add a request to set the target analog voltage value.
+     *
      * @param nValue Numeric target voltage value
      * @returns The ParameterType for TargetAnalogVoltageValue
      */
@@ -629,6 +642,7 @@ export class OxxifyProtocol {
 
     /**
      * Add a request to set the night mode timer setpoint.
+     *
      * @param strTimeValue Time string in format "HH:MM"
      * @returns The ParameterType for NightModeTimerSetpoint
      */
@@ -655,6 +669,7 @@ export class OxxifyProtocol {
 
     /**
      * Add a request to set the party mode timer setpoint.
+     *
      * @param strTimeValue Time string in format "HH:MM"
      * @returns The ParameterType for PartyModeTimerSetPoint
      */
@@ -691,6 +706,7 @@ export class OxxifyProtocol {
 
     /**
      * The currently constructed protocol packet buffer (only the written portion).
+     *
      * @returns Buffer containing the frame ready to be sent
      */
     public get ProtocolPacket(): Buffer {
@@ -699,6 +715,7 @@ export class OxxifyProtocol {
 
     /**
      * Parse a complete response frame from the fan and return structured parsed data.
+     *
      * @param dataBytes Raw buffer bytes received from the fan
      * @returns ParsedData containing fan id, status and extracted datapoints
      */
