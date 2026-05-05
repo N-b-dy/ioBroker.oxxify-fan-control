@@ -58,7 +58,6 @@ This channel contains system data about the hardware and firmware as well as run
 ## ToDos
 
 - Implementing more tests
-- Improve documentation
 - Implement missing data points (like time schedule, writing of network data & cloud control)
 
 <!--
@@ -67,6 +66,9 @@ This channel contains system data about the hardware and firmware as well as run
 -->
 
 ## Changelog
+
+### **WORK IN PROGRESS**
+
 ### 0.0.14 (2026-05-05)
 
 - Added missing JSDoc comments
