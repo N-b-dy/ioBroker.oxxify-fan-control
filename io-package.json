@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "oxxify-fan-control",
-    "version": "0.0.14",
+    "version": "0.0.15",
     "news": {
+      "0.0.15": {
+        "en": "Security vulnerabilities fixed (#141)",
+        "de": "Sicherheitslücken behoben (#141)",
+        "ru": "Уязвимости безопасности (#141)",
+        "pt": "Vulnerabilidades de segurança fixas (# 141)",
+        "nl": "Veiligheidskwetsbaarheden vastgesteld (#141)",
+        "fr": "Vulnérabilités de sécurité corrigées (#141)",
+        "it": "Vulnerabilità di sicurezza fissate (#141)",
+        "es": "Vulnerabilidades de seguridad fijas (#141)",
+        "pl": "Ustabilizowane podatności na zagrożenia (# 141)",
+        "uk": "Безпека вразливостей фіксована (#141)",
+        "zh-cn": "固定的安全弱点(# 141)"
+      },
       "0.0.14": {
         "en": "Added missing JSDoc comments\nAdapter requires node.js >= 22 now\nWarning [W5039] fixed",
         "de": "Hinzugefügt fehlende JSDoc Kommentare\nAdapter benötigt node.js >= 22 jetzt\nWarnung [W5039] fest",

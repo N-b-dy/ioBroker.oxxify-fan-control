@@ -66,8 +66,7 @@ This channel contains system data about the hardware and firmware as well as run
 -->
 
 ## Changelog
-
-### **WORK IN PROGRESS**
+### 0.0.15 (2026-05-05)
 
 - Security vulnerabilities fixed (#141)
 
@@ -90,13 +89,6 @@ This channel contains system data about the hardware and firmware as well as run
 
 - TypeScript updated to 6.0
 - Some dependency work
-
-### 0.0.10 (2026-03-15)
-
-- Auto PRs merged
-- Some dependency work
-- Tests extended
-- Copyright year updated
 
 ## License
 

@@ -1,4 +1,11 @@
 # Older changes
+## 0.0.10 (2026-03-15)
+
+- Auto PRs merged
+- Some dependency work
+- Tests extended
+- Copyright year updated
+
 ## 0.0.9 (2025-12-01)
 
 - Some dependency work
