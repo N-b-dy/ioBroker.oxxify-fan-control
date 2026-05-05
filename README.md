@@ -69,6 +69,8 @@ This channel contains system data about the hardware and firmware as well as run
 
 ### **WORK IN PROGRESS**
 
+- Security vulnerabilities fixed (#141)
+
 ### 0.0.14 (2026-05-05)
 
 - Added missing JSDoc comments
