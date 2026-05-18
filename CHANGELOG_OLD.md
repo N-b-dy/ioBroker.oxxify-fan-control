@@ -1,4 +1,9 @@
 # Older changes
+## 0.0.11 (2026-04-06)
+
+- TypeScript updated to 6.0
+- Some dependency work
+
 ## 0.0.10 (2026-03-15)
 
 - Auto PRs merged
