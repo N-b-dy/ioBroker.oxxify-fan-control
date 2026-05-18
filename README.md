@@ -68,6 +68,7 @@ This channel contains system data about the hardware and firmware as well as run
 ## Changelog
 
 - Security vulnerabilities fixed (#143)
+- Dependencies updated
 
 ### 0.0.15 (2026-05-05)
 
