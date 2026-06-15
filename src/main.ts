@@ -27,7 +27,7 @@ import { Utility } from "./lib/Utility";
 /**
  * The main class for this adapter.
  */
-export class OxxifyFanControl extends utils.Adapter {
+class OxxifyFanControl extends utils.Adapter {
     /**
      * Adapter constructor.
      *
