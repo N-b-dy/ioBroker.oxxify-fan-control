@@ -202,6 +202,7 @@ class OxxifyFanControl extends utils.Adapter {
     }
     this.subscribeStates("devices.*");
     this.udpServer.on("error", (error) => {
+      var _a;
       this.log.error(`Error: ${error}`);
       this.udpServer.close();
       this.udpServerErrorCount++;
@@ -211,11 +212,7 @@ class OxxifyFanControl extends utils.Adapter {
         this.log.error(
           `This adapter had ${this.udpServerErrorCount} errors regarding the listening of the udp server to port 4001. Adapter is terminated now.`
         );
-        if (typeof this.terminate === "function") {
-          this.terminate();
-        } else {
-          process.exit();
-        }
+        (_a = this.terminate) == null ? void 0 : _a.call(this);
       }
     });
     this.udpServer.on("message", async (msg, info) => {
