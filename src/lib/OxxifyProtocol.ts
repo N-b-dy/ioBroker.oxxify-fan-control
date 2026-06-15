@@ -836,7 +836,7 @@ export class OxxifyProtocol {
                 break;
         }
 
-        const eParameter = ((data.at(nIndex) ?? 0) | (this.nCurrentReadHighByte << 8)) as ParameterType;
+        const eParameter = (data.at(nIndex) ?? 0) | (this.nCurrentReadHighByte << 8);
         nIndex++;
 
         if (this.stateDictionary.has(eParameter)) {
@@ -986,7 +986,7 @@ export class OxxifyProtocol {
             }
         }
 
-        this.internalBuffer[this.nWriteIndex] = eParameter as number;
+        this.internalBuffer[this.nWriteIndex] = eParameter;
         this.nWriteIndex++;
 
         if (this.eCurrentFunction == FunctionType.WriteRead) {
