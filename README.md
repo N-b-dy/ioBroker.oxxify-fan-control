@@ -67,6 +67,12 @@ This channel contains system data about the hardware and firmware as well as run
 
 ## Changelog
 
+### **WORK IN PROGRESS**
+
+- Security vulnerabilities fixed
+- Dependencies updated
+- Adapter checker stuff fixed (https://github.com/N-b-dy/ioBroker.oxxify-fan-control/issues/158)
+
 ### 0.0.16 (2026-05-18)
 
 - Security vulnerabilities fixed (#143)
