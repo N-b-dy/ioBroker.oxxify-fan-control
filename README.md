@@ -91,7 +91,7 @@ This channel contains system data about the hardware and firmware as well as run
 
 - Deploy workflow changed from "npm install" to "npm ci"
 
-### Older Versions
+### 0.0.11 and older
 
 [Link](/CHANGELOG_OLD.md)
 
