@@ -10,7 +10,7 @@
                     "type": "number",
                     "label": "cfgLblPollingInterval",
                     "help": "cfgHelpPollingInterval",
-                    "default": "2",
+                    "default": 2,
                     "min": 1,
                     "max": 86400,
                     "sm": 3,
