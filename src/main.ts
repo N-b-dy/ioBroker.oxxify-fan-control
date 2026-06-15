@@ -240,11 +240,7 @@ class OxxifyFanControl extends utils.Adapter {
                     `This adapter had ${this.udpServerErrorCount} errors regarding the listening of the udp server to port 4001. Adapter is terminated now.`,
                 );
 
-                if (typeof this.terminate === "function") {
-                    this.terminate();
-                } else {
-                    process.exit();
-                }
+                this.terminate?.();
             }
         });
 
