@@ -31,7 +31,7 @@ export enum ParsingStatus {
 }
 
 /**
- * Model class which holds the parsed data together with the unique fan identifier and the status @see ParsingStatus.
+ * Model class which holds the parsed data together with the unique fan identifier and the status `@see ParsingStatus`.
  */
 export class ParsedData {
     /**
