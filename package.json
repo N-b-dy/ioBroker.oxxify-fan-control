@@ -23,8 +23,6 @@
     },
     "dependencies": {
         "@iobroker/adapter-core": "^3.4.3",
-        "@iobroker/js-controller-common-db": "7.2.2",
-        "@iobroker/types": "7.2.2",
         "ntp-time": "^2.1.1",
         "queue-fifo": "^0.2.6"
     },
