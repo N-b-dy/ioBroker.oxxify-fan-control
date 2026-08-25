@@ -1,4 +1,12 @@
 # Older changes
+## 0.0.12 (2026-04-06)
+
+- Deploy workflow changed from "npm install" to "npm ci"
+
+## 0.0.11 and older
+
+[Link](/CHANGELOG_OLD.md)
+
 ## 0.0.11 (2026-04-06)
 
 - TypeScript updated to 6.0

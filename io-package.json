@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "oxxify-fan-control",
-    "version": "0.0.16",
+    "version": "0.0.17",
     "news": {
+      "0.0.17": {
+        "en": "Security vulnerabilities fixed\nDependencies updated\nAdapter checker stuff fixed (https://github.com/N-b-dy/ioBroker.oxxify-fan-control/issues/158)",
+        "de": "Sicherheitslücken behoben\nAbhängigkeiten aktualisiert\nAdapter-Checker-Problem behoben (https://github.com/N-b-dy/ioBroker.oxxify-fan-control/issues/158)",
+        "ru": "Устранены уязвимости безопасности\nЗависимости обновлены.\nИсправлены ошибки в работе проверки адаптера (https://github.com/N-b-dy/ioBroker.oxxify-fan-control/issues/158)",
+        "pt": "Vulnerabilidades de segurança corrigidas\nDependências atualizadas\nCorreção no verificador de adaptadores (https://github.com/N-b-dy/ioBroker.oxxify-fan-control/issues/158)",
+        "nl": "Beveiligingslekken verholpen\nAfhankelijkheden bijgewerkt\nProblemen met de adaptercontrole opgelost (https://github.com/N-b-dy/ioBroker.oxxify-fan-control/issues/158)",
+        "fr": "Les failles de sécurité ont été corrigées.\nDépendances mises à jour\nProblèmes liés à la vérification de l'adaptateur corrigés (https://github.com/N-b-dy/ioBroker.oxxify-fan-control/issues/158)",
+        "it": "Risolte vulnerabilità di sicurezza\nDipendenze aggiornate\nRisolto il problema relativo al controllo dell'adattatore (https://github.com/N-b-dy/ioBroker.oxxify-fan-control/issues/158)",
+        "es": "Se han corregido las vulnerabilidades de seguridad.\nDependencias actualizadas\nSe ha corregido el problema del verificador del adaptador (https://github.com/N-b-dy/ioBroker.oxxify-fan-control/issues/158)",
+        "pl": "Naprawiono luki w zabezpieczeniach\nZaktualizowano zależności\nNaprawiono sprawdzanie adapterów (https://github.com/N-b-dy/ioBroker.oxxify-fan-control/issues/158)",
+        "uk": "Виправлено вразливості безпеки\nЗалежності оновлено\nВиправлено помилки перевірки адаптера (https://github.com/N-b-dy/ioBroker.oxxify-fan-control/issues/158)",
+        "zh-cn": "已修复安全漏洞\n依赖项已更新\n适配器检查器相关问题已修复（https://github.com/N-b-dy/ioBroker.oxxify-fan-control/issues/158）"
+      },
       "0.0.16": {
         "en": "Security vulnerabilities fixed (#143)\nDependencies updated",
         "de": "Sicherheitslücken behoben (#143)\nAusgaben aktualisiert",
@@ -80,19 +93,6 @@
         "pl": "Pewne prace związane z uzależnieniem\nUnikaj komunikatów ostrzegawczych, jeśli otrzymany protokół nie zawiera wartości do aktualizacji stanów jOBroker (wydanie # 91)",
         "uk": "Деякі роботи залежностей\nУникайте попередження повідомлень, якщо отриманий протокол не містить значень для оновлення станів ioBroker (Issue #91)",
         "zh-cn": "一些依赖性工作\n避免警告消息, 如果收到的协议没有包含更新 ioBroker 状态的值( 问题 #91)"
-      },
-      "0.0.8": {
-        "en": "Some dependency work\nIssues from adapter checker fixed",
-        "de": "Einige Abhängigkeitsarbeit\nProbleme von Adapter-Checker behoben",
-        "ru": "Некоторые зависимые работы\nПроблемы с Adapter Checker фиксированные",
-        "pt": "Algum trabalho de dependência\nProblemas do verificador adaptador corrigido",
-        "nl": "Enige afhankelijkheid werk\nProblemen met de adaptercontrole zijn opgelost",
-        "fr": "Travail de dépendance\nProblèmes de l'adaptateur checker corrigé",
-        "it": "Alcuni lavori di dipendenza\nEmissioni da adattatore fisso",
-        "es": "Algunos trabajos de dependencia\nProblemas del control de adaptador fijo",
-        "pl": "Pewne prace związane z uzależnieniem\nProblemy z sprawdzaczem adaptera naprawione",
-        "uk": "Деякі роботи залежностей\nВиди з перехідника фіксовані",
-        "zh-cn": "一些依赖性工作\n适配器检查器的问题已固定"
       }
     },
     "titleLang": {
