@@ -1,4 +1,11 @@
 # Older changes
+## 0.0.13 (2026-04-08)
+
+- Auto PRs merged
+- Fixing other deployment issues...
+
+For older changelog entries see [CHANGELOG_OLD.md](./CHANGELOG_OLD.md)
+
 ## 0.0.12 (2026-04-06)
 
 - Deploy workflow changed from "npm install" to "npm ci"

@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "oxxify-fan-control",
-    "version": "0.0.17",
+    "version": "0.0.18",
     "news": {
+      "0.0.18": {
+        "en": "Fixed issues from adapter checker\nSecurity vulnerabilities fixed",
+        "de": "Adapter-Checker hat Probleme gelöst\nSicherheitslücken behoben",
+        "ru": "Исправлены проблемы с программой проверки адаптера\nУстранены уязвимости безопасности",
+        "pt": "Problemas corrigidos no Adapter Checker\nFalhas de segurança fixas",
+        "nl": "Problemen met de adapterchecker opgelost\nBeveiligingsproblemen opgelost",
+        "fr": "Problèmes résolus avec Adapter Checker\nFailles de sécurité corrigées",
+        "it": "Problemi risolti con Adapter Checker\nVulnerabilità di sicurezza risolte",
+        "es": "Problemas resueltos en Adapter Checker\nVulnerabilidades de seguridad corregidas",
+        "pl": "Naprawiono problemy z kontrolą adaptera\nNaprawiono luki w zabezpieczeniach",
+        "uk": "Виправлені проблеми з перевіркою адаптера\nВиправлені вразливості безпеки",
+        "zh-cn": "修复了适配器检查器中的问题\n安全漏洞已修复"
+      },
       "0.0.17": {
         "en": "Security vulnerabilities fixed\nDependencies updated\nAdapter checker stuff fixed (https://github.com/N-b-dy/ioBroker.oxxify-fan-control/issues/158)",
         "de": "Sicherheitslücken behoben\nAbhängigkeiten aktualisiert\nAdapter-Checker-Problem behoben (https://github.com/N-b-dy/ioBroker.oxxify-fan-control/issues/158)",
@@ -80,19 +93,6 @@
         "pl": "Automatyczne PRs połączone\nPewne prace związane z uzależnieniem\nBadania rozszerzone\nAktualizacja roku Copyright",
         "uk": "Авто PR злив\nДеякі роботи залежностей\nТести розширені\nОновлено",
         "zh-cn": "自动 PR 合并\n一些依赖性工作\n延长的测试\n更新版权年"
-      },
-      "0.0.9": {
-        "en": "Some dependency work\nAvoid warning messages, if the received protocol does not contain values to update the ioBroker states (Issue #91)",
-        "de": "Einige Abhängigkeitsarbeit\nVermeiden Sie Warnmeldungen, wenn das empfangene Protokoll keine Werte enthält, um die ioBroker-Zustände zu aktualisieren (Issue #91)",
-        "ru": "Некоторые зависимые работы\nИзбегайте предупреждающих сообщений, если принятый протокол не содержит значений для обновления состояний ioBroker (выпуск #91)",
-        "pt": "Algum trabalho de dependência\nEvite mensagens de aviso, se o protocolo recebido não contém valores para atualizar os estados do ioBroker (Issue #91)",
-        "nl": "Enige afhankelijkheid werk\nWaarschuwingsberichten vermijden, als het ontvangen protocol geen waarden bevat om de ioBroker toestanden bij te werken (Issue #91)",
-        "fr": "Travail de dépendance\nÉvitez les messages d'avertissement, si le protocole reçu ne contient pas de valeurs pour mettre à jour les états ioBroker (Issue #91)",
-        "it": "Alcuni lavori di dipendenza\nEvitare messaggi di avviso, se il protocollo ricevuto non contiene valori per aggiornare gli stati ioBroker (Issue #91)",
-        "es": "Algunos trabajos de dependencia\nEvite los mensajes de advertencia, si el protocolo recibido no contiene valores para actualizar los estados ioBroker (Isue #91)",
-        "pl": "Pewne prace związane z uzależnieniem\nUnikaj komunikatów ostrzegawczych, jeśli otrzymany protokół nie zawiera wartości do aktualizacji stanów jOBroker (wydanie # 91)",
-        "uk": "Деякі роботи залежностей\nУникайте попередження повідомлень, якщо отриманий протокол не містить значень для оновлення станів ioBroker (Issue #91)",
-        "zh-cn": "一些依赖性工作\n避免警告消息, 如果收到的协议没有包含更新 ioBroker 状态的值( 问题 #91)"
       }
     },
     "titleLang": {
